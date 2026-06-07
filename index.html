@@ -560,6 +560,11 @@
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Nova Solicitacao
       </div>
+      <div class="nav-item" onclick="showPage('predicao')" id="nav-predicao">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 2l20 10L2 22V2z"/><path d="M12 12h8"/></svg>
+        Predicao de Leads
+        <span class="nav-badge" style="background:rgba(245,158,11,0.2);color:#f59e0b;">7</span>
+      </div>
       <div class="nav-item" onclick="showPage('expansao')" id="nav-expansao">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
         Expansao Geografica
@@ -1888,6 +1893,82 @@
         </div>
       </div><!-- /page-integracoes -->
 
+      <!-- ── PREDICAO DE LEADS ── -->
+      <div id="page-predicao" class="page" style="display:none">
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px" id="pred-kpis">
+          <div class="analytics-card" style="border-top:3px solid #ef4444">
+            <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Agir Hoje</div>
+            <div style="font-size:2rem;font-weight:800;color:#ef4444" id="pk-agir">7</div>
+            <div style="font-size:.78rem;color:var(--muted);margin-top:4px">leads urgentes</div>
+          </div>
+          <div class="analytics-card" style="border-top:3px solid #f59e0b">
+            <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Prestes a Fechar</div>
+            <div style="font-size:2rem;font-weight:800;color:#f59e0b" id="pk-fechar">23</div>
+            <div style="font-size:.78rem;color:var(--muted);margin-top:4px">P(conv) &gt; 70%</div>
+          </div>
+          <div class="analytics-card" style="border-top:3px solid #3b82f6">
+            <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Prestes a Esfriar</div>
+            <div style="font-size:2rem;font-weight:800;color:#3b82f6" id="pk-esfriar">31</div>
+            <div style="font-size:.78rem;color:var(--muted);margin-top:4px">risco de perda</div>
+          </div>
+          <div class="analytics-card" style="border-top:3px solid #10b981">
+            <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Acuracia do Modelo</div>
+            <div style="font-size:2rem;font-weight:800;color:#10b981" id="pk-acur">84%</div>
+            <div style="font-size:.78rem;color:var(--muted);margin-top:4px">ultimos 30 dias</div>
+          </div>
+          <div class="analytics-card" style="border-top:3px solid #7c3aed">
+            <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">LTV Previsto</div>
+            <div style="font-size:2rem;font-weight:800;color:#7c3aed" id="pk-ltv">R$94k</div>
+            <div style="font-size:.78rem;color:var(--muted);margin-top:4px">pipeline ativo</div>
+          </div>
+        </div>
+
+        <!-- alert banner -->
+        <div style="background:linear-gradient(90deg,rgba(239,68,68,.12),rgba(245,158,11,.08));border:1px solid rgba(239,68,68,.35);border-radius:10px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px">
+          <svg width="20" height="20" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r=".5" fill="#ef4444"/></svg>
+          <div>
+            <div style="font-size:.85rem;font-weight:700;color:#fca5a5">Janela de Alta Conversao detectada</div>
+            <div style="font-size:.78rem;color:var(--muted);margin-top:2px">Modelo indica que contatos feitos entre 14h–17h nas proximas 48h tem 2.3x mais chance de fechar. 7 leads prioritarios aguardam acao.</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 380px;gap:20px;margin-bottom:24px">
+          <!-- action panel -->
+          <div class="analytics-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+              <div class="analytics-title">Painel de Acao — Leads Priorizados pela IA</div>
+              <div style="display:flex;gap:8px" id="pred-filters">
+                <button onclick="filterPredLeads('todos')" class="pred-filter-btn pred-filter-active" data-f="todos" style="padding:5px 14px;border-radius:6px;font-size:.78rem;font-weight:600;border:1px solid var(--accent);background:rgba(37,99,235,.15);color:var(--accent2);cursor:pointer">Todos</button>
+                <button onclick="filterPredLeads('quentes')" class="pred-filter-btn" data-f="quentes" style="padding:5px 14px;border-radius:6px;font-size:.78rem;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer">Quentes</button>
+                <button onclick="filterPredLeads('risco')" class="pred-filter-btn" data-f="risco" style="padding:5px 14px;border-radius:6px;font-size:.78rem;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer">Em Risco</button>
+              </div>
+            </div>
+            <div id="pred-leads-table"></div>
+          </div>
+
+          <!-- model factors -->
+          <div class="analytics-card">
+            <div class="analytics-title" style="margin-bottom:16px">Fatores do Modelo</div>
+            <div id="pred-fatores"></div>
+            <div class="analytics-title" style="margin:20px 0 12px">Proxima Oferta Recomendada</div>
+            <div id="pred-produtos"></div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <!-- timeline -->
+          <div class="analytics-card">
+            <div class="analytics-title" style="margin-bottom:16px">Probabilidade de Conversao — Proximos Periodos</div>
+            <div id="pred-timeline"></div>
+          </div>
+          <!-- ltv forecast -->
+          <div class="analytics-card">
+            <div class="analytics-title" style="margin-bottom:16px">Previsao de LTV por Segmento</div>
+            <div id="pred-ltv-chart"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- ── FUNIL INTELIGENTE ── -->
       <div class="page" id="page-funil">
         <div class="section-header">
@@ -2118,6 +2199,7 @@
     integracoes: ['Integracoes','Conecte suas fontes de leads e acompanhe ao vivo'],
     tatica:   ['Painel Tatico','Concentracao, qualidade, velocidade e eficiencia'],
     expansao: ['Expansao Geografica','Onde voce e forte, onde crescer e por qual caminho entrar'],
+    predicao: ['Predicao de Leads','IA identifica quem vai converter, quando agir e quanto vale cada lead'],
     funil:    ['Funil Inteligente','MQL/SQL, Time-to-Convert, Decay Rate e Dropout Analysis'],
     score:    ['Score & Perfil','Lead Scoring Preditivo, ICP, RFM e Clustering de Leads'],
     roi:      ['ROI & Atribuicao','CAC vs LTV, ROAS, Payback Period e Attribution Modeling'],
@@ -2138,6 +2220,7 @@
     else pararFeedAoVivo();
     if(name==='tatica')        setTimeout(renderTatica,       80);
     if(name==='expansao')      setTimeout(renderExpansao,     80);
+    if(name==='predicao')      setTimeout(renderPredicao,     80);
     if(name==='funil')         setTimeout(renderFunil,        80);
     if(name==='score')         setTimeout(renderScore,        80);
     if(name==='roi')           setTimeout(renderRoi,          80);
@@ -2604,6 +2687,155 @@
     }).join('')+'</div>';
   }
 
+  // ── PREDICAO DE LEADS ──
+  var predRendered = false;
+  var predLeadsData = [
+    {nome:'Empresa Alpha Ltda',   score:94, pconv:91, ltv:'R$28k', urgencia:'Alta',   canal:'WhatsApp', hora:'14h–15h', tag:'quentes'},
+    {nome:'Beta Comercio S/A',    score:88, pconv:84, ltv:'R$19k', urgencia:'Alta',   canal:'Email',    hora:'10h–11h', tag:'quentes'},
+    {nome:'Gama Industria',       score:81, pconv:78, ltv:'R$34k', urgencia:'Media',  canal:'Ligacao',  hora:'16h–17h', tag:'quentes'},
+    {nome:'Delta Servicos ME',    score:77, pconv:72, ltv:'R$11k', urgencia:'Media',  canal:'WhatsApp', hora:'09h–10h', tag:'quentes'},
+    {nome:'Epsilon Tech',         score:68, pconv:61, ltv:'R$22k', urgencia:'Baixa',  canal:'Email',    hora:'15h–16h', tag:'todos'},
+    {nome:'Zeta Varejo',          score:45, pconv:38, ltv:'R$8k',  urgencia:'Risco',  canal:'Ligacao',  hora:'11h–12h', tag:'risco'},
+    {nome:'Eta Logistica',        score:39, pconv:31, ltv:'R$15k', urgencia:'Risco',  canal:'Email',    hora:'14h–15h', tag:'risco'},
+    {nome:'Theta Financas',       score:28, pconv:22, ltv:'R$41k', urgencia:'Critico',canal:'Ligacao',  hora:'08h–09h', tag:'risco'},
+  ];
+
+  function renderPredicao(){
+    if(predRendered) return;
+    predRendered = true;
+    renderPredLeads('todos', predLeadsData);
+    renderPredFatores();
+    renderPredProdutos();
+    renderPredTimeline();
+    renderPredLtv();
+  }
+
+  function filterPredLeads(tipo){
+    document.querySelectorAll('.pred-filter-btn').forEach(function(b){
+      var active = b.getAttribute('data-f') === tipo;
+      b.style.border = active ? '1px solid var(--accent)' : '1px solid var(--border)';
+      b.style.background = active ? 'rgba(37,99,235,.15)' : 'transparent';
+      b.style.color = active ? 'var(--accent2)' : 'var(--muted)';
+    });
+    var filtered = tipo === 'todos' ? predLeadsData : predLeadsData.filter(function(d){ return d.tag === tipo; });
+    renderPredLeads(tipo, filtered);
+  }
+
+  function renderPredLeads(tipo, data){
+    var urgColors = {Alta:'#f59e0b',Media:'#3b82f6',Baixa:'#10b981',Risco:'#ef4444',Critico:'#dc2626'};
+    var rows = data.map(function(d){
+      var uc = urgColors[d.urgencia] || '#8896b0';
+      var bar = Math.round(d.pconv);
+      return '<tr style="border-bottom:1px solid var(--border)">'
+        + '<td style="padding:10px 8px;font-size:.83rem;font-weight:600;color:var(--text)">' + d.nome + '</td>'
+        + '<td style="padding:10px 8px;text-align:center">'
+          + '<div style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(37,99,235,.15);font-size:.8rem;font-weight:800;color:var(--accent2)">' + d.score + '</div>'
+        + '</td>'
+        + '<td style="padding:10px 8px;min-width:100px">'
+          + '<div style="font-size:.78rem;color:var(--muted);margin-bottom:3px;text-align:right">' + d.pconv + '%</div>'
+          + '<div style="height:5px;background:var(--border);border-radius:3px"><div style="height:5px;width:' + bar + '%;background:' + uc + ';border-radius:3px"></div></div>'
+        + '</td>'
+        + '<td style="padding:10px 8px;font-size:.82rem;color:#10b981;text-align:center">' + d.ltv + '</td>'
+        + '<td style="padding:10px 8px;text-align:center"><span style="font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:12px;background:' + uc + '22;color:' + uc + '">' + d.urgencia + '</span></td>'
+        + '<td style="padding:10px 8px;font-size:.78rem;color:var(--muted)">' + d.canal + '</td>'
+        + '<td style="padding:10px 8px;font-size:.78rem;color:var(--muted)">' + d.hora + '</td>'
+        + '<td style="padding:10px 8px">'
+          + '<button style="padding:5px 12px;border-radius:6px;font-size:.75rem;font-weight:600;background:var(--accent);color:#fff;border:none;cursor:pointer" onclick="alert('Abrindo contato: ' + d.nome + '')">Contatar</button>'
+        + '</td>'
+        + '</tr>';
+    }).join('');
+    document.getElementById('pred-leads-table').innerHTML =
+      '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">'
+      + '<thead><tr style="border-bottom:1px solid var(--border)">'
+      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);text-align:left;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Lead</th>'
+      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);text-align:center;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Score</th>'
+      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">P(conv)</th>'
+      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);text-align:center;font-weight:600;text-transform:uppercase;letter-spacing:.06em">LTV</th>'
+      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);text-align:center;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Urgencia</th>'
+      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Canal</th>'
+      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Melhor Hora</th>'
+      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Acao</th>'
+      + '</thead><tbody>' + rows + '</tbody></table></div>';
+  }
+
+  function renderPredFatores(){
+    var fatores = [
+      {label:'Engajamento Recente', val:87, cor:'#3b82f6'},
+      {label:'Perfil ICP',          val:82, cor:'#7c3aed'},
+      {label:'Tempo no Funil',      val:71, cor:'#f59e0b'},
+      {label:'Canal de Entrada',    val:65, cor:'#10b981'},
+      {label:'Completude do Lead',  val:58, cor:'#06b6d4'},
+      {label:'Historico Similar',   val:44, cor:'#ec4899'},
+    ];
+    document.getElementById('pred-fatores').innerHTML = fatores.map(function(f){
+      return '<div style="margin-bottom:12px">'
+        + '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px">'
+        + '<span style="color:var(--text)">' + f.label + '</span>'
+        + '<span style="color:' + f.cor + ';font-weight:700">' + f.val + '%</span>'
+        + '</div>'
+        + '<div style="height:6px;background:var(--border);border-radius:3px">'
+        + '<div style="height:6px;width:' + f.val + '%;background:' + f.cor + ';border-radius:3px;transition:width .6s"></div>'
+        + '</div></div>';
+    }).join('');
+  }
+
+  function renderPredProdutos(){
+    var prods = [
+      {nome:'Leads com Inteligencia Premium', prob:73, cor:'#7c3aed'},
+      {nome:'Painel Tatico Avancado',          prob:58, cor:'#3b82f6'},
+      {nome:'Expansao Geografica Pro',         prob:41, cor:'#10b981'},
+    ];
+    document.getElementById('pred-produtos').innerHTML = prods.map(function(p){
+      return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'
+        + '<div style="flex:1;font-size:.8rem;color:var(--text)">' + p.nome + '</div>'
+        + '<span style="font-size:.78rem;font-weight:700;color:' + p.cor + ';min-width:32px;text-align:right">' + p.prob + '%</span>'
+        + '</div>'
+        + '<div style="height:4px;background:var(--border);border-radius:2px;margin-bottom:14px">'
+        + '<div style="height:4px;width:' + p.prob + '%;background:' + p.cor + ';border-radius:2px"></div>'
+        + '</div>';
+    }).join('');
+  }
+
+  function renderPredTimeline(){
+    var periodos = [
+      {label:'Hoje',        val:41, cor:'#ef4444'},
+      {label:'Amanha',      val:34, cor:'#f59e0b'},
+      {label:'Em 3 dias',   val:28, cor:'#3b82f6'},
+      {label:'Esta semana', val:22, cor:'#10b981'},
+      {label:'Proximo mes', val:15, cor:'#7c3aed'},
+    ];
+    var max = 41;
+    document.getElementById('pred-timeline').innerHTML = periodos.map(function(p){
+      var w = Math.round((p.val/max)*100);
+      return '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">'
+        + '<div style="min-width:88px;font-size:.8rem;color:var(--muted)">' + p.label + '</div>'
+        + '<div style="flex:1;height:28px;background:var(--border);border-radius:6px;overflow:hidden">'
+        + '<div style="height:28px;width:' + w + '%;background:' + p.cor + ';border-radius:6px;display:flex;align-items:center;padding:0 8px">'
+        + '<span style="font-size:.78rem;font-weight:700;color:#fff;white-space:nowrap">' + p.val + '%</span>'
+        + '</div></div></div>';
+    }).join('');
+  }
+
+  function renderPredLtv(){
+    var segs = [
+      {label:'Enterprise',   val:120, cor:'#7c3aed'},
+      {label:'Mid-Market',   val:68,  cor:'#3b82f6'},
+      {label:'SMB',          val:29,  cor:'#10b981'},
+      {label:'Varejo',       val:18,  cor:'#f59e0b'},
+      {label:'Servicos ME',  val:11,  cor:'#06b6d4'},
+    ];
+    var max = 120;
+    document.getElementById('pred-ltv-chart').innerHTML = segs.map(function(s){
+      var w = Math.round((s.val/max)*100);
+      return '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">'
+        + '<div style="min-width:90px;font-size:.8rem;color:var(--muted)">' + s.label + '</div>'
+        + '<div style="flex:1;height:28px;background:var(--border);border-radius:6px;overflow:hidden">'
+        + '<div style="height:28px;width:' + w + '%;background:' + s.cor + ';border-radius:6px;display:flex;align-items:center;padding:0 8px">'
+        + '<span style="font-size:.78rem;font-weight:700;color:#fff;white-space:nowrap">R$' + s.val + 'k</span>'
+        + '</div></div></div>';
+    }).join('');
+  }
+
   // ── FUNIL INTELIGENTE ──
   let funilRendered=false;
   function renderFunil(){
@@ -2877,15 +3109,4 @@
     const pen=document.getElementById('penetracao-bars');
     if(pen) pen.innerHTML=penData.map(d=>`
       <div style="display:flex;align-items:center;gap:8px;">
-        <div style="width:26px;font-size:11px;font-weight:700;">${d.uf}</div>
-        <div style="flex:1;height:12px;background:var(--border);border-radius:3px;overflow:hidden;">
-          <div style="height:100%;width:${d.leads/maxL*100}%;background:${d.cor};border-radius:3px;opacity:.8;"></div>
-        </div>
-        <div style="width:52px;font-size:10px;text-align:right;color:var(--text-muted);">${d.leads.toLocaleString('pt-BR')}</div>
-        <div style="width:38px;font-size:10px;font-weight:700;text-align:right;color:${d.cor};">LQ ${d.lq}</div>
-      </div>`).join('');
-  }
-
-</script>
-</body>
-</html>
+        <div style="width:26px;font-size:11px;font-weight:7
