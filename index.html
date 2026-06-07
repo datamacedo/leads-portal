@@ -571,7 +571,7 @@
       </div>
       <div class="nav-item" onclick="showPage('predicao')" id="nav-predicao">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 2l20 10L2 22V2z"/><path d="M12 12h8"/></svg>
-        Predicao de Leads
+        Priorizacao de Leads
         <span class="nav-badge" style="background:rgba(245,158,11,0.2);color:#f59e0b;">7</span>
       </div>
       <div class="nav-item" onclick="showPage('expansao')" id="nav-expansao">
@@ -1900,7 +1900,7 @@
       </div><!-- /page-integracoes -->
 
       <!-- ── PREDICAO DE LEADS ── -->
-      <div id="page-predicao" class="page" style="display:none">
+      <div id="page-predicao" class="page">
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px" id="pred-kpis">
           <div class="analytics-card" style="border-top:3px solid #ef4444">
             <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Agir Hoje</div>
@@ -1942,7 +1942,7 @@
           <!-- action panel -->
           <div class="analytics-card">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-              <div class="analytics-title">Painel de Acao — Leads Priorizados pela IA</div>
+              <div class="analytics-title">Painel de Acao — Leads Priorizados por Score</div>
               <div style="display:flex;gap:8px" id="pred-filters">
                 <button onclick="filterPredLeads('todos')" class="pred-filter-btn pred-filter-active" data-f="todos" style="padding:5px 14px;border-radius:6px;font-size:.78rem;font-weight:600;border:1px solid var(--accent);background:rgba(37,99,235,.15);color:var(--accent2);cursor:pointer">Todos</button>
                 <button onclick="filterPredLeads('quentes')" class="pred-filter-btn" data-f="quentes" style="padding:5px 14px;border-radius:6px;font-size:.78rem;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer">Quentes</button>
@@ -2169,6 +2169,17 @@
 </div><!-- /app -->
 
 <script>
+  // ── THEME ──
+  function toggleTheme(){
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? '' : 'dark');
+    const btn = document.querySelector('.theme-toggle');
+    if(btn) btn.innerHTML = isDark
+      ? '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>'
+      : '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  }
+
   // ── LOGIN ──
   const accounts = {
     cliente: { name: 'Empresa Exemplo', initials: 'EE', plan: 'Plano Volume' },
@@ -2205,7 +2216,7 @@
     integracoes: ['Integracoes','Conecte suas fontes de leads e acompanhe ao vivo'],
     tatica:   ['Painel Tatico','Concentracao, qualidade, velocidade e eficiencia'],
     expansao: ['Expansao Geografica','Onde voce e forte, onde crescer e por qual caminho entrar'],
-    predicao: ['Predicao de Leads','IA identifica quem vai converter, quando agir e quanto vale cada lead'],
+    predicao: ['Priorizacao de Leads','Modelo preditivo identifica quem vai converter, quando agir e quanto vale cada lead'],
     funil:    ['Funil Inteligente','MQL/SQL, Time-to-Convert, Decay Rate e Dropout Analysis'],
     score:    ['Score & Perfil','Lead Scoring Preditivo, ICP, RFM e Clustering de Leads'],
     roi:      ['ROI & Atribuicao','CAC vs LTV, ROAS, Payback Period e Attribution Modeling'],
