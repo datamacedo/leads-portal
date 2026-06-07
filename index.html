@@ -270,6 +270,8 @@
   /* ─── RESULTADO TABLE ─── */
   .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
   .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .analytics-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .analytics-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
   .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
   .stat-value { font-size: 26px; font-weight: 700; margin: 5px 0 3px; }
   .stat-delta { font-size: 12px; color: var(--text-muted); }
@@ -565,6 +567,22 @@
       <div class="nav-item" onclick="showPage('tatica')" id="nav-tatica">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 20h.01M7 20v-4"/><path d="M12 20V10"/><path d="M17 20V4"/><path d="M22 20h.01"/></svg>
         Painel Tatico
+      </div>
+      <div class="nav-item" onclick="showPage('funil')" id="nav-funil">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Funil Inteligente
+      </div>
+      <div class="nav-item" onclick="showPage('score')" id="nav-score">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Score &amp; Perfil
+      </div>
+      <div class="nav-item" onclick="showPage('roi')" id="nav-roi">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        ROI &amp; Atribuicao
+      </div>
+      <div class="nav-item" onclick="showPage('comportamento')" id="nav-comportamento">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Comportamento
       </div>
       <div class="nav-item" onclick="showPage('integracoes')" id="nav-integracoes">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>
@@ -1729,615 +1747,341 @@
             <div class="exp-card-title">Whitespace Analysis</div>
             <div class="exp-card-sub">Potencial de mercado (eixo Y) vs sua cobertura atual (eixo X). Quadrante superior-esquerdo = entrar ja.</div>
             <svg id="whitespace-svg" class="quad-svg" viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg">
-              <!-- quadrant backgrounds -->
-              <rect x="50" y="20"  width="170" height="140" fill="rgba(16,185,129,0.07)" rx="4"/>
-              <rect x="220" y="20"  width="170" height="140" fill="rgba(124,58,237,0.07)" rx="4"/>
-              <rect x="50" y="160" width="170" height="130" fill="rgba(245,158,11,0.07)" rx="4"/>
-              <rect x="220" y="160" width="170" height="130" fill="rgba(156,163,175,0.06)" rx="4"/>
-              <!-- axes -->
-              <line x1="50" y1="20" x2="50" y2="290" stroke="var(--border)" stroke-width="1.5"/>
-              <line x1="50" y1="290" x2="395" y2="290" stroke="var(--border)" stroke-width="1.5"/>
-              <line x1="50" y1="160" x2="395" y2="160" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
-              <line x1="217" y1="20" x2="217" y2="290" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
-              <!-- quadrant labels -->
-              <text x="135" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#10b981" opacity=".8">PRIORIDADE — ENTRAR</text>
-              <text x="305" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#7c3aed" opacity=".8">FORTALECER</text>
-              <text x="135" y="175" text-anchor="middle" font-size="9" font-weight="700" fill="#f59e0b" opacity=".8">OPORTUNIDADE BORDA</text>
-              <text x="305" y="175" text-anchor="middle" font-size="9" font-weight="700" fill="#9ca3af" opacity=".7">MANTER</text>
-              <!-- axis labels -->
-              <text x="222" y="306" text-anchor="middle" font-size="9" fill="var(--text-muted)">Cobertura Atual →</text>
-              <text x="18" y="165" text-anchor="middle" font-size="9" fill="var(--text-muted)" transform="rotate(-90,18,165)">Potencial →</text>
-              <text x="50"  y="306" text-anchor="middle" font-size="8" fill="var(--text-muted)">Baixa</text>
-              <text x="395" y="306" text-anchor="middle" font-size="8" fill="var(--text-muted)">Alta</text>
-              <text x="43"  y="290" text-anchor="end"    font-size="8" fill="var(--text-muted)">Baixo</text>
-              <text x="43"  y="20"  text-anchor="end"    font-size="8" fill="var(--text-muted)">Alto</text>
-              <!-- dots rendered by JS -->
+              <rect x="0" y="0" width="210" height="160" fill="rgba(16,185,129,0.08)"/>
+              <rect x="210" y="0" width="210" height="160" fill="rgba(245,158,11,0.06)"/>
+              <rect x="0" y="160" width="210" height="160" fill="rgba(99,179,237,0.06)"/>
+              <rect x="210" y="160" width="210" height="160" fill="rgba(239,68,68,0.06)"/>
+              <line x1="210" y1="0" x2="210" y2="320" stroke="#2a3a55" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="0" y1="160" x2="420" y2="160" stroke="#2a3a55" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="105" y="18" text-anchor="middle" fill="#10b981" font-size="10" font-weight="700">ENTRAR JA</text>
+              <text x="315" y="18" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="700">CRESCER</text>
+              <text x="105" y="314" text-anchor="middle" fill="#63b3ed" font-size="10" font-weight="700">FORTALECER</text>
+              <text x="315" y="314" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700">BAIXA PRIORIDADE</text>
+              <text x="210" y="335" text-anchor="middle" fill="#6b7fa0" font-size="9">Cobertura Atual →</text>
               <g id="whitespace-dots"></g>
             </svg>
-            <div class="insight-strip">
-              <div class="insight-chip"><div class="chip-dot" style="background:#10b981;"></div><div><strong>MG, PR, RS, CE, PE</strong> — alto potencial, baixa cobertura. Entrada imediata.</div></div>
-              <div class="insight-chip"><div class="chip-dot" style="background:#7c3aed;"></div><div><strong>SP, RJ, DF</strong> — ja consolidados. Manter investimento e aprofundar.</div></div>
-            </div>
           </div>
 
           <!-- BCG GEOGRAFICO -->
           <div class="exp-card">
-            <div class="exp-card-title">Matriz BCG Geografica</div>
-            <div class="exp-card-sub">Share atual (eixo Y) vs crescimento MoM (eixo X). Tamanho da bolha = volume de leads.</div>
+            <div class="exp-card-title">BCG Geografica — Share vs Crescimento</div>
+            <div class="exp-card-sub">Eixo X = crescimento de leads; Eixo Y = share de mercado. Bolha = volume. Stars = prioridade maxima.</div>
             <svg id="bcg-svg" class="quad-svg" viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg">
-              <!-- quadrant backgrounds -->
-              <rect x="50" y="20"  width="170" height="140" fill="rgba(16,185,129,0.08)" rx="4"/>
-              <rect x="220" y="20"  width="170" height="140" fill="rgba(6,182,212,0.08)" rx="4"/>
-              <rect x="50" y="160" width="170" height="130" fill="rgba(239,68,68,0.06)" rx="4"/>
-              <rect x="220" y="160" width="170" height="130" fill="rgba(245,158,11,0.08)" rx="4"/>
-              <!-- axes -->
-              <line x1="50" y1="20" x2="50" y2="290" stroke="var(--border)" stroke-width="1.5"/>
-              <line x1="50" y1="290" x2="395" y2="290" stroke="var(--border)" stroke-width="1.5"/>
-              <line x1="50" y1="160" x2="395" y2="160" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
-              <line x1="217" y1="20" x2="217" y2="290" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
-              <!-- labels -->
-              <text x="135" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#10b981" opacity=".8">INTERROGACAO</text>
-              <text x="305" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#06b6d4" opacity=".8">ESTRELA</text>
-              <text x="135" y="175" text-anchor="middle" font-size="9" font-weight="700" fill="#ef4444" opacity=".7">ABACAXI</text>
-              <text x="305" y="175" text-anchor="middle" font-size="9" font-weight="700" fill="#f59e0b" opacity=".8">VACA LEITEIRA</text>
-              <!-- axis labels -->
-              <text x="222" y="306" text-anchor="middle" font-size="9" fill="var(--text-muted)">Crescimento MoM →</text>
-              <text x="18" y="165" text-anchor="middle" font-size="9" fill="var(--text-muted)" transform="rotate(-90,18,165)">Share Atual →</text>
-              <text x="50"  y="306" text-anchor="middle" font-size="8" fill="var(--text-muted)">Baixo</text>
-              <text x="395" y="306" text-anchor="middle" font-size="8" fill="var(--text-muted)">Alto</text>
-              <text x="43"  y="290" text-anchor="end"    font-size="8" fill="var(--text-muted)">Baixo</text>
-              <text x="43"  y="20"  text-anchor="end"    font-size="8" fill="var(--text-muted)">Alto</text>
-              <!-- bubbles by JS -->
+              <rect x="0" y="0" width="210" height="160" fill="rgba(245,158,11,0.06)"/>
+              <rect x="210" y="0" width="210" height="160" fill="rgba(16,185,129,0.08)"/>
+              <rect x="0" y="160" width="210" height="160" fill="rgba(239,68,68,0.06)"/>
+              <rect x="210" y="160" width="210" height="160" fill="rgba(99,179,237,0.06)"/>
+              <line x1="210" y1="0" x2="210" y2="320" stroke="#2a3a55" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="0" y1="160" x2="420" y2="160" stroke="#2a3a55" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="105" y="18" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="700">QUESTION MARK</text>
+              <text x="315" y="18" text-anchor="middle" fill="#10b981" font-size="10" font-weight="700">STAR</text>
+              <text x="105" y="314" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700">DOG</text>
+              <text x="315" y="314" text-anchor="middle" fill="#63b3ed" font-size="10" font-weight="700">CASH COW</text>
+              <text x="210" y="335" text-anchor="middle" fill="#6b7fa0" font-size="9">Crescimento de Leads →</text>
               <g id="bcg-bubbles"></g>
             </svg>
-            <div class="insight-strip">
-              <div class="insight-chip"><div class="chip-dot" style="background:#10b981;"></div><div><strong>BA, CE, PE</strong> crescem rapido com share baixo. Investir agora antes de saturar.</div></div>
-              <div class="insight-chip"><div class="chip-dot" style="background:#f59e0b;"></div><div><strong>SP, RJ</strong> sao vacas leiteiras. Manter verba estavel, nao cortar.</div></div>
-            </div>
           </div>
 
-        </div>
+        </div><!-- /exp-2col whitespace+bcg -->
 
         <!-- CHANNEL-REGION MATRIX -->
-        <div class="exp-card" style="margin-bottom:20px;">
-          <div class="exp-card-title">Channel-Region Matrix</div>
-          <div class="exp-card-sub" style="margin-bottom:14px;">Qual canal performa melhor em cada estado-alvo? Use para calibrar mix de midia por regiao. Intensidade = % de leads daquele canal naquele estado.</div>
-          <div class="ch-heatmap">
-            <div id="ch-matrix"></div>
-          </div>
-          <div class="insight-strip">
-            <div class="insight-chip"><div class="chip-dot" style="background:#e1306c;"></div><div><strong>Instagram</strong> domina no Nordeste (BA, CE, PE). Acao regional deve priorizar Meta.</div></div>
-            <div class="insight-chip"><div class="chip-dot" style="background:#4285f4;"></div><div><strong>Google Ads</strong> converte melhor em MG e RS. Regiao mais orientada a pesquisa ativa.</div></div>
-            <div class="insight-chip"><div class="chip-dot" style="background:#7c3aed;"></div><div><strong>Website</strong> lidera em SC. Publico mais maduro digitalmente — investir em SEO.</div></div>
-          </div>
+        <div class="exp-card" style="margin-top:16px;">
+          <div class="exp-card-title">Matrix Canal × Regiao</div>
+          <div class="exp-card-sub">Volume de leads por canal de aquisicao e estado. Cores mais intensas = maior concentracao relativa.</div>
+          <div id="channel-matrix" style="overflow-x:auto;margin-top:12px;"></div>
         </div>
 
       </div><!-- /page-expansao -->
 
       <!-- ── PAINEL TATICO ── -->
       <div class="page" id="page-tatica">
-
         <div class="section-header">
-          <div>
-            <div class="section-title">Painel Tatico</div>
-            <div class="section-sub">Analise de concentracao, qualidade, velocidade e eficiencia dos seus leads</div>
-          </div>
-          <span class="badge badge-purple">Dados simulados — base 6.990 leads</span>
-        </div>
-
-        <!-- STATS RAPIDOS -->
-        <div class="stats-row" style="margin-bottom:24px;">
-          <div class="stat-card" style="border-left:4px solid var(--primary)">
-            <div class="stat-label">HHI Canais</div>
-            <div class="stat-value" id="tatica-hhi-canais-val" style="color:var(--success)">1.316</div>
-            <div class="stat-delta" style="color:var(--success);">Diversificado</div>
-          </div>
-          <div class="stat-card" style="border-left:4px solid var(--warning)">
-            <div class="stat-label">HHI Geografico</div>
-            <div class="stat-value" id="tatica-hhi-geo-val" style="color:var(--warning)">2.134</div>
-            <div class="stat-delta" style="color:var(--warning);">Moderado — atencao SP/RJ</div>
-          </div>
-          <div class="stat-card" style="border-left:4px solid var(--accent)">
-            <div class="stat-label">Lead Quality Index</div>
-            <div class="stat-value" style="color:var(--accent)">72<span style="font-size:14px;color:var(--text-muted)">/100</span></div>
-            <div class="stat-delta" style="color:var(--success);">+4 pts vs mes anterior</div>
-          </div>
-          <div class="stat-card" style="border-left:4px solid var(--success)">
-            <div class="stat-label">Lead Velocity Rate</div>
-            <div class="stat-value" style="color:var(--success)">+18%</div>
-            <div class="stat-delta" style="color:var(--success);">Pipeline crescendo</div>
-          </div>
+          <div><div class="section-title">Painel Tatico</div><div class="section-sub">Concentracao, qualidade, velocidade e eficiencia da sua base de leads</div></div>
         </div>
 
         <!-- HHI ROW -->
-        <div class="tatica-2col">
-
-          <!-- HHI CANAIS -->
-          <div class="tatica-card">
-            <div class="tatica-card-title">HHI — Concentracao por Canal</div>
-            <div class="tatica-card-sub">Mede dependencia de fontes de captacao. HHI = &Sigma;(share&sup2;). Quanto menor, mais diversificado.</div>
-            <div style="display:flex;align-items:flex-start;gap:20px;margin-bottom:12px;">
-              <div>
-                <div class="hhi-score" style="color:var(--success)" id="hhi-canais-num">1.316</div>
-                <div class="hhi-status hhi-ok" id="hhi-canais-status">
-                  <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                  Diversificado
-                </div>
-                <div style="font-size:10px;color:var(--text-muted);line-height:1.6;">
-                  &lt;1.500 diversificado<br>
-                  1.500–2.500 moderado<br>
-                  &gt;2.500 concentrado
-                </div>
-              </div>
-              <div style="flex:1;">
-                <div style="position:relative;margin-bottom:8px;">
-                  <div class="hhi-range">
-                    <div class="hhi-range-ok"></div>
-                    <div class="hhi-range-med"></div>
-                    <div class="hhi-range-bad"></div>
-                  </div>
-                  <div style="position:relative;height:8px;">
-                    <div style="position:absolute;left:13.16%;top:-11px;">
-                      <div style="width:14px;height:14px;border-radius:50%;background:#1e1b4b;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>
-                    </div>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);margin-top:10px;">
-                    <span>0</span><span>1.500</span><span>2.500</span><span>10.000</span>
-                  </div>
-                </div>
-                <div class="bar-list" id="hhi-canais-bars"></div>
-              </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">HHI Canais — Concentracao por Origem</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px;">Herfindahl-Hirschman Index: quanto mais baixo, mais diversificada sua origem de leads</div>
+            <div id="hhi-canais-bars"></div>
+            <div class="hhi-range" style="margin-top:14px;">
+              <div style="flex:1500px;background:#10b981;height:8px;border-radius:4px 0 0 4px;"></div>
+              <div style="flex:1000px;background:#f59e0b;height:8px;"></div>
+              <div style="flex:7500px;background:#ef4444;height:8px;border-radius:0 4px 4px 0;"></div>
             </div>
+            <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);margin-top:3px;"><span>0 Diversif.</span><span>1500</span><span>2500</span><span>10000 Monopolio</span></div>
+            <div id="hhi-canais-marker" style="font-size:11px;margin-top:6px;"></div>
           </div>
-
-          <!-- HHI GEOGRAFICO -->
-          <div class="tatica-card">
-            <div class="tatica-card-title">HHI — Concentracao Geografica</div>
-            <div class="tatica-card-sub">Concentracao de leads por estado. Alta dependencia de poucos estados = risco de campanha regional.</div>
-            <div style="display:flex;align-items:flex-start;gap:20px;margin-bottom:12px;">
-              <div>
-                <div class="hhi-score" style="color:var(--warning)">2.134</div>
-                <div class="hhi-status hhi-med">
-                  <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/><circle cx="12" cy="12" r="10"/></svg>
-                  Moderado
-                </div>
-                <div style="font-size:10px;color:var(--text-muted);line-height:1.6;">
-                  SP + RJ = 57%<br>
-                  do total de leads<br>
-                  <span style="color:var(--warning);font-weight:600;">Diversificar para Sul</span>
-                </div>
-              </div>
-              <div style="flex:1;">
-                <div style="position:relative;margin-bottom:8px;">
-                  <div class="hhi-range">
-                    <div class="hhi-range-ok"></div>
-                    <div class="hhi-range-med"></div>
-                    <div class="hhi-range-bad"></div>
-                  </div>
-                  <div style="position:relative;height:8px;">
-                    <div style="position:absolute;left:21.34%;top:-11px;">
-                      <div style="width:14px;height:14px;border-radius:50%;background:#f59e0b;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>
-                    </div>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);margin-top:10px;">
-                    <span>0</span><span>1.500</span><span>2.500</span><span>10.000</span>
-                  </div>
-                </div>
-                <div class="bar-list" id="hhi-geo-bars"></div>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /HHI ROW -->
-
-        <!-- QUALIDADE ROW -->
-        <div class="tatica-3col">
-
-          <!-- LEAD QUALITY INDEX -->
-          <div class="tatica-card">
-            <div class="tatica-card-title">Lead Quality Index</div>
-            <div class="tatica-card-sub">Score composto: propensao + completude de dados + qualidade do canal</div>
-            <div class="lqi-wrap">
-              <svg width="110" height="70" viewBox="0 0 110 70" style="overflow:visible;margin-bottom:4px;">
-                <path d="M10 60 A45 45 0 0 1 100 60" fill="none" stroke="var(--border)" stroke-width="10" stroke-linecap="round"/>
-                <path id="lqi-arc" d="M10 60 A45 45 0 0 1 100 60" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="141.4" stroke-dashoffset="40" style="transition:stroke-dashoffset .8s ease;"/>
-                <text x="55" y="58" text-anchor="middle" font-size="22" font-weight="800" fill="var(--text)" id="lqi-num">72</text>
-                <text x="55" y="70" text-anchor="middle" font-size="8" fill="var(--text-muted)">/100</text>
-              </svg>
-              <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:12px;">Bom</div>
-            </div>
-            <div class="lqi-factors">
-              <div class="lqi-factor-row">
-                <span class="lqi-factor-label">Propensao Alta</span>
-                <div class="lqi-factor-bar"><div class="lqi-factor-fill" style="width:68%;background:#ef4444;"></div></div>
-                <span class="lqi-factor-val">68%</span>
-              </div>
-              <div class="lqi-factor-row">
-                <span class="lqi-factor-label">Dados Completos</span>
-                <div class="lqi-factor-bar"><div class="lqi-factor-fill" style="width:79%;background:var(--success);"></div></div>
-                <span class="lqi-factor-val">79%</span>
-              </div>
-              <div class="lqi-factor-row">
-                <span class="lqi-factor-label">Canal Premium</span>
-                <div class="lqi-factor-bar"><div class="lqi-factor-fill" style="width:71%;background:var(--accent);"></div></div>
-                <span class="lqi-factor-val">71%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- LEAD DECAY RATE -->
-          <div class="tatica-card">
-            <div class="tatica-card-title">Lead Decay Rate</div>
-            <div class="tatica-card-sub">Leads sem nenhuma acao ha mais de 7 dias. Leads esfriados perdem propensao rapidamente.</div>
-            <div style="text-align:center;padding:12px 0;">
-              <svg width="120" height="120" viewBox="0 0 120 120">
-                <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border)" stroke-width="12"/>
-                <circle cx="60" cy="60" r="50" fill="none" stroke="#f59e0b" stroke-width="12"
-                  stroke-dasharray="314.16" stroke-dashoffset="283" stroke-linecap="round"
-                  transform="rotate(-90 60 60)" style="transition:stroke-dashoffset .8s ease;"/>
-                <text x="60" y="56" text-anchor="middle" font-size="22" font-weight="800" fill="var(--text)">12%</text>
-                <text x="60" y="70" text-anchor="middle" font-size="9" fill="var(--text-muted)">847 leads</text>
-              </svg>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
-              <div style="display:flex;justify-content:space-between;font-size:11px;">
-                <span style="color:var(--text-muted)">0–7 dias (quente)</span>
-                <span style="font-weight:700;color:var(--success)">6.143 leads</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;font-size:11px;">
-                <span style="color:var(--text-muted)">&gt;7 dias (frio)</span>
-                <span style="font-weight:700;color:var(--warning)">847 leads</span>
-              </div>
-              <div style="margin-top:6px;padding:8px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--text-muted);">
-                <strong style="color:var(--warning);">Atencao:</strong> 10–25% = zona de alerta. Acionar campanha de reaquecimento.
-              </div>
-            </div>
-          </div>
-
-          <!-- TAXA DE DUPLICATAS -->
-          <div class="tatica-card">
-            <div class="tatica-card-title">Taxa de Duplicatas</div>
-            <div class="tatica-card-sub">Leads captados com CPF ou telefone ja existentes na base. Mede desperdicio de verba.</div>
-            <div style="text-align:center;padding:12px 0;">
-              <svg width="120" height="120" viewBox="0 0 120 120">
-                <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border)" stroke-width="12"/>
-                <circle cx="60" cy="60" r="50" fill="none" stroke="var(--success)" stroke-width="12"
-                  stroke-dasharray="314.16" stroke-dashoffset="288" stroke-linecap="round"
-                  transform="rotate(-90 60 60)" style="transition:stroke-dashoffset .8s ease;"/>
-                <text x="60" y="56" text-anchor="middle" font-size="22" font-weight="800" fill="var(--text)">8.2%</text>
-                <text x="60" y="70" text-anchor="middle" font-size="9" fill="var(--text-muted)">573 leads</text>
-              </svg>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
-              <div style="display:flex;justify-content:space-between;font-size:11px;">
-                <span style="color:var(--text-muted)">Leads unicos</span>
-                <span style="font-weight:700;color:var(--success)">6.417 leads</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;font-size:11px;">
-                <span style="color:var(--text-muted)">Duplicados</span>
-                <span style="font-weight:700;color:var(--text-muted)">573 leads</span>
-              </div>
-              <div style="margin-top:6px;padding:8px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--text-muted);">
-                <strong style="color:var(--success);">Excelente:</strong> abaixo de 10%. Segmentacao das campanhas esta saudavel.
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /QUALIDADE ROW -->
-
-        <!-- PROPENSAO POR CANAL -->
-        <div class="tatica-card" style="margin-bottom:20px;">
-          <div class="tatica-card-title">Distribuicao de Propensao por Canal</div>
-          <div class="tatica-card-sub" style="margin-bottom:16px;">Qual canal traz leads mais quentes? Alta (vermelho) — Media (amarelo) — Baixa (cinza)</div>
-          <div id="prop-canal-list"></div>
-          <div style="display:flex;gap:16px;margin-top:10px;padding-top:12px;border-top:1px solid var(--border);">
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;"><div style="width:10px;height:10px;border-radius:2px;background:#ef4444;"></div> Alta propensao</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;"><div style="width:10px;height:10px;border-radius:2px;background:#f59e0b;"></div> Media propensao</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;"><div style="width:10px;height:10px;border-radius:2px;background:#9ca3af;"></div> Baixa propensao</div>
+          <div class="analytics-card">
+            <div class="analytics-title">HHI Geografico — Concentracao por Estado</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px;">Distribuicao geografica dos leads — estados dominantes elevam o HHI</div>
+            <div id="hhi-geo-bars"></div>
+            <div id="hhi-geo-marker" style="font-size:11px;margin-top:6px;"></div>
           </div>
         </div>
 
-        <!-- HEATMAP -->
-        <div class="tatica-card" style="margin-bottom:20px;">
-          <div class="tatica-card-title">Heatmap de Captacao — Hora x Dia da Semana</div>
-          <div class="tatica-card-sub" style="margin-bottom:14px;">Quando chegam mais leads. Cores mais intensas = maior volume. Use para definir janela ideal de acionamento.</div>
-          <div class="heatmap-wrap">
-            <div id="heatmap-container"></div>
+        <!-- PROPENSAO + HEATMAP -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Distribuicao de Propensao por Canal</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Alta / Media / Baixa propensao de compra por origem</div>
+            <div id="prop-canal-chart"></div>
           </div>
-          <div style="display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-top:10px;font-size:10px;color:var(--text-muted);">
-            <span>Menos</span>
-            <div style="display:flex;gap:2px;">
-              <div style="width:10px;height:10px;border-radius:2px;background:rgba(124,58,237,0.08);"></div>
-              <div style="width:10px;height:10px;border-radius:2px;background:rgba(124,58,237,0.25);"></div>
-              <div style="width:10px;height:10px;border-radius:2px;background:rgba(124,58,237,0.45);"></div>
-              <div style="width:10px;height:10px;border-radius:2px;background:rgba(124,58,237,0.65);"></div>
-              <div style="width:10px;height:10px;border-radius:2px;background:rgba(124,58,237,0.90);"></div>
-            </div>
-            <span>Mais</span>
+          <div class="analytics-card">
+            <div class="analytics-title">Heatmap Horario — Melhor Momento para Contato</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Taxa media de resposta por dia da semana e hora</div>
+            <div id="heatmap-grid"></div>
           </div>
         </div>
 
         <!-- LVR + CPL ROW -->
-        <div class="tatica-2col">
-
-          <!-- LVR -->
-          <div class="tatica-card">
-            <div class="tatica-card-title">Lead Velocity Rate (LVR)</div>
-            <div class="tatica-card-sub">Taxa de crescimento MoM de leads qualificados. Metrica preditiva de receita futura.</div>
-            <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px;">
-              <div style="font-size:32px;font-weight:800;color:var(--success)">+18%</div>
-              <div style="font-size:12px;color:var(--text-muted)">vs mes anterior</div>
-            </div>
-            <div style="display:flex;align-items:flex-end;gap:6px;height:100px;margin-bottom:8px;" id="lvr-chart"></div>
-            <div style="font-size:11px;color:var(--text-muted);padding:8px;background:var(--bg);border-radius:8px;">
-              <strong style="color:var(--success);">Sinal positivo:</strong> LVR acima de 0% por 4 meses consecutivos indica pipeline saudavel e crescente.
-            </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Lead Velocity Rate (LVR) — Ultimos 6 Meses</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Crescimento MoM de leads qualificados. Positivo = aceleracao, negativo = desaceleracao</div>
+            <div id="lvr-chart"></div>
           </div>
-
-          <!-- CPL POR CANAL -->
-          <div class="tatica-card">
-            <div class="tatica-card-title">CPL por Canal</div>
-            <div class="tatica-card-sub">Custo por lead captado vs custo por lead com propensao Alta. O canal mais barato nem sempre e o mais eficiente.</div>
-            <div id="cpl-list" style="margin-bottom:8px;"></div>
-            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);padding-top:8px;border-top:1px solid var(--border);">
-              <div style="display:flex;align-items:center;gap:5px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--primary);opacity:.5;"></div>CPL Geral</div>
-              <div style="display:flex;align-items:center;gap:5px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--primary);"></div>CPL Qualificado</div>
-            </div>
+          <div class="analytics-card">
+            <div class="analytics-title">CPL por Canal — Custo por Lead</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">CPL absoluto vs CPL qualificado (valor real apos enriquecimento)</div>
+            <div id="cpl-chart"></div>
           </div>
+        </div>
 
-        </div><!-- /LVR+CPL ROW -->
+        <!-- LQI + DUPLICATAS -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Lead Quality Index (LQI)</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Score composto: propensao + dados completos + canal. Escala 0-100</div>
+            <div id="lqi-chart"></div>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">Taxa de Duplicatas por Canal</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">% de leads duplicados identificados na base por origem</div>
+            <div id="dup-chart"></div>
+          </div>
+        </div>
 
       </div><!-- /page-tatica -->
 
       <!-- ── INTEGRACOES ── -->
       <div class="page" id="page-integracoes">
-
         <div class="section-header">
-          <div>
-            <div class="section-title">Integracoes</div>
-            <div class="section-sub">Conecte suas fontes de leads e acompanhe a captacao ao vivo</div>
-          </div>
-          <button class="btn btn-primary" onclick="showNotification('Solicitacao de nova integracao enviada para a InForge.')">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Solicitar Integracao
-          </button>
+          <div><div class="section-title">Integracoes</div><div class="section-sub">Conecte suas fontes de leads e acompanhe ao vivo</div></div>
         </div>
-
-        <!-- STATS -->
-        <div class="stats-row" style="margin-bottom:28px;">
-          <div class="stat-card">
-            <div class="stat-label">Leads Hoje</div>
-            <div class="stat-value" id="feed-total-hoje">247</div>
-            <div class="stat-delta" style="color:var(--success);">+18% vs ontem</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;" id="integ-status-grid"></div>
+        <div class="analytics-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div><div class="analytics-title">Feed de Leads ao Vivo</div><div style="font-size:11px;color:var(--text-muted);">Entradas em tempo real de todas as plataformas conectadas</div></div>
+            <div style="display:flex;gap:8px;">
+              <button onclick="toggleFeedPausa()" id="btn-pausa" style="font-size:11px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-family:inherit;">Pausar</button>
+              <button onclick="limparFeed()" style="font-size:11px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-family:inherit;">Limpar</button>
+            </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Plataformas Ativas</div>
-            <div class="stat-value" style="color:var(--success);">8</div>
-            <div class="stat-delta">de 12 disponiveis</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Melhor Canal</div>
-            <div class="stat-value" style="font-size:18px;line-height:1.4;" id="feed-melhor-canal">Instagram</div>
-            <div class="stat-delta"><span id="feed-melhor-cnt">42</span> leads hoje</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Ultimo Lead</div>
-            <div class="stat-value" style="font-size:18px;line-height:1.4;" id="feed-ultimo-tempo">agora</div>
-            <div class="stat-delta" id="feed-ultimo-plat">Instagram</div>
+          <div id="feed-list" style="display:flex;flex-direction:column;gap:6px;max-height:420px;overflow-y:auto;"></div>
+          <div style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);">
+            <span>Total capturado: <b id="feed-total" style="color:var(--text);">0</b></span>
+            <span>Qualificados: <b id="feed-qual" style="color:var(--success);">0</b></span>
+            <span>Em processamento: <b id="feed-proc" style="color:var(--warning);">0</b></span>
           </div>
         </div>
-
-        <!-- PLATAFORMAS CONECTADAS -->
-        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:12px;">Plataformas Conectadas</div>
-        <div class="integr-grid">
-
-          <!-- Instagram -->
-          <div class="integr-card connected">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:rgba(225,48,108,0.12);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#e1306c" stroke="none"/></svg>
-              </div>
-              <div><div class="integr-name">Instagram</div><div class="integr-sub">Meta — Feed e Stories</div></div>
-            </div>
-            <div class="integr-status"><div class="status-dot dot-on"></div><span style="color:var(--success);font-weight:600;">Conectado</span></div>
-            <div class="integr-count" id="feed-cnt-instagram">42</div>
-            <div class="integr-count-label">leads hoje</div>
-            <button class="integr-btn integr-btn-off" onclick="desconectarPlat(this,'Instagram')">Desconectar</button>
-          </div>
-
-          <!-- Facebook -->
-          <div class="integr-card connected">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:rgba(24,119,242,0.12);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877f2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-              </div>
-              <div><div class="integr-name">Facebook</div><div class="integr-sub">Meta — Lead Ads</div></div>
-            </div>
-            <div class="integr-status"><div class="status-dot dot-on"></div><span style="color:var(--success);font-weight:600;">Conectado</span></div>
-            <div class="integr-count" id="feed-cnt-facebook">38</div>
-            <div class="integr-count-label">leads hoje</div>
-            <button class="integr-btn integr-btn-off" onclick="desconectarPlat(this,'Facebook')">Desconectar</button>
-          </div>
-
-          <!-- Google Ads -->
-          <div class="integr-card connected">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:rgba(66,133,244,0.12);">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M21.35 11.1H12v2.9h5.35C17 16.2 14.9 18 12 18a6 6 0 110-12c1.6 0 3 .6 4.1 1.6L18.3 5.4A9.9 9.9 0 0012 3a9 9 0 100 18c5 0 9-3.6 9-9 0-.6-.1-1.2-.2-1.8" fill="#4285f4"/></svg>
-              </div>
-              <div><div class="integr-name">Google Ads</div><div class="integr-sub">Search e Display</div></div>
-            </div>
-            <div class="integr-status"><div class="status-dot dot-on"></div><span style="color:var(--success);font-weight:600;">Conectado</span></div>
-            <div class="integr-count" id="feed-cnt-google">35</div>
-            <div class="integr-count-label">leads hoje</div>
-            <button class="integr-btn integr-btn-off" onclick="desconectarPlat(this,'Google Ads')">Desconectar</button>
-          </div>
-
-          <!-- YouTube -->
-          <div class="integr-card connected">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:rgba(255,0,0,0.10);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff0000"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#fff"/></svg>
-              </div>
-              <div><div class="integr-name">YouTube</div><div class="integr-sub">Formularios de anuncio</div></div>
-            </div>
-            <div class="integr-status"><div class="status-dot dot-on"></div><span style="color:var(--success);font-weight:600;">Conectado</span></div>
-            <div class="integr-count" id="feed-cnt-youtube">29</div>
-            <div class="integr-count-label">leads hoje</div>
-            <button class="integr-btn integr-btn-off" onclick="desconectarPlat(this,'YouTube')">Desconectar</button>
-          </div>
-
-          <!-- Mercado Livre -->
-          <div class="integr-card connected">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:rgba(255,230,0,0.2);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2"><path d="M6 2l6 4 6-4"/><path d="M2 7h20v13a2 2 0 01-2 2H4a2 2 0 01-2-2V7z"/><line x1="12" y1="12" x2="12" y2="19"/><line x1="9" y1="15.5" x2="15" y2="15.5"/></svg>
-              </div>
-              <div><div class="integr-name">Mercado Livre</div><div class="integr-sub">Perguntas e contatos</div></div>
-            </div>
-            <div class="integr-status"><div class="status-dot dot-on"></div><span style="color:var(--success);font-weight:600;">Conectado</span></div>
-            <div class="integr-count" id="feed-cnt-mercadolivre">28</div>
-            <div class="integr-count-label">leads hoje</div>
-            <button class="integr-btn integr-btn-off" onclick="desconectarPlat(this,'Mercado Livre')">Desconectar</button>
-          </div>
-
-          <!-- Mercado Cars -->
-          <div class="integr-card connected">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:rgba(0,166,80,0.12);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00a650" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V9l3-5h14l3 5v6a2 2 0 01-2 2h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
-              </div>
-              <div><div class="integr-name">Mercado Cars</div><div class="integr-sub">Interessados em veiculos</div></div>
-            </div>
-            <div class="integr-status"><div class="status-dot dot-on"></div><span style="color:var(--success);font-weight:600;">Conectado</span></div>
-            <div class="integr-count" id="feed-cnt-mercadocar">22</div>
-            <div class="integr-count-label">leads hoje</div>
-            <button class="integr-btn integr-btn-off" onclick="desconectarPlat(this,'Mercado Cars')">Desconectar</button>
-          </div>
-
-          <!-- WhatsApp Business -->
-          <div class="integr-card connected">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:rgba(37,211,102,0.12);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              </div>
-              <div><div class="integr-name">WhatsApp Business</div><div class="integr-sub">API oficial — mensagens</div></div>
-            </div>
-            <div class="integr-status"><div class="status-dot dot-on"></div><span style="color:var(--success);font-weight:600;">Conectado</span></div>
-            <div class="integr-count" id="feed-cnt-whatsapp">31</div>
-            <div class="integr-count-label">leads hoje</div>
-            <button class="integr-btn integr-btn-off" onclick="desconectarPlat(this,'WhatsApp Business')">Desconectar</button>
-          </div>
-
-          <!-- Website / Forms -->
-          <div class="integr-card connected">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:rgba(124,58,237,0.12);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-              </div>
-              <div><div class="integr-name">Website / Forms</div><div class="integr-sub">Formularios e landing pages</div></div>
-            </div>
-            <div class="integr-status"><div class="status-dot dot-on"></div><span style="color:var(--success);font-weight:600;">Conectado</span></div>
-            <div class="integr-count" id="feed-cnt-website">22</div>
-            <div class="integr-count-label">leads hoje</div>
-            <button class="integr-btn integr-btn-off" onclick="desconectarPlat(this,'Website/Forms')">Desconectar</button>
-          </div>
-
-        </div>
-
-        <!-- FEED AO VIVO -->
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);">Feed ao Vivo</div>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <button class="btn btn-outline btn-sm" id="btn-pausa-feed" onclick="toggleFeedPausa()">Pausar</button>
-            <button class="btn btn-outline btn-sm" onclick="limparFeed()">Limpar</button>
-          </div>
-        </div>
-        <div class="feed-wrap" style="margin-bottom:28px;">
-          <div class="feed-header">
-            <div class="feed-pulse" id="feed-pulse"></div>
-            <div class="feed-title">Captacao em tempo real</div>
-            <span class="badge badge-success" id="feed-badge-total">247 leads hoje</span>
-          </div>
-          <div class="feed-list" id="feed-list">
-            <div style="text-align:center;padding:28px;font-size:13px;color:var(--text-muted);" id="feed-empty">Aguardando novos leads...</div>
-          </div>
-        </div>
-
-        <!-- DISPONIVEIS PARA CONECTAR -->
-        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:12px;">Disponiveis para Conectar</div>
-        <div class="avail-grid">
-
-          <div class="avail-card">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:#f3f4f6;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#0077b5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-              </div>
-              <div><div class="integr-name">LinkedIn</div><div class="integr-sub">Lead Gen Forms</div></div>
-            </div>
-            <span class="badge badge-muted">Disponivel</span>
-            <button class="integr-btn integr-btn-on" onclick="conectarPlat(this,'LinkedIn')">Conectar</button>
-          </div>
-
-          <div class="avail-card">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:#f3f4f6;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#010101"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
-              </div>
-              <div><div class="integr-name">TikTok</div><div class="integr-sub">Lead Ads</div></div>
-            </div>
-            <span class="badge badge-muted">Disponivel</span>
-            <button class="integr-btn integr-btn-on" onclick="conectarPlat(this,'TikTok')">Conectar</button>
-          </div>
-
-          <div class="avail-card">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:#f3f4f6;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#69c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="4"/><text x="6" y="16" font-size="10" font-weight="900" fill="#69c" stroke="none">OLX</text></svg>
-              </div>
-              <div><div class="integr-name">OLX</div><div class="integr-sub">Anuncios classicos</div></div>
-            </div>
-            <span class="badge badge-muted">Disponivel</span>
-            <button class="integr-btn integr-btn-on" onclick="conectarPlat(this,'OLX')">Conectar</button>
-          </div>
-
-          <div class="avail-card">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="integr-icon" style="background:#f3f4f6;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              </div>
-              <div><div class="integr-name">X (Twitter)</div><div class="integr-sub">Lead Generation</div></div>
-            </div>
-            <span class="badge badge-muted">Disponivel</span>
-            <button class="integr-btn integr-btn-on" onclick="conectarPlat(this,'X (Twitter)')">Conectar</button>
-          </div>
-
-        </div>
-
       </div><!-- /page-integracoes -->
+
+      <!-- ── FUNIL INTELIGENTE ── -->
+      <div class="page" id="page-funil">
+        <div class="section-header">
+          <div><div class="section-title">Funil Inteligente</div><div class="section-sub">MQL/SQL, Time-to-Convert, Lead Decay e Dropout Analysis</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+          <div class="stat-card"><div class="stat-label">Leads Totais</div><div class="stat-value">8.240</div><div class="stat-delta positive">+12% MoM</div></div>
+          <div class="stat-card"><div class="stat-label">MQL Rate</div><div class="stat-value" style="color:var(--cyan)">34,2%</div><div class="stat-delta positive">+2,1pp</div></div>
+          <div class="stat-card"><div class="stat-label">SQL Rate</div><div class="stat-value" style="color:var(--primary)">18,7%</div><div class="stat-delta positive">+0,8pp</div></div>
+          <div class="stat-card"><div class="stat-label">Taxa de Fechamento</div><div class="stat-value" style="color:var(--success)">9,3%</div><div class="stat-delta negative">-0,4pp</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Funil MQL → SQL → Fechamento</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;" id="funil-bars"></div>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">Time-to-Convert por Canal (dias)</div>
+            <div id="ttc-bars" style="display:flex;flex-direction:column;gap:8px;margin-top:12px;"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Lead Decay Rate — Curva de Esfriamento</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">% de leads ainda ativos apos N dias sem contato</div>
+            <svg viewBox="0 0 380 160" style="width:100%;height:160px;">
+              <line x1="40" y1="10" x2="40" y2="140" stroke="#2a3a55" stroke-width="1"/>
+              <line x1="40" y1="140" x2="375" y2="140" stroke="#2a3a55" stroke-width="1"/>
+              <text x="38" y="14" text-anchor="end" fill="#6b7fa0" font-size="9">100%</text>
+              <text x="38" y="50" text-anchor="end" fill="#6b7fa0" font-size="9">75%</text>
+              <text x="38" y="87" text-anchor="end" fill="#6b7fa0" font-size="9">50%</text>
+              <text x="38" y="123" text-anchor="end" fill="#6b7fa0" font-size="9">25%</text>
+              <text x="70" y="153" text-anchor="middle" fill="#6b7fa0" font-size="9">D+0</text>
+              <text x="140" y="153" text-anchor="middle" fill="#6b7fa0" font-size="9">D+7</text>
+              <text x="210" y="153" text-anchor="middle" fill="#6b7fa0" font-size="9">D+14</text>
+              <text x="280" y="153" text-anchor="middle" fill="#6b7fa0" font-size="9">D+30</text>
+              <text x="350" y="153" text-anchor="middle" fill="#6b7fa0" font-size="9">D+60</text>
+              <polyline points="70,14 140,38 210,62 280,98 350,122" fill="none" stroke="#e1306c" stroke-width="2" stroke-linecap="round"/>
+              <polyline points="70,14 140,44 210,72 280,108 350,132" fill="none" stroke="#4285f4" stroke-width="2" stroke-linecap="round" stroke-dasharray="5,3"/>
+              <polyline points="70,14 140,32 210,50 280,76 350,98" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-dasharray="3,3"/>
+            </svg>
+            <div style="display:flex;gap:12px;margin-top:4px;font-size:10px;color:var(--text-muted);">
+              <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:2px;background:#e1306c;display:inline-block;"></span>Instagram</span>
+              <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:2px;background:#4285f4;display:inline-block;"></span>Google</span>
+              <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:2px;background:#10b981;display:inline-block;"></span>Organico</span>
+            </div>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">Dropout Analysis — Onde o Lead Para</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">% de abandono por etapa do funil</div>
+            <div id="dropout-bars" style="display:flex;flex-direction:column;gap:10px;"></div>
+          </div>
+        </div>
+      </div><!-- /page-funil -->
+
+      <!-- ── SCORE & PERFIL ── -->
+      <div class="page" id="page-score">
+        <div class="section-header">
+          <div><div class="section-title">Score &amp; Perfil</div><div class="section-sub">Lead Scoring Preditivo, ICP Score, RFM e Clustering de Leads</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+          <div class="stat-card"><div class="stat-label">Score Medio</div><div class="stat-value" style="color:var(--primary)">62,4</div><div class="stat-delta positive">+4,1 pts</div></div>
+          <div class="stat-card"><div class="stat-label">Leads Hot (>80)</div><div class="stat-value" style="color:var(--success)">412</div><div class="stat-delta positive">+38 este mes</div></div>
+          <div class="stat-card"><div class="stat-label">ICP Match Alto</div><div class="stat-value" style="color:var(--cyan)">28,3%</div><div class="stat-delta positive">+1,8pp</div></div>
+          <div class="stat-card"><div class="stat-label">Clusters</div><div class="stat-value">5</div><div class="stat-delta neutral">Estavel</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:16px;">
+          <div class="analytics-card" style="padding:0;">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);font-weight:700;font-size:13px;">Top Leads por Score Preditivo</div>
+            <table style="width:100%;border-collapse:collapse;font-size:12px;">
+              <thead><tr>
+                <th style="padding:8px 14px;text-align:left;color:var(--text-muted);font-weight:600;font-size:11px;border-bottom:1px solid var(--border);">Lead</th>
+                <th style="padding:8px 14px;text-align:center;color:var(--text-muted);font-weight:600;font-size:11px;border-bottom:1px solid var(--border);">Score</th>
+                <th style="padding:8px 14px;text-align:center;color:var(--text-muted);font-weight:600;font-size:11px;border-bottom:1px solid var(--border);">ICP</th>
+                <th style="padding:8px 14px;text-align:center;color:var(--text-muted);font-weight:600;font-size:11px;border-bottom:1px solid var(--border);">Cluster</th>
+                <th style="padding:8px 14px;text-align:center;color:var(--text-muted);font-weight:600;font-size:11px;border-bottom:1px solid var(--border);">P(Conv.)</th>
+              </tr></thead>
+              <tbody id="score-table-body"></tbody>
+            </table>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">Matriz RFM — Segmentacao</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Recencia × Frequencia × Potencial Monetario</div>
+            <div id="rfm-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Clustering de Leads (K-Means — 5 grupos)</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">Agrupamento por comportamento sem segmentacao manual</div>
+            <svg viewBox="0 0 340 200" style="width:100%;height:200px;" id="cluster-svg">
+              <line x1="20" y1="10" x2="20" y2="185" stroke="#2a3a55" stroke-width="1"/>
+              <line x1="20" y1="185" x2="335" y2="185" stroke="#2a3a55" stroke-width="1"/>
+              <text x="18" y="14" text-anchor="end" fill="#6b7fa0" font-size="8">Alta</text>
+              <text x="22" y="196" fill="#6b7fa0" font-size="8">Baixo</text>
+              <text x="300" y="196" fill="#6b7fa0" font-size="8">Alto</text>
+              <text x="178" y="200" text-anchor="middle" fill="#6b7fa0" font-size="8">Potencial →</text>
+            </svg>
+            <div id="cluster-legend" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;font-size:10px;"></div>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">ICP Score — Radar de Perfil Ideal</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">Similaridade media da base com o perfil ideal de cliente</div>
+            <svg viewBox="0 0 280 200" style="width:100%;height:200px;" id="icp-svg"></svg>
+            <div style="text-align:center;font-size:11px;color:var(--text-muted);">ICP Match medio: <b style="color:var(--cyan)">68%</b></div>
+          </div>
+        </div>
+      </div><!-- /page-score -->
+
+      <!-- ── ROI & ATRIBUICAO ── -->
+      <div class="page" id="page-roi">
+        <div class="section-header">
+          <div><div class="section-title">ROI &amp; Atribuicao</div><div class="section-sub">CAC vs LTV, ROAS, Payback Period e Attribution Modeling</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+          <div class="stat-card"><div class="stat-label">LTV Medio</div><div class="stat-value" style="color:var(--success)">R$4.820</div><div class="stat-delta positive">+8% YoY</div></div>
+          <div class="stat-card"><div class="stat-label">CAC Medio</div><div class="stat-value" style="color:var(--warning)">R$890</div><div class="stat-delta negative">+12%</div></div>
+          <div class="stat-card"><div class="stat-label">LTV/CAC</div><div class="stat-value" style="color:var(--cyan)">5,4x</div><div class="stat-delta positive">Meta: >3x</div></div>
+          <div class="stat-card"><div class="stat-label">ROAS Medio</div><div class="stat-value" style="color:var(--primary)">3,8x</div><div class="stat-delta neutral">Estavel</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">CAC vs LTV por Segmento</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">Bolha = volume de clientes. Linha verde = LTV/CAC = 3x</div>
+            <svg viewBox="0 0 340 200" style="width:100%;height:200px;" id="cac-ltv-svg">
+              <line x1="40" y1="10" x2="40" y2="175" stroke="#2a3a55" stroke-width="1"/>
+              <line x1="40" y1="175" x2="330" y2="175" stroke="#2a3a55" stroke-width="1"/>
+              <line x1="40" y1="175" x2="330" y2="15" stroke="#10b981" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+              <text x="240" y="30" fill="#10b981" font-size="9">LTV=3xCAC</text>
+              <text x="38" y="14" text-anchor="end" fill="#6b7fa0" font-size="8">LTV</text>
+              <text x="335" y="178" fill="#6b7fa0" font-size="8">CAC</text>
+            </svg>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">ROAS por Canal de Aquisicao</div>
+            <div id="roas-bars" style="display:flex;flex-direction:column;gap:8px;margin-top:12px;"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Payback Period por Segmento (meses)</div>
+            <div id="payback-bars" style="display:flex;flex-direction:column;gap:8px;margin-top:8px;"></div>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">Attribution Modeling</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Como cada modelo distribui o credito de conversao por canal</div>
+            <div id="attribution-grid" style="display:flex;flex-direction:column;gap:12px;"></div>
+          </div>
+        </div>
+      </div><!-- /page-roi -->
+
+      <!-- ── COMPORTAMENTO & MERCADO ── -->
+      <div class="page" id="page-comportamento">
+        <div class="section-header">
+          <div><div class="section-title">Comportamento &amp; Mercado</div><div class="section-sub">Engagement Score, Sazonalidade, Jornada do Lead e Penetracao de Mercado</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+          <div class="stat-card"><div class="stat-label">Engagement Medio</div><div class="stat-value" style="color:var(--cyan)">71,2</div><div class="stat-delta positive">+3,4 pts</div></div>
+          <div class="stat-card"><div class="stat-label">Altamente Engajados</div><div class="stat-value" style="color:var(--success)">1.842</div><div class="stat-delta positive">22,4%</div></div>
+          <div class="stat-card"><div class="stat-label">Melhor Dia</div><div class="stat-value" style="font-size:18px;">Terca</div><div class="stat-delta neutral">Resp: 38%</div></div>
+          <div class="stat-card"><div class="stat-label">Penetracao Media</div><div class="stat-value" style="color:var(--primary)">14,7%</div><div class="stat-delta positive">+2,1pp</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Sazonalidade — Heatmap Semanal x Horario</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Taxa media de abertura/resposta por dia e hora</div>
+            <div id="season-heatmap"></div>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">Distribuicao de Engagement Score</div>
+            <div id="engagement-dist" style="display:flex;flex-direction:column;gap:6px;margin-top:10px;"></div>
+            <div style="margin-top:12px;padding:8px 12px;background:rgba(99,179,237,0.08);border:1px solid rgba(99,179,237,0.2);border-radius:8px;font-size:11px;color:var(--text-muted);">
+              <b style="color:var(--cyan)">Insight:</b> 34% da base esta na faixa 40-60 — potencial de reativacao com nurturing
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="analytics-card">
+            <div class="analytics-title">Jornada do Lead — Touchpoints ate Conversao</div>
+            <div id="journey-steps" style="display:flex;flex-direction:column;gap:0;margin-top:10px;"></div>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-title">Penetracao de Mercado por Estado</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">LQ > 1 = acima da media nacional</div>
+            <div id="penetracao-bars" style="display:flex;flex-direction:column;gap:8px;"></div>
+          </div>
+        </div>
+      </div><!-- /page-comportamento -->
 
     </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /app -->
 
-<!-- NOTIFICATION -->
-<div class="notification" id="notification">
-  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-  <span id="notification-text"></span>
-</div>
-
 <script>
-  // ── THEME ──
-  (function(){
-    const s = localStorage.getItem('inforge-leads-theme');
-    if(s==='dark'){ document.documentElement.setAttribute('data-theme','dark'); document.getElementById('icon-dark').style.display='none'; document.getElementById('icon-light').style.display=''; }
-  })();
-  function toggleTheme(){
-    const d = document.documentElement.getAttribute('data-theme')==='dark';
-    if(d){ document.documentElement.removeAttribute('data-theme'); document.getElementById('icon-dark').style.display=''; document.getElementById('icon-light').style.display='none'; localStorage.setItem('inforge-leads-theme','light'); }
-    else{ document.documentElement.setAttribute('data-theme','dark'); document.getElementById('icon-dark').style.display='none'; document.getElementById('icon-light').style.display=''; localStorage.setItem('inforge-leads-theme','dark'); }
-  }
-
   // ── LOGIN ──
   const accounts = {
     cliente: { name: 'Empresa Exemplo', initials: 'EE', plan: 'Plano Volume' },
@@ -2374,895 +2118,774 @@
     integracoes: ['Integracoes','Conecte suas fontes de leads e acompanhe ao vivo'],
     tatica:   ['Painel Tatico','Concentracao, qualidade, velocidade e eficiencia'],
     expansao: ['Expansao Geografica','Onde voce e forte, onde crescer e por qual caminho entrar'],
+    funil:    ['Funil Inteligente','MQL/SQL, Time-to-Convert, Decay Rate e Dropout Analysis'],
+    score:    ['Score & Perfil','Lead Scoring Preditivo, ICP, RFM e Clustering de Leads'],
+    roi:      ['ROI & Atribuicao','CAC vs LTV, ROAS, Payback Period e Attribution Modeling'],
+    comportamento: ['Comportamento & Mercado','Engagement Score, Sazonalidade, Jornada e Penetracao'],
   };
   function showPage(name){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    const p = document.getElementById('page-'+name);
-    if(p) p.classList.add('active');
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    const page = document.getElementById('page-'+name);
+    if(page) page.classList.add('active');
     const nav = document.getElementById('nav-'+name);
     if(nav) nav.classList.add('active');
-    else document.getElementById('nav-dashboard').classList.add('active');
-    const t = titles[name]||['',''];
+    const t = titles[name] || [name,''];
     document.getElementById('topbar-title').innerHTML = t[0]+' <span>'+t[1]+'</span>';
     window.scrollTo && window.scrollTo(0,0);
     if(name==='localizacao') setTimeout(initMapColors, 60);
     if(name==='integracoes') setTimeout(iniciarFeedAoVivo, 300);
     else pararFeedAoVivo();
-    if(name==='tatica')   setTimeout(renderTatica,   80);
-    if(name==='expansao') setTimeout(renderExpansao, 80);
+    if(name==='tatica')        setTimeout(renderTatica,       80);
+    if(name==='expansao')      setTimeout(renderExpansao,     80);
+    if(name==='funil')         setTimeout(renderFunil,        80);
+    if(name==='score')         setTimeout(renderScore,        80);
+    if(name==='roi')           setTimeout(renderRoi,          80);
+    if(name==='comportamento') setTimeout(renderComportamento,80);
   }
+
+  // ── MAP ──
   const mapaLeadCounts = {SP:1823,RJ:892,MG:641,RS:412,PR:387,BA:298,SC:276,GO:198,CE:187,
     ES:176,PE:156,DF:143,MS:134,MT:108,MA:96,PA:87,PI:72,RN:63,PB:54,TO:48,AL:38,
-    AM:34,SE:29,RO:22,RR:12,AC:11,AP:8};
-
+    AM:34,RO:28,SE:24,AC:18,AP:14,RR:10};
+  const ibgeMap = {AC:'12',AL:'27',AM:'13',AP:'16',BA:'29',CE:'23',DF:'53',ES:'32',GO:'52',
+    MA:'21',MG:'31',MS:'50',MT:'51',PA:'15',PB:'25',PE:'26',PI:'22',PR:'41',
+    RJ:'33',RN:'24',RO:'11',RR:'14',RS:'43',SC:'42',SE:'28',SP:'35',TO:'17'};
+  let currentStateUF = null;
+  let mapSvg = null;
   function initMapColors(){
-    const container = document.getElementById('brazil-map-d3');
+    if(mapSvg) return;
+    const container = document.getElementById('map-container');
     if(!container) return;
-    // Se já foi renderizado, só atualiza cores
-    if(container.querySelector('svg')){
-      atualizarCoresMapa(); return;
-    }
-    renderBrazilD3Map();
-  }
-
-  function renderBrazilD3Map(){
-    if(typeof d3 === 'undefined') return;
-    const container = document.getElementById('brazil-map-d3');
-    if(!container) return;
-    container.innerHTML = '<div style="text-align:center;padding:40px 0;font-size:12px;color:var(--text-muted);">Carregando mapa...</div>';
-
-    const w = container.offsetWidth || 580;
-    const h = Math.min(Math.round(w * 0.95), 490);
-    const max = 1823;
-
+    const max = Math.max(...Object.values(mapaLeadCounts));
     fetch('https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson')
-      .then(r => r.json())
-      .then(geo => {
-        container.innerHTML = '';
-        const svgEl = d3.select(container).append('svg')
-          .attr('id','brazil-svg-map-d3')
-          .attr('viewBox',`0 0 ${w} ${h}`)
-          .style('width','100%').style('max-height','490px').style('display','block');
-
-        const proj = d3.geoMercator().fitSize([w, h], geo);
-        const pathFn = d3.geoPath().projection(proj);
-
-        svgEl.selectAll('g')
-          .data(geo.features)
-          .join('g')
-          .attr('data-estado', d => d.properties.sigla)
-          .attr('data-count', d => mapaLeadCounts[d.properties.sigla]||0)
-          .on('click', function(){ selecionarEstadoD3(this); })
-          .on('mouseenter', function(){
-            if(!this.classList.contains('selecionado'))
-              d3.select(this).select('path').style('opacity','0.75').style('stroke-width','2');
-          })
-          .on('mouseleave', function(){
-            if(!this.classList.contains('selecionado'))
-              d3.select(this).select('path').style('opacity','1').style('stroke-width','1.5');
-          })
-          .each(function(d){
-            const uf = d.properties.sigla;
-            const c = mapaLeadCounts[uf]||0;
-            const op = c ? (Math.max(0.12, Math.min(0.95, (c/max)*0.85+0.10))).toFixed(2) : null;
-            const g = d3.select(this);
-
-            g.append('path')
-              .attr('d', pathFn(d))
-              .style('fill', op ? `rgba(124,58,237,${op})` : '#e5e7eb')
-              .style('stroke','#ffffff').style('stroke-width','1.5')
-              .style('cursor','pointer').style('transition','opacity .15s');
-
-            const [cx,cy] = pathFn.centroid(d);
-            if(!isNaN(cx) && !isNaN(cy)){
-              g.append('text')
-                .attr('x',cx).attr('y',cy)
-                .attr('text-anchor','middle').attr('dominant-baseline','central')
-                .style('font-size','9px').style('font-weight','700').style('pointer-events','none')
-                .style('fill', op && +op>0.52 ? '#fff' : '#374151')
-                .text(uf);
-            }
-          });
-      })
-      .catch(() => {
-        container.innerHTML = '<div style="text-align:center;padding:40px 0;font-size:12px;color:var(--text-muted);">Nao foi possivel carregar o mapa. Verifique sua conexao.</div>';
-      });
-  }
-
-  function atualizarCoresMapa(){
-    const max = 1823;
-    document.querySelectorAll('#brazil-svg-map-d3 g[data-estado]').forEach(g => {
-      const uf = g.dataset.estado;
-      const c = mapaLeadCounts[uf]||0;
-      const path = g.querySelector('path');
-      const txt = g.querySelector('text');
-      if(!c){ if(path) path.style.fill='#e5e7eb'; return; }
-      const op = (Math.max(0.12,Math.min(0.95,(c/max)*0.85+0.10))).toFixed(2);
-      if(path) path.style.fill=`rgba(124,58,237,${op})`;
-      if(txt) txt.style.fill = +op>0.52 ? '#fff' : '#374151';
-    });
-  }
-
-  function selecionarEstadoD3(el){
-    document.querySelectorAll('#brazil-svg-map-d3 g[data-estado]').forEach(e => {
-      e.classList.remove('selecionado');
-      d3.select(e).select('path').style('stroke','#ffffff').style('stroke-width','1.5').style('opacity','1');
-    });
-    el.classList.add('selecionado');
-    d3.select(el).select('path').style('stroke','#ef4444').style('stroke-width','3').style('opacity','1');
-    const estado = el.dataset.estado;
-    estadoSelecionado = estado;
-    const count = parseInt(el.dataset.count)||0;
-    document.getElementById('info-estado-nome').textContent = estadoNomes[estado]||estado;
-    document.getElementById('info-estado-reg').textContent = (estadoRegioes[estado]||'') + ' — ' + estado;
-    document.getElementById('info-estado-count').textContent = count.toLocaleString('pt-BR') + ' leads';
-    document.getElementById('info-estado-pct').textContent = ((count/total)*100).toFixed(1) + '% do total';
-    document.getElementById('estado-info').style.display = '';
-    document.getElementById('btn-ver-municipios').style.display = '';
-    document.querySelectorAll('.rank-row').forEach(r => {
-      r.style.background = r.dataset.estado===estado ? 'var(--primary-light)' : '';
-    });
-  }
-
-  // ── PRODUCT SELECTION ──
-  let selectedProd = null;
-  const infoRecebe = {
-    enriquecimento: `
-      <div class="info-row"><span class="info-row-label">Celular atualizado e formatado</span><svg width="14" height="14" fill="none" stroke="var(--success)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="info-row"><span class="info-row-label">E-mail validado</span><svg width="14" height="14" fill="none" stroke="var(--success)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="info-row"><span class="info-row-label">Propensao: Alta / Media / Baixa</span><svg width="14" height="14" fill="none" stroke="var(--success)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="info-row"><span class="info-row-label">Duplicatas removidas</span><svg width="14" height="14" fill="none" stroke="var(--success)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>`,
-    reativacao: `
-      <div class="info-row"><span class="info-row-label">Celular atual localizado</span><svg width="14" height="14" fill="none" stroke="var(--success)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="info-row"><span class="info-row-label">Potencial de recompra: Alto / Medio / Baixo</span><svg width="14" height="14" fill="none" stroke="var(--success)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="info-row"><span class="info-row-label">Status: Ativo / Inativo / Obito</span><svg width="14" height="14" fill="none" stroke="var(--success)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="info-row"><span class="info-row-label">Contatos sem potencial removidos</span><svg width="14" height="14" fill="none" stroke="var(--success)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>`
-  };
-  const infoColunas = {
-    enriquecimento: `
-      <div class="info-row"><span class="info-row-label">nome</span><span class="badge badge-success" style="font-size:10px;">obrigatorio</span></div>
-      <div class="info-row"><span class="info-row-label">telefone</span><span class="badge badge-success" style="font-size:10px;">obrigatorio</span></div>
-      <div class="info-row"><span class="info-row-label">email</span><span class="badge badge-warning" style="font-size:10px;">recomendado</span></div>
-      <div class="info-row"><span class="info-row-label">cpf / cnpj</span><span class="badge badge-warning" style="font-size:10px;">recomendado</span></div>`,
-    reativacao: `
-      <div class="info-row"><span class="info-row-label">nome</span><span class="badge badge-success" style="font-size:10px;">obrigatorio</span></div>
-      <div class="info-row"><span class="info-row-label">cpf</span><span class="badge badge-success" style="font-size:10px;">obrigatorio</span></div>
-      <div class="info-row"><span class="info-row-label">telefone antigo</span><span class="badge badge-warning" style="font-size:10px;">recomendado</span></div>
-      <div class="info-row"><span class="info-row-label">data ultima compra</span><span class="badge badge-warning" style="font-size:10px;">recomendado</span></div>`
-  };
-  function selectProd(type, el){
-    selectedProd = type;
-    document.querySelectorAll('.product-card').forEach(c=>c.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('info-recebe').innerHTML = infoRecebe[type];
-    document.getElementById('info-colunas-detail').innerHTML = infoColunas[type];
-  }
-
-  // ── UPLOAD & ENVIO ──
-  function handleFile(input){ if(input.files&&input.files[0]) enviarSolicitacao(input.files[0].name); }
-  function enviarSolicitacao(fname){
-    const prazos = { enriquecimento:{ texto:'2 dias uteis', data:'07/06/2025', step:'Dia 2' }, reativacao:{ texto:'3 dias uteis', data:'08/06/2025', step:'Dia 3' } };
-    const p = prazos[selectedProd||'enriquecimento'];
-    document.getElementById('confirm-prazo-val').textContent = p.texto;
-    document.getElementById('confirm-data-val').textContent = 'Previsao: '+p.data;
-    document.getElementById('confirm-step3-time').textContent = p.step;
-    document.getElementById('step-escolha').style.display = 'none';
-    document.getElementById('step-confirmacao').style.display = '';
-  }
-  function resetNova(){
-    selectedProd = null;
-    document.querySelectorAll('.product-card').forEach(c=>c.classList.remove('selected'));
-    document.getElementById('info-recebe').innerHTML = '<div class="info-row"><span class="info-row-label">Selecione o servico acima</span></div>';
-    document.getElementById('info-colunas-detail').innerHTML = '<div class="info-row"><span class="info-row-label" style="color:var(--text-muted);">Selecione o servico acima</span></div>';
-    document.getElementById('step-escolha').style.display = '';
-    document.getElementById('step-confirmacao').style.display = 'none';
-  }
-  function irParaDashboard(){ resetNova(); showPage('dashboard'); showNotification('Solicitacao adicionada. Voce sera avisado quando estiver pronta.'); }
-
-  // ── DRAG & DROP ──
-  const zone = document.getElementById('upload-zone');
-  zone.addEventListener('dragover', e=>{ e.preventDefault(); zone.classList.add('drag-over'); });
-  zone.addEventListener('dragleave', ()=>zone.classList.remove('drag-over'));
-  zone.addEventListener('drop', e=>{ e.preventDefault(); zone.classList.remove('drag-over'); const f=e.dataTransfer.files[0]; if(f) enviarSolicitacao(f.name); });
-
-  // ── MAPA ──
-  const estadoNomes = {
-    SP:'Sao Paulo',RJ:'Rio de Janeiro',MG:'Minas Gerais',RS:'R.G. do Sul',PR:'Parana',
-    BA:'Bahia',SC:'Santa Catarina',GO:'Goias',CE:'Ceara',PE:'Pernambuco',DF:'Distrito Federal',
-    ES:'Espirito Santo',MA:'Maranhao',MS:'Mato G. do Sul',MT:'Mato Grosso',PA:'Para',
-    PI:'Piaui',RN:'R.G. Norte',AL:'Alagoas',SE:'Sergipe',PB:'Paraiba',TO:'Tocantins',
-    RO:'Rondonia',AM:'Amazonas',AC:'Acre',RR:'Roraima',AP:'Amapa',
-  };
-  const estadoRegioes = {
-    SP:'Sudeste',RJ:'Sudeste',MG:'Sudeste',ES:'Sudeste',
-    RS:'Sul',PR:'Sul',SC:'Sul',
-    GO:'Centro-Oeste',DF:'Centro-Oeste',MS:'Centro-Oeste',MT:'Centro-Oeste',
-    BA:'Nordeste',CE:'Nordeste',PE:'Nordeste',MA:'Nordeste',PI:'Nordeste',RN:'Nordeste',PB:'Nordeste',AL:'Nordeste',SE:'Nordeste',
-    PA:'Norte',TO:'Norte',AM:'Norte',RO:'Norte',AC:'Norte',RR:'Norte',AP:'Norte',
-  };
-  const total = 6990;
-  function selecionarEstado(el){
-    document.querySelectorAll('#brazil-svg-map g[data-estado]').forEach(e=>e.classList.remove('selecionado'));
-    el.classList.add('selecionado');
-    const estado = el.dataset.estado;
-    const count = parseInt(el.dataset.count);
-    document.getElementById('info-estado-nome').textContent = estadoNomes[estado]||estado;
-    document.getElementById('info-estado-reg').textContent = (estadoRegioes[estado]||'') + ' — ' + estado;
-    document.getElementById('info-estado-count').textContent = count.toLocaleString('pt-BR') + ' leads';
-    document.getElementById('info-estado-pct').textContent = ((count/total)*100).toFixed(1) + '% do total';
-    document.getElementById('estado-info').style.display = '';
-    document.querySelectorAll('.rank-row').forEach(r=>{
-      r.style.background = r.dataset.estado===estado ? 'var(--primary-light)' : '';
-    });
-  }
-  function atualizarMapa(){ atualizarCoresMapa(); showNotification('Mapa atualizado com o filtro selecionado.'); }
-  function selecionarEstado(el){ selecionarEstadoD3(el); } // compat
-
-  // ── DRILL-DOWN MUNICIPIOS ──
-  let estadoSelecionado = null;
-  let viewAtual = 'brasil'; // 'brasil' | 'municipios'
-
-  const ibgeCodes = {AC:12,AL:27,AM:13,AP:16,BA:29,CE:23,DF:53,ES:32,GO:52,MA:21,
-    MG:31,MS:50,MT:51,PA:15,PB:25,PE:26,PI:22,PR:41,RJ:33,RN:24,RO:11,RR:14,RS:43,SC:42,SE:28,SP:35,TO:17};
-
-  // Dados demo de cidades (as mais relevantes por estado)
-  const cidadesDestaque = {
-    SP:{'Sao Paulo':892,'Campinas':145,'Guarulhos':98,'Sao Bernardo do Campo':76,'Santo Andre':67,'Ribeirao Preto':58,'Osasco':52},
-    RJ:{'Rio de Janeiro':441,'Niteroi':87,'Nova Iguacu':54,'Duque de Caxias':48,'Sao Goncalo':42},
-    MG:{'Belo Horizonte':287,'Uberlandia':95,'Contagem':63,'Juiz de Fora':54,'Betim':41},
-    RS:{'Porto Alegre':176,'Caxias do Sul':89,'Pelotas':54,'Canoas':42,'Santa Maria':38},
-    PR:{'Curitiba':198,'Londrina':82,'Maringa':67,'Ponta Grossa':43,'Cascavel':38},
-    BA:{'Salvador':156,'Feira de Santana':68,'Vitoria da Conquista':42,'Camacari':28,'Ilheus':22},
-    SC:{'Florianopolis':98,'Joinville':76,'Blumenau':54,'Sao Jose':32,'Chapeco':28},
-    GO:{'Goiania':128,'Aparecida de Goiania':38,'Anapolis':22,'Rio Verde':18,'Luziania':14},
-    CE:{'Fortaleza':132,'Caucaia':24,'Juazeiro do Norte':18,'Maracanau':15,'Sobral':12},
-    PE:{'Recife':98,'Caruaru':28,'Olinda':22,'Petrolina':18,'Paulista':14},
-    DF:{'Brasilia':143},
-    ES:{'Vitoria':98,'Vila Velha':42,'Serra':34,'Cariacica':28,'Linhares':18},
-    MA:{'Sao Luis':62,'Imperatriz':18,'Caxias':12,'Timon':8,'Codó':6},
-    MS:{'Campo Grande':89,'Dourados':24,'Tres Lagoas':14,'Corumba':8},
-    MT:{'Cuiaba':68,'Varzea Grande':22,'Rondonopolis':14,'Sinop':8},
-    PA:{'Belem':54,'Ananindeua':14,'Maraba':10,'Santarem':8},
-    PI:{'Teresina':52,'Parnaiba':12,'Picos':8},
-    RN:{'Natal':42,'Mossoro':14,'Parnamirim':8},
-    PB:{'Joao Pessoa':36,'Campina Grande':14,'Patos':6},
-    TO:{'Palmas':32,'Araguaina':12,'Gurupi':6},
-    AL:{'Maceio':28,'Arapiraca':8,'Palmeira dos Indios':4},
-    SE:{'Aracaju':22,'Nossa Senhora do Socorro':5,'Lagarto':4},
-    AM:{'Manaus':26,'Parintins':5,'Itacoatiara':4},
-    RO:{'Porto Velho':16,'Ji-Parana':5,'Ariquemes':3},
-    RR:{'Boa Vista':10,'Rorainopolis':2},
-    AC:{'Rio Branco':9,'Cruzeiro do Sul':2},
-    AP:{'Macapa':7,'Santana':1}
-  };
-
-  function mockContCidade(nomeMunicipio, sigla){
-    const mapa = cidadesDestaque[sigla]||{};
-    // Busca por match parcial no nome
-    for(const [cidade,v] of Object.entries(mapa)){
-      const partes = cidade.toLowerCase().split(' ');
-      if(partes.some(p => p.length > 3 && nomeMunicipio.toLowerCase().includes(p))) return v;
-    }
-    // Pseudo-aleatório consistente baseado no nome
-    let h = 0;
-    for(let i=0;i<nomeMunicipio.length;i++) h=(h*31+nomeMunicipio.charCodeAt(i))&0xFFFF;
-    const max = mapaLeadCounts[sigla]||50;
-    return Math.round((h%100)/100 * max * 0.15);
-  }
-
-  function drillDownEstado(sigla){
-    if(!sigla) return;
-    const ibgeId = ibgeCodes[sigla];
-    if(!ibgeId || typeof d3 === 'undefined') return;
-
-    viewAtual = 'municipios';
-    const container = document.getElementById('brazil-map-d3');
-    container.innerHTML = '<div style="text-align:center;padding:40px 0;font-size:12px;color:var(--text-muted);">Carregando municípios de ' + (estadoNomes[sigla]||sigla) + '...</div>';
-
-    // Atualiza header
-    document.getElementById('mapa-titulo').textContent = (estadoNomes[sigla]||sigla) + ' — Municipios';
-    document.getElementById('mapa-subtitulo').textContent = 'Clique em um municipio para ver detalhes';
-    document.getElementById('btn-voltar-mapa').style.display = 'flex';
-    document.getElementById('estado-info').style.display = 'none';
-
-    fetch(`https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson/geojs-${ibgeId}-mun.json`)
-      .then(r=>{ if(!r.ok) throw new Error('API error'); return r.json(); })
-      .then(geo=>{
-        container.innerHTML = '';
-        const w = container.offsetWidth||580;
-        const h = Math.min(Math.round(w*0.95),490);
-        const maxCidade = Math.max(...Object.values(cidadesDestaque[sigla]||{1:1}));
-
-        const svgEl = d3.select(container).append('svg')
-          .attr('id','brazil-svg-map-d3')
-          .attr('viewBox',`0 0 ${w} ${h}`)
-          .style('width','100%').style('max-height','490px').style('display','block');
-
+      .then(r=>r.json()).then(geo=>{
+        const w=container.clientWidth||600, h=500;
+        const d3 = window.d3;
         const proj = d3.geoMercator().fitSize([w,h],geo);
-        const pathFn = d3.geoPath().projection(proj);
-
-        svgEl.selectAll('g').data(geo.features).join('g')
-          .on('mouseenter',function(){
-            d3.select(this).select('path').style('opacity','0.72').style('stroke-width','1.5');
+        const path = d3.geoPath().projection(proj);
+        mapSvg = d3.select('#map-container').append('svg').attr('width',w).attr('height',h);
+        mapSvg.selectAll('path').data(geo.features).enter().append('path')
+          .attr('d',path)
+          .attr('fill',d=>{
+            const uf=d.properties.sigla||d.properties.UF||d.properties.abbrev;
+            const v=mapaLeadCounts[uf]||0;
+            const t=v/max;
+            return t>0.7?'#7c3aed':t>0.4?'#2563eb':t>0.2?'#0891b2':t>0.05?'#0e7490':'#1e2d45';
           })
-          .on('mouseleave',function(){
-            d3.select(this).select('path').style('opacity','1').style('stroke-width','0.8');
+          .attr('stroke','#0d1220').attr('stroke-width',0.8)
+          .style('cursor','pointer')
+          .on('mouseover',function(e,d){
+            const uf=d.properties.sigla||d.properties.UF||d.properties.abbrev;
+            d3.select(this).attr('stroke','#a78bfa').attr('stroke-width',1.5);
+            showMapTooltip(e,uf,mapaLeadCounts[uf]||0);
           })
-          .on('click',function(event,d){
-            const nome = d.properties.name||d.properties.NM_MUNICIP||d.properties.nome||'Municipio';
-            const cnt = mockContCidade(nome,sigla);
-            document.getElementById('info-estado-nome').textContent = nome;
-            document.getElementById('info-estado-reg').textContent = (estadoNomes[sigla]||sigla);
-            document.getElementById('info-estado-count').textContent = cnt.toLocaleString('pt-BR')+' leads';
-            document.getElementById('info-estado-pct').textContent = ((cnt/(mapaLeadCounts[sigla]||1))*100).toFixed(1)+'% do estado';
-            document.getElementById('estado-info').style.display = '';
-            document.getElementById('btn-ver-municipios').style.display = 'none';
-            // highlight
-            svgEl.selectAll('path').style('stroke','#fff');
-            d3.select(this).select('path').style('stroke','#ef4444').style('stroke-width','2');
+          .on('mouseout',function(e,d){
+            const uf=d.properties.sigla||d.properties.UF||d.properties.abbrev;
+            if(uf!==currentStateUF) d3.select(this).attr('stroke','#0d1220').attr('stroke-width',0.8);
+            hideMapTooltip();
           })
-          .each(function(d){
-            const nome = d.properties.name||d.properties.NM_MUNICIP||d.properties.nome||'';
-            const cnt = mockContCidade(nome,sigla);
-            const op = (Math.max(0.10,Math.min(0.94,(cnt/maxCidade)*0.85+0.10))).toFixed(2);
-            const g = d3.select(this);
-            g.append('path').attr('d',pathFn(d))
-              .style('fill',`rgba(124,58,237,${op})`)
-              .style('stroke','#fff').style('stroke-width','0.8')
-              .style('cursor','pointer').style('transition','opacity .12s');
+          .on('click',function(e,d){
+            const uf=d.properties.sigla||d.properties.UF||d.properties.abbrev;
+            drillDownState(uf);
           });
-      })
-      .catch(()=>{
-        container.innerHTML = '<div style="text-align:center;padding:30px;font-size:13px;color:var(--text-muted);">Nao foi possivel carregar os municipios. Verifique sua conexao.</div>';
-      });
+      }).catch(()=>{});
+  }
+  function showMapTooltip(e,uf,n){
+    const t=document.getElementById('map-tooltip');
+    if(t){t.style.display='block';t.innerHTML='<b>'+uf+'</b><br>'+n+' leads';
+    t.style.left=(e.offsetX+12)+'px';t.style.top=(e.offsetY-20)+'px';}
+  }
+  function hideMapTooltip(){const t=document.getElementById('map-tooltip');if(t)t.style.display='none';}
+  function drillDownState(uf){
+    currentStateUF=uf;
+    const ibgeId=ibgeMap[uf];
+    if(!ibgeId) return;
+    const container=document.getElementById('map-container');
+    if(!container) return;
+    fetch('https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson/geojs-'+ibgeId+'-mun.json')
+      .then(r=>r.json()).then(geo=>{
+        container.innerHTML='';
+        const w=container.clientWidth||600,h=500;
+        const d3=window.d3;
+        const proj=d3.geoMercator().fitSize([w,h],geo);
+        const path=d3.geoPath().projection(proj);
+        const svg=d3.select('#map-container').append('svg').attr('width',w).attr('height',h);
+        svg.selectAll('path').data(geo.features).enter().append('path')
+          .attr('d',path).attr('fill','#1e3a5a').attr('stroke','#0d1220').attr('stroke-width',0.5)
+          .style('cursor','pointer')
+          .on('mouseover',function(e,d){
+            d3.select(this).attr('fill','#7c3aed');
+            const n=d.properties.name||d.properties.NM_MUN||'';
+            showMapTooltip(e,n,Math.floor(Math.random()*120));
+          })
+          .on('mouseout',function(){d3.select(this).attr('fill','#1e3a5a');hideMapTooltip();});
+        const back=document.getElementById('map-back-btn');
+        if(back) back.style.display='inline-flex';
+        mapSvg=null;
+      }).catch(()=>{});
+  }
+  function resetMap(){
+    currentStateUF=null;
+    const container=document.getElementById('map-container');
+    if(container) container.innerHTML='';
+    mapSvg=null;
+    const back=document.getElementById('map-back-btn');
+    if(back) back.style.display='none';
+    setTimeout(initMapColors,60);
   }
 
-  function voltarParaBrasil(){
-    viewAtual = 'brasil';
-    document.getElementById('mapa-titulo').textContent = 'Distribuicao por Estado';
-    document.getElementById('mapa-subtitulo').textContent = 'Intensidade da cor = concentracao de leads';
-    document.getElementById('btn-voltar-mapa').style.display = 'none';
-    document.getElementById('btn-ver-municipios').style.display = '';
-    document.getElementById('estado-info').style.display = 'none';
-    renderBrazilD3Map();
+  // ── NOTIFICATIONS ──
+  function showNotification(msg){
+    const n=document.getElementById('notif-toast');
+    if(!n) return;
+    n.textContent=msg; n.classList.add('show');
+    setTimeout(()=>n.classList.remove('show'),3000);
   }
 
-  // Regioes campanha
-  const regiaoLeads = { norte:201, nordeste:902, 'centro-oeste':583, sudeste:3530, sul:1075 };
-  function toggleRegiao(btn){
-    btn.classList.toggle('selected');
-    const selecionadas = [...document.querySelectorAll('.regiao-btn.selected')].map(b=>b.dataset.regiao);
-    // atualiza estados
-    document.querySelectorAll('.campanha-estado').forEach(e=>{
-      const reg = e.dataset.reg;
-      e.className = 'campanha-estado ' + (selecionadas.includes(reg)?'ativo':'inativo');
-    });
-    // resumo
-    const total = selecionadas.reduce((acc,r)=>acc+(regiaoLeads[r]||0),0);
-    const nomes = selecionadas.map(r=>r.charAt(0).toUpperCase()+r.slice(1).replace('-',' '));
-    document.getElementById('resumo-regioes').textContent = nomes.join(', ')||'Nenhuma';
-    document.getElementById('resumo-leads').textContent = total.toLocaleString('pt-BR')+' leads';
-    const btn2 = document.getElementById('btn-campanha');
-    if(selecionadas.length>0){ btn2.style.display=''; } else { btn2.style.display='none'; }
-  }
-  function solicitarCampanha(){
-    const selecionadas = [...document.querySelectorAll('.regiao-btn.selected')].map(b=>b.dataset.regiao);
-    const nomes = selecionadas.map(r=>r.charAt(0).toUpperCase()+r.slice(1)).join(', ');
-    showNotification('Campanha regional solicitada: '+nomes+'. InForge entrara em contato.');
-  }
-
-  // ── MODAL USUARIO ──
-  function showModalUsuario(){
-    const m = document.getElementById('modal-usuario');
-    m.style.display = 'flex';
-  }
-  function fecharModalUsuario(){
-    const m = document.getElementById('modal-usuario');
-    m.style.display = 'none';
-  }
-
-  // ── EXPANSAO GEOGRAFICA ──
-  const lqData = [
-    { uf:'RJ', lq:1.57 }, { uf:'MS', lq:1.54 }, { uf:'ES', lq:1.50 },
-    { uf:'DF', lq:1.43 }, { uf:'SP', lq:1.18 }, { uf:'MT', lq:1.18 },
-    { uf:'RS', lq:1.11 }, { uf:'SC', lq:1.11 }, { uf:'PR', lq:1.09 },
-    { uf:'GO', lq:0.94 }, { uf:'MG', lq:0.86 }, { uf:'CE', lq:0.67 },
-    { uf:'BA', lq:0.55 }, { uf:'PE', lq:0.43 }, { uf:'MA', lq:0.30 },
+  // ── INTEGRACOES FEED ──
+  const integPlataformas=[
+    {id:'instagram',nome:'Instagram',cor:'#e1306c',bg:'rgba(225,48,108,0.1)'},
+    {id:'facebook', nome:'Facebook', cor:'#1877f2',bg:'rgba(24,119,242,0.1)'},
+    {id:'google',   nome:'Google Ads',cor:'#4285f4',bg:'rgba(66,133,244,0.1)'},
+    {id:'youtube',  nome:'YouTube',  cor:'#ff0000',bg:'rgba(255,0,0,0.08)'},
+    {id:'meli',     nome:'Mkt. Livre',cor:'#ffe600',bg:'rgba(255,230,0,0.1)'},
+    {id:'melicar',  nome:'Mkt. Cars', cor:'#00a650',bg:'rgba(0,166,80,0.1)'},
+    {id:'whatsapp', nome:'WhatsApp', cor:'#25d366',bg:'rgba(37,211,102,0.1)'},
+    {id:'site',     nome:'Website',  cor:'#7c3aed',bg:'rgba(124,58,237,0.1)'},
   ];
-  const adjData = [
-    { num:1, estado:'Minas Gerais', raison:'Vizinho direto de SP e RJ. LQ 0.86 — subexplorado com PIB alto. Crescimento de +22% MoM ja em andamento.', tags:['LQ 0.86','PIB alto','Adjacente SP'], cor:'#10b981' },
-    { num:2, estado:'Parana',       raison:'Fronteira com SP e SC. LQ 1.09 (neutro mas pode dobrar). Base industrial forte — perfil B2B relevante.', tags:['LQ 1.09','Industrial','Adjacente SP'], cor:'#0891b2' },
-    { num:3, estado:'Bahia',        raison:'Maior whitespace do Nordeste. LQ 0.55 — mercado 5x maior que seu share atual. Crescimento de +35% MoM.', tags:['LQ 0.55','Whitespace','BCG Interrogacao'], cor:'#f59e0b' },
-    { num:4, estado:'Ceara',        raison:'Hub do Nordeste com economia em expansao. LQ 0.67. Gateway para todo o Nordeste — canal Instagram performa aqui.', tags:['LQ 0.67','Hub Nordeste','Instagram'], cor:'#f59e0b' },
-    { num:5, estado:'Pernambuco',   raison:'LQ 0.43 — o maior whitespace absoluto entre estados populosos. Economia diversificada, polo tecnologico em Recife.', tags:['LQ 0.43','Maior Whitespace','Recife Tech'], cor:'#ef4444' },
-  ];
-  const whitespaceData = [
-    // x=cobertura(0-100), y=potencial(0-100), label, cor
-    { uf:'SP',  x:82, y:95, r:12, cor:'#7c3aed' },
-    { uf:'RJ',  x:74, y:88, r: 9, cor:'#7c3aed' },
-    { uf:'DF',  x:62, y:90, r: 5, cor:'#7c3aed' },
-    { uf:'ES',  x:68, y:58, r: 5, cor:'#f59e0b' },
-    { uf:'MS',  x:70, y:52, r: 4, cor:'#f59e0b' },
-    { uf:'SC',  x:54, y:70, r: 6, cor:'#10b981' },
-    { uf:'RS',  x:48, y:75, r: 7, cor:'#10b981' },
-    { uf:'PR',  x:46, y:78, r: 8, cor:'#10b981' },
-    { uf:'MG',  x:38, y:82, r:10, cor:'#10b981' },
-    { uf:'GO',  x:42, y:62, r: 5, cor:'#10b981' },
-    { uf:'CE',  x:28, y:50, r: 6, cor:'#f59e0b' },
-    { uf:'PE',  x:22, y:52, r: 5, cor:'#f59e0b' },
-    { uf:'BA',  x:24, y:58, r: 6, cor:'#f59e0b' },
-    { uf:'MA',  x:14, y:30, r: 4, cor:'#9ca3af' },
-    { uf:'PA',  x:12, y:28, r: 3, cor:'#9ca3af' },
-  ];
-  const bcgData = [
-    // x=crescimento%(0-40), y=share%(0-30), r=raio, label
-    { uf:'SP',  x:8,  y:26, r:14, cor:'#f59e0b' },
-    { uf:'RJ',  x:5,  y:13, r:10, cor:'#f59e0b' },
-    { uf:'MG',  x:22, y:9,  r: 8, cor:'#06b6d4' },
-    { uf:'PR',  x:18, y:6,  r: 6, cor:'#10b981' },
-    { uf:'SC',  x:25, y:4,  r: 5, cor:'#10b981' },
-    { uf:'RS',  x:12, y:6,  r: 6, cor:'#10b981' },
-    { uf:'BA',  x:35, y:4,  r: 5, cor:'#10b981' },
-    { uf:'CE',  x:28, y:3,  r: 4, cor:'#10b981' },
-    { uf:'GO',  x:15, y:3,  r: 4, cor:'#10b981' },
-    { uf:'PE',  x:30, y:2,  r: 3, cor:'#10b981' },
-    { uf:'DF',  x:10, y:2,  r: 3, cor:'#f59e0b' },
-    { uf:'ES',  x:7,  y:3,  r: 4, cor:'#f59e0b' },
-    { uf:'MA',  x:-3, y:1,  r: 2, cor:'#ef4444' },
-    { uf:'MT',  x:6,  y:2,  r: 3, cor:'#f59e0b' },
-  ];
-  const chData = {
-    estados:  ['SP','RJ','MG','PR','RS','BA','CE','SC'],
-    canais:   ['Instagram','Facebook','Google','YouTube','Merc.Livre','WhatsApp','Website'],
-    valores: [
-      [20,17,16,14,11,13,9],   // SP
-      [28,18,14,12, 9,11,8],   // RJ
-      [15,16,25,13, 8,12,11],  // MG
-      [22,16,16,12,10,17,7],   // PR
-      [16,14,23,11, 9,13,14],  // RS
-      [30,22,14,11,10, 9,4],   // BA
-      [27,19,15,12,10,12,5],   // CE
-      [18,13,20,10, 9,12,18],  // SC
-    ],
-    cores: ['#e1306c','#1877f2','#4285f4','#ff0000','#b8860b','#25d366','#7c3aed'],
-  };
-
-  let expansaoRendered = false;
-
-  function renderExpansao(){
-    if(expansaoRendered) return;
-    expansaoRendered = true;
-    renderLqBars();
-    renderAdjacency();
-    renderWhitespaceDots();
-    renderBcgBubbles();
-    renderChannelMatrix();
+  let feedInterval=null, feedPausado=false, feedContadores={total:0,qual:0,proc:0};
+  function iniciarFeedAoVivo(){
+    renderIntegStatus();
+    if(feedInterval) return;
+    feedInterval=setInterval(()=>{ if(!feedPausado) adicionarLeadFeed(); },1400);
   }
-
-  function renderLqBars(){
-    const el = document.getElementById('lq-bars-list');
-    if(!el) return;
-    const max = 2.0;
-    el.innerHTML = lqData.map(d=>{
-      const pct = (d.lq/max)*100;
-      const cor = d.lq>=1.2 ? '#10b981' : d.lq>=0.80 ? '#f59e0b' : '#ef4444';
-      const badge = d.lq>=1.2 ? 'Forte' : d.lq>=0.80 ? 'Neutro' : 'Whitespace';
-      const bClr  = d.lq>=1.2 ? 'badge-success' : d.lq>=0.80 ? 'badge-warning' : 'badge-danger';
-      return `<div class="lq-row">
-        <span class="lq-state" style="color:${cor};">${d.uf}</span>
-        <div class="lq-track">
-          <div class="lq-fill" style="width:${pct}%;background:${cor};">${d.lq.toFixed(2)}</div>
-        </div>
-        <span class="lq-badge"><span class="badge ${bClr}" style="font-size:9px;padding:2px 6px;">${badge}</span></span>
-      </div>`;
-    }).join('');
-  }
-
-  function renderAdjacency(){
-    const el = document.getElementById('adj-list');
-    if(!el) return;
-    el.innerHTML = adjData.map(d=>`
-      <div class="adj-step">
-        <div class="adj-num" style="background:${d.cor}22;color:${d.cor};">${d.num}</div>
-        <div class="adj-body">
-          <div class="adj-state">${d.estado}</div>
-          <div class="adj-reason">${d.raison}</div>
-          <div class="adj-tags">${d.tags.map(t=>`<span class="adj-tag">${t}</span>`).join('')}</div>
-        </div>
-      </div>`).join('');
-  }
-
-  function renderWhitespaceDots(){
-    const g = document.getElementById('whitespace-dots');
+  function pararFeedAoVivo(){ if(feedInterval){clearInterval(feedInterval);feedInterval=null;} }
+  function renderIntegStatus(){
+    const g=document.getElementById('integ-status-grid');
     if(!g) return;
-    // SVG area: x 50-390, y 20-285 → map coverage(0-100) to x, potential(0-100) to y (inverted)
-    const mapX = v => 50  + (v/100)*(390-50);
-    const mapY = v => 285 - (v/100)*(285-25);
-    g.innerHTML = whitespaceData.map(d=>{
-      const cx = mapX(d.x), cy = mapY(d.y);
-      return `<g>
-        <circle cx="${cx}" cy="${cy}" r="${d.r}" fill="${d.cor}" opacity=".75"/>
-        <text x="${cx}" y="${cy-d.r-2}" text-anchor="middle" font-size="9" font-weight="700" fill="var(--text)">${d.uf}</text>
-      </g>`;
-    }).join('');
-  }
-
-  function renderBcgBubbles(){
-    const g = document.getElementById('bcg-bubbles');
-    if(!g) return;
-    // X: crescimento -5 to 40 → x 50-390 (midline at x=217 = growth 12%)
-    // Y: share 0 to 30 → y 285 to 25 (midline at y=160 = share 7%)
-    const mapX = v => 50  + ((v+5)/45)*(390-50);
-    const mapY = v => 285 - (v/30)*(285-25);
-    g.innerHTML = bcgData.map(d=>{
-      const cx = mapX(d.x), cy = mapY(d.y);
-      const isVaca = d.x<12 && d.y>7;
-      const txtCol = isVaca ? '#fff' : 'var(--text)';
-      return `<g>
-        <circle cx="${cx}" cy="${cy}" r="${d.r}" fill="${d.cor}" opacity="${isVaca?0.85:0.70}"/>
-        <text x="${cx}" y="${cy+3}" text-anchor="middle" font-size="${d.r>7?9:8}" font-weight="700" fill="${d.r>8?'#fff':'var(--text)'}">${d.uf}</text>
-      </g>`;
-    }).join('');
-  }
-
-  function renderChannelMatrix(){
-    const el = document.getElementById('ch-matrix');
-    if(!el) return;
-    const { estados, canais, valores, cores } = chData;
-    const cols = canais.length;
-    // grid: 1 label col + N canal cols
-    let html = `<div style="display:grid;grid-template-columns:60px repeat(${cols},1fr);gap:3px;min-width:500px;">`;
-    // header
-    html += '<div></div>';
-    canais.forEach((c,i)=>{
-      html += `<div class="ch-lbl-row" style="font-size:9px;color:var(--text-muted);text-align:center;padding-bottom:4px;line-height:1.2;">${c}</div>`;
-    });
-    // rows
-    estados.forEach((est,ei)=>{
-      html += `<div class="ch-lbl-col">${est}</div>`;
-      valores[ei].forEach((v,ci)=>{
-        const maxV = Math.max(...valores[ei]);
-        const op = (0.15 + (v/maxV)*0.80).toFixed(2);
-        const textCol = v/maxV > 0.55 ? '#fff' : 'var(--text)';
-        html += `<div class="ch-cell" style="background:${cores[ci]};opacity:${op};color:${textCol};" title="${est} / ${canais[ci]}: ${v}%">${v}%</div>`;
-      });
-    });
-    html += '</div>';
-    el.innerHTML = html;
-  }
-
-  // ── PAINEL TATICO ──
-  const hhiCanaisData = [
-    { nome:'Instagram',    share:18, cor:'#e1306c' },
-    { nome:'WhatsApp',     share:16, cor:'#25d366' },
-    { nome:'Facebook',     share:15, cor:'#1877f2' },
-    { nome:'Google Ads',   share:14, cor:'#4285f4' },
-    { nome:'YouTube',      share:12, cor:'#ff0000' },
-    { nome:'ML + Cars',    share:11, cor:'#b8860b' },
-    { nome:'Website',      share: 9, cor:'#7c3aed' },
-    { nome:'Outros',       share: 5, cor:'#9ca3af' },
-  ];
-  const hhiGeoData = [
-    { nome:'Sao Paulo',        share:26, cor:'#7c3aed' },
-    { nome:'Rio de Janeiro',   share:13, cor:'#7c3aed' },
-    { nome:'Minas Gerais',     share: 9, cor:'#7c3aed' },
-    { nome:'Rio Gde do Sul',   share: 6, cor:'#7c3aed' },
-    { nome:'Parana',           share: 6, cor:'#7c3aed' },
-    { nome:'Bahia',            share: 4, cor:'#7c3aed' },
-    { nome:'Santa Catarina',   share: 4, cor:'#7c3aed' },
-    { nome:'Demais estados',   share:32, cor:'#9ca3af' },
-  ];
-  const propCanalData = [
-    { nome:'Instagram',   alta:42, media:38, baixa:20 },
-    { nome:'Google Ads',  alta:51, media:35, baixa:14 },
-    { nome:'WhatsApp',    alta:38, media:44, baixa:18 },
-    { nome:'Facebook',    alta:29, media:46, baixa:25 },
-    { nome:'YouTube',     alta:33, media:41, baixa:26 },
-    { nome:'Website',     alta:56, media:32, baixa:12 },
-    { nome:'Mercado Livre',alta:22, media:47, baixa:31 },
-    { nome:'Mercado Cars', alta:45, media:38, baixa:17 },
-  ];
-  const lvrData = [
-    { mes:'Jan', val:420, delta:'+5%'  },
-    { mes:'Fev', val:467, delta:'+11%' },
-    { mes:'Mar', val:510, delta:'+9%'  },
-    { mes:'Abr', val:543, delta:'+6%'  },
-    { mes:'Mai', val:598, delta:'+10%' },
-    { mes:'Jun', val:706, delta:'+18%' },
-  ];
-  const cplData = [
-    { nome:'Website',      cpl:3.80, cplQ:5.20,  cor:'#7c3aed' },
-    { nome:'Instagram',    cpl:4.20, cplQ:9.10,  cor:'#e1306c' },
-    { nome:'WhatsApp',     cpl:4.90, cplQ:11.80, cor:'#25d366' },
-    { nome:'Facebook',     cpl:5.80, cplQ:18.20, cor:'#1877f2' },
-    { nome:'YouTube',      cpl:7.10, cplQ:19.40, cor:'#ff0000' },
-    { nome:'Google Ads',   cpl:9.10, cplQ:16.30, cor:'#4285f4' },
-    { nome:'Mercado Cars', cpl:6.40, cplQ:13.50, cor:'#00a650' },
-    { nome:'Mercado Livre',cpl:5.20, cplQ:22.10, cor:'#b8860b' },
-  ];
-
-  let taticaRendered = false;
-
-  function renderTatica(){
-    if(taticaRendered) return;
-    taticaRendered = true;
-    renderHhiBars('hhi-canais-bars', hhiCanaisData);
-    renderHhiBars('hhi-geo-bars', hhiGeoData);
-    renderPropCanal();
-    renderHeatmap();
-    renderLvr();
-    renderCpl();
-  }
-
-  function renderHhiBars(containerId, data){
-    const el = document.getElementById(containerId);
-    if(!el) return;
-    const max = Math.max(...data.map(d=>d.share));
-    el.innerHTML = data.map(d=>`
-      <div class="bar-row">
-        <span class="bar-name">${d.nome}</span>
-        <div class="bar-track">
-          <div class="bar-fill" style="width:${(d.share/max)*100}%;background:${d.cor};opacity:.85;"></div>
-        </div>
-        <span class="bar-val" style="color:${d.cor};">${d.share}%</span>
-      </div>`).join('');
-  }
-
-  function renderPropCanal(){
-    const el = document.getElementById('prop-canal-list');
-    if(!el) return;
-    el.innerHTML = propCanalData.map(d=>`
-      <div class="prop-row">
-        <span class="prop-name">${d.nome}</span>
-        <div class="prop-bar">
-          <div class="prop-seg prop-seg-alta"  style="width:${d.alta}%;">${d.alta>12?d.alta+'%':''}</div>
-          <div class="prop-seg prop-seg-media" style="width:${d.media}%;">${d.media>12?d.media+'%':''}</div>
-          <div class="prop-seg prop-seg-baixa" style="width:${d.baixa}%;">${d.baixa>12?d.baixa+'%':''}</div>
+    g.innerHTML=integPlataformas.map(p=>`
+      <div class="stat-card" style="text-align:center;">
+        <div style="font-size:11px;font-weight:700;color:${p.cor};margin-bottom:4px;">${p.nome}</div>
+        <div style="font-size:8px;display:inline-flex;align-items:center;gap:3px;background:rgba(16,185,129,0.1);color:#10b981;padding:2px 7px;border-radius:10px;font-weight:700;">
+          <span style="width:5px;height:5px;border-radius:50%;background:#10b981;display:inline-block;"></span>Conectado
         </div>
       </div>`).join('');
   }
-
-  function getHeatVal(dia, hora){
-    const fds = dia >= 5;
-    let v = fds ? 0.18 : 0.40;
-    if(!fds && hora>=9  && hora<=11) v += 0.50;
-    if(hora>=19 && hora<=21)         v += 0.35;
-    if(!fds && hora>=12 && hora<=13) v += 0.18;
-    if(hora>=22 || hora<=6)          v -= 0.30;
-    if(dia===0) v += 0.08;
-    v += Math.sin(dia*13+hora*7)*0.06;
-    return Math.max(0.04, Math.min(1, v));
-  }
-
-  function renderHeatmap(){
-    const cont = document.getElementById('heatmap-container');
-    if(!cont) return;
-    const dias = ['Seg','Ter','Qua','Qui','Sex','Sab','Dom'];
-    const hours = Array.from({length:24},(_,i)=>i);
-    let html = `<div style="display:grid;grid-template-columns:28px repeat(24,1fr);gap:2px;">`;
-    // Header row
-    html += '<div></div>';
-    hours.forEach(h=>{
-      html += `<div style="font-size:8px;color:var(--text-muted);text-align:center;height:14px;display:flex;align-items:center;justify-content:center;">${h%3===0?h:''}</div>`;
-    });
-    // Data rows
-    dias.forEach((dia,d)=>{
-      html += `<div style="font-size:9px;color:var(--text-muted);display:flex;align-items:center;height:16px;">${dia}</div>`;
-      hours.forEach(h=>{
-        const v = getHeatVal(d,h);
-        const op = (v*0.92+0.04).toFixed(2);
-        const tooltipText = `${dia} ${h}h: ~${Math.round(v*42)} leads`;
-        html += `<div style="background:rgba(124,58,237,${op});border-radius:2px;height:16px;cursor:default;" title="${tooltipText}"></div>`;
-      });
-    });
-    html += '</div>';
-    cont.innerHTML = html;
-  }
-
-  function renderLvr(){
-    const el = document.getElementById('lvr-chart');
-    if(!el) return;
-    const max = Math.max(...lvrData.map(d=>d.val));
-    el.innerHTML = lvrData.map((d,i)=>{
-      const h = Math.round((d.val/max)*90);
-      const isLast = i===lvrData.length-1;
-      return `<div class="lvr-col">
-        <div style="font-size:9px;color:${isLast?'var(--success)':'var(--text-muted)'};font-weight:${isLast?'700':'400'}">${d.delta}</div>
-        <div class="lvr-bar" style="height:${h}px;background:${isLast?'var(--success)':'var(--primary)'};opacity:${isLast?1:0.5};"></div>
-        <div class="lvr-bar-lbl">${d.mes}</div>
-      </div>`;
-    }).join('');
-  }
-
-  function renderCpl(){
-    const el = document.getElementById('cpl-list');
-    if(!el) return;
-    const maxQ = Math.max(...cplData.map(d=>d.cplQ));
-    el.innerHTML = cplData.map(d=>`
-      <div class="cpl-row">
-        <span class="cpl-name">${d.nome}</span>
-        <div class="cpl-track">
-          <div class="cpl-fill" style="width:${(d.cpl/maxQ)*100}%;background:${d.cor};opacity:.45;"></div>
-        </div>
-        <div class="cpl-track" style="margin-left:-100%;">
-          <div class="cpl-fill" style="width:${(d.cplQ/maxQ)*100}%;background:${d.cor};"></div>
-        </div>
-        <span class="cpl-val" style="color:${d.cor};">R$${d.cplQ.toFixed(2)}</span>
-      </div>`).join('');
-    // fix layout — use simpler double-bar approach
-    el.innerHTML = cplData.map(d=>`
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-        <span style="width:100px;flex-shrink:0;font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.nome}</span>
-        <div style="flex:1;display:flex;flex-direction:column;gap:2px;">
-          <div style="display:flex;align-items:center;gap:4px;">
-            <div style="flex:1;height:5px;background:var(--border);border-radius:99px;overflow:hidden;">
-              <div style="width:${(d.cpl/maxQ)*100}%;height:100%;background:${d.cor};opacity:.4;border-radius:99px;"></div>
-            </div>
-            <span style="width:42px;font-size:10px;color:var(--text-muted);text-align:right;">R$${d.cpl.toFixed(2)}</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <div style="flex:1;height:5px;background:var(--border);border-radius:99px;overflow:hidden;">
-              <div style="width:${(d.cplQ/maxQ)*100}%;height:100%;background:${d.cor};border-radius:99px;"></div>
-            </div>
-            <span style="width:42px;font-size:10px;font-weight:700;color:${d.cor};text-align:right;">R$${d.cplQ.toFixed(2)}</span>
-          </div>
-        </div>
-      </div>`).join('');
-  }
-
-  // ── INTEGRACOES / FEED AO VIVO ──
-  const integPlataformas = [
-    { id:'instagram',     nome:'Instagram',       cor:'#e1306c', bg:'rgba(225,48,108,0.12)'  },
-    { id:'facebook',      nome:'Facebook',        cor:'#1877f2', bg:'rgba(24,119,242,0.12)'  },
-    { id:'google',        nome:'Google Ads',      cor:'#4285f4', bg:'rgba(66,133,244,0.12)'  },
-    { id:'youtube',       nome:'YouTube',         cor:'#ff0000', bg:'rgba(255,0,0,0.10)'     },
-    { id:'mercadolivre',  nome:'Mercado Livre',   cor:'#b8860b', bg:'rgba(255,230,0,0.18)'   },
-    { id:'mercadocar',    nome:'Mercado Cars',    cor:'#00a650', bg:'rgba(0,166,80,0.12)'    },
-    { id:'whatsapp',      nome:'WhatsApp',        cor:'#25d366', bg:'rgba(37,211,102,0.12)'  },
-    { id:'website',       nome:'Website',         cor:'#7c3aed', bg:'rgba(124,58,237,0.12)'  },
-  ];
-  const nomesMock = ['A. Silva','M. Costa','J. Souza','C. Oliveira','R. Santos','P. Lima','L. Fernandes','B. Alves','T. Martins','F. Rocha','G. Pereira','D. Carvalho'];
-  const cidadesMock = ['Sao Paulo, SP','Rio de Janeiro, RJ','Belo Horizonte, MG','Curitiba, PR','Porto Alegre, RS','Salvador, BA','Fortaleza, CE','Recife, PE','Goiania, GO','Florianopolis, SC','Campinas, SP','Natal, RN'];
-  const propensoesMock = ['Alta','Alta','Media','Alta','Media','Baixa'];
-
-  let feedInterval = null;
-  let feedPausado = false;
-  let feedCount = 0;
-  const feedContadores = {instagram:42,facebook:38,google:35,youtube:29,mercadolivre:28,mercadocar:22,whatsapp:31,website:22};
-
-  function getPlatIcon(id, cor){
-    const icons = {
-      instagram:    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${cor}" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="${cor}" stroke="none"/></svg>`,
-      facebook:     `<svg width="14" height="14" viewBox="0 0 24 24" fill="${cor}"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>`,
-      google:       `<svg width="14" height="14" viewBox="0 0 24 24"><path d="M21.35 11.1H12v2.9h5.35C17 16.2 14.9 18 12 18a6 6 0 110-12c1.6 0 3 .6 4.1 1.6L18.3 5.4A9.9 9.9 0 0012 3a9 9 0 100 18c5 0 9-3.6 9-9 0-.6-.1-1.2-.2-1.8" fill="${cor}"/></svg>`,
-      youtube:      `<svg width="14" height="14" viewBox="0 0 24 24" fill="${cor}"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#fff"/></svg>`,
-      mercadolivre: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${cor}" stroke-width="2"><path d="M6 2l6 4 6-4"/><path d="M2 7h20v13a2 2 0 01-2 2H4a2 2 0 01-2-2V7z"/></svg>`,
-      mercadocar:   `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${cor}" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V9l3-5h14l3 5v6a2 2 0 01-2 2h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>`,
-      whatsapp:     `<svg width="14" height="14" viewBox="0 0 24 24" fill="${cor}"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51A9.87 9.87 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`,
-      website:      `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${cor}" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>`,
+  function getPlatIcon(id,cor){
+    const icons={
+      instagram:`<svg width="11" height="11" viewBox="0 0 24 24" fill="${cor}"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="${cor}" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="${cor}" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="${cor}"/></svg>`,
+      facebook:`<svg width="11" height="11" viewBox="0 0 24 24" fill="${cor}"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" fill="${cor}"/></svg>`,
+      google:`<svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="${cor}" stroke-width="2"/><text x="6" y="16" font-size="10" fill="${cor}" font-weight="700">G</text></svg>`,
+      youtube:`<svg width="11" height="11" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3" fill="${cor}"/><polygon points="10,9 16,12 10,15" fill="#fff"/></svg>`,
+      meli:`<svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="${cor}"/><text x="5" y="16" font-size="9" fill="#333" font-weight="800">ML</text></svg>`,
+      melicar:`<svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="${cor}"/><text x="6" y="16" font-size="8" fill="#fff" font-weight="700">MC</text></svg>`,
+      whatsapp:`<svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="${cor}"/><path d="M8 12s1 2 4 2 4-2 4-2" fill="none" stroke="#fff" stroke-width="1.5"/></svg>`,
+      site:`<svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="${cor}" stroke-width="2"/><line x1="2" y1="12" x2="22" y2="12" stroke="${cor}" stroke-width="1.5"/><path d="M12 2c-4 4-4 16 0 20M12 2c4 4 4 16 0 20" fill="none" stroke="${cor}" stroke-width="1.5"/></svg>`,
     };
     return icons[id]||'';
   }
-
+  const nomes=['Ana Lima','Carlos Melo','Patricia Souza','Roberto Faria','Juliana Costa','Marcos Alves','Fernanda Reis','Diego Santos','Camila Nunes','Thiago Borges'];
+  const empresas=['Tech SA','Grupo Nortel','Clinica Total','Distribuidora X','StartFlow','Acme Log','Farma Sul','DataBiz','VendaMais','FlowCorp'];
+  const propensoes=['Alta','Media','Baixa'];
+  const propCores={'Alta':'#10b981','Media':'#f59e0b','Baixa':'#ef4444'};
   function adicionarLeadFeed(){
-    const plat = integPlataformas[Math.floor(Math.random()*integPlataformas.length)];
-    const nome = nomesMock[Math.floor(Math.random()*nomesMock.length)];
-    const cidade = cidadesMock[Math.floor(Math.random()*cidadesMock.length)];
-    const prop = propensoesMock[Math.floor(Math.random()*propensoesMock.length)];
-    feedCount++;
-    feedContadores[plat.id] = (feedContadores[plat.id]||0) + 1;
-
-    const list = document.getElementById('feed-list');
-    if(!list) return;
-
-    // Remove placeholder
-    const empty = document.getElementById('feed-empty');
-    if(empty) empty.remove();
-
-    const propClass = prop==='Alta' ? 'prop-alta' : prop==='Media' ? 'prop-media' : 'prop-baixa';
-    const agora = new Date();
-    const hora = agora.getHours().toString().padStart(2,'0')+':'+agora.getMinutes().toString().padStart(2,'0')+':'+agora.getSeconds().toString().padStart(2,'0');
-
-    const item = document.createElement('div');
-    item.className = 'feed-item';
-    item.innerHTML =
-      '<div class="feed-plat-icon" style="background:'+plat.bg+';">'+getPlatIcon(plat.id,plat.cor)+'</div>'+
-      '<div><div class="feed-lead-name">'+nome+'</div><div class="feed-lead-meta">'+plat.nome+' — '+cidade+'</div></div>'+
-      '<span class="feed-score '+propClass+'">'+prop+'</span>'+
-      '<span class="feed-time">'+hora+'</span>';
-
-    list.insertBefore(item, list.firstChild);
-    while(list.children.length > 50) list.removeChild(list.lastChild);
-
-    // Atualiza contadores
-    const totalBase = 247;
-    const totalEl = document.getElementById('feed-total-hoje');
-    if(totalEl) totalEl.textContent = (totalBase+feedCount).toLocaleString('pt-BR');
-
-    const badgeEl = document.getElementById('feed-badge-total');
-    if(badgeEl) badgeEl.textContent = (totalBase+feedCount).toLocaleString('pt-BR')+' leads hoje';
-
-    const cntEl = document.getElementById('feed-cnt-'+plat.id);
-    if(cntEl) cntEl.textContent = feedContadores[plat.id];
-
-    // Atualiza melhor canal
-    const nomeMap = {instagram:'Instagram',facebook:'Facebook',google:'Google Ads',youtube:'YouTube',mercadolivre:'Mercado Livre',mercadocar:'Mercado Cars',whatsapp:'WhatsApp',website:'Website'};
-    const melhor = Object.entries(feedContadores).sort((a,b)=>b[1]-a[1])[0];
-    const melhorEl = document.getElementById('feed-melhor-canal');
-    if(melhorEl) melhorEl.textContent = nomeMap[melhor[0]]||melhor[0];
-    const melhorCntEl = document.getElementById('feed-melhor-cnt');
-    if(melhorCntEl) melhorCntEl.textContent = melhor[1];
-
-    const ultimoEl = document.getElementById('feed-ultimo-tempo');
-    if(ultimoEl) ultimoEl.textContent = hora;
-    const ultimoPlatEl = document.getElementById('feed-ultimo-plat');
-    if(ultimoPlatEl) ultimoPlatEl.textContent = plat.nome;
+    const plat=integPlataformas[Math.floor(Math.random()*integPlataformas.length)];
+    const nome=nomes[Math.floor(Math.random()*nomes.length)];
+    const empresa=empresas[Math.floor(Math.random()*empresas.length)];
+    const prop=propensoes[Math.floor(Math.random()*propensoes.length)];
+    feedContadores.total++;
+    if(prop==='Alta') feedContadores.qual++;
+    else feedContadores.proc++;
+    document.getElementById('feed-total').textContent=feedContadores.total;
+    document.getElementById('feed-qual').textContent=feedContadores.qual;
+    document.getElementById('feed-proc').textContent=feedContadores.proc;
+    const fl=document.getElementById('feed-list');
+    if(!fl) return;
+    const agora=new Date();
+    const hora=agora.getHours().toString().padStart(2,'0')+':'+agora.getMinutes().toString().padStart(2,'0')+':'+agora.getSeconds().toString().padStart(2,'0');
+    const item=document.createElement('div');
+    item.style.cssText='display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:12px;animation:fadeIn .3s ease;';
+    item.innerHTML=`
+      <span style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:${plat.bg};flex-shrink:0;">${getPlatIcon(plat.id,plat.cor)}</span>
+      <span style="flex:1;font-weight:600;">${nome}</span>
+      <span style="color:var(--text-muted);font-size:11px;">${empresa}</span>
+      <span style="padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;background:${propCores[prop]}22;color:${propCores[prop]};">${prop}</span>
+      <span style="color:var(--text-muted);font-size:10px;flex-shrink:0;">${hora}</span>`;
+    fl.insertBefore(item,fl.firstChild);
+    while(fl.children.length>60) fl.removeChild(fl.lastChild);
   }
-
-  function iniciarFeedAoVivo(){
-    if(feedInterval) return;
-    feedPausado = false;
-    feedInterval = setInterval(function(){
-      if(!feedPausado) adicionarLeadFeed();
-    }, 2000 + Math.random()*1500);
-  }
-
-  function pararFeedAoVivo(){
-    if(feedInterval){ clearInterval(feedInterval); feedInterval = null; }
-  }
-
   function toggleFeedPausa(){
-    feedPausado = !feedPausado;
-    const btn = document.getElementById('btn-pausa-feed');
-    const pulse = document.getElementById('feed-pulse');
-    if(!btn) return;
-    if(feedPausado){
-      btn.textContent = 'Retomar';
-      if(pulse) pulse.style.animationPlayState = 'paused';
-    } else {
-      btn.textContent = 'Pausar';
-      if(pulse) pulse.style.animationPlayState = '';
-    }
+    feedPausado=!feedPausado;
+    const btn=document.getElementById('btn-pausa');
+    if(btn) btn.textContent=feedPausado?'Retomar':'Pausar';
   }
-
   function limparFeed(){
-    const list = document.getElementById('feed-list');
-    if(list){ list.innerHTML = '<div style="text-align:center;padding:28px;font-size:13px;color:var(--text-muted);" id="feed-empty">Aguardando novos leads...</div>'; }
+    const fl=document.getElementById('feed-list');
+    if(fl) fl.innerHTML='';
+    feedContadores={total:0,qual:0,proc:0};
+    document.getElementById('feed-total').textContent='0';
+    document.getElementById('feed-qual').textContent='0';
+    document.getElementById('feed-proc').textContent='0';
   }
 
-  function desconectarPlat(btn, nome){
-    showNotification(nome+' desconectado. Entre em contato com a InForge para reconectar.');
-    const card = btn.closest('.integr-card');
-    if(!card) return;
-    card.classList.remove('connected');
-    card.querySelector('.integr-status').innerHTML = '<div class="status-dot dot-off"></div><span style="color:var(--text-muted);">Desconectado</span>';
-    btn.textContent = 'Reconectar';
-    btn.className = 'integr-btn integr-btn-on';
-    btn.onclick = function(){ reconectarPlat(this, nome); };
+  // ── EXPANSAO GEOGRAFICA ──
+  const lqData=[
+    {uf:'SP',lq:1.42,leads:1823},{uf:'RJ',lq:1.18,leads:892},{uf:'MG',lq:0.94,leads:641},
+    {uf:'RS',lq:1.08,leads:412},{uf:'PR',lq:1.03,leads:387},{uf:'SC',lq:0.87,leads:276},
+    {uf:'GO',lq:0.72,leads:198},{uf:'CE',lq:0.61,leads:187},{uf:'ES',lq:0.98,leads:176},
+    {uf:'PE',lq:0.54,leads:156},{uf:'DF',lq:1.22,leads:143},{uf:'MS',lq:0.78,leads:134},
+    {uf:'MT',lq:0.66,leads:108},{uf:'MA',lq:0.42,leads:96},{uf:'BA',lq:0.58,leads:298},
+  ];
+  const adjData=[
+    {step:1,estados:['SP','RJ'],label:'Nucleo consolidado',cor:'#10b981',desc:'Base solida. Manter e aprofundar.'},
+    {step:2,estados:['MG','PR','SC'],label:'Expansao imediata',cor:'#3b82f6',desc:'Alta adjacencia, bom CPL, expandir agora.'},
+    {step:3,estados:['RS','GO','ES','DF'],label:'Expansao planejada',cor:'#f59e0b',desc:'Potencial medio, requer adaptacao local.'},
+    {step:4,estados:['BA','CE','PE'],label:'Expansao futura',cor:'#ef4444',desc:'Mercado com potencial mas baixa penetracao.'},
+    {step:5,estados:['MA','PA','AM','PI'],label:'Oportunidade latente',cor:'#6b7fa0',desc:'Mercados nao tocados — entrada de longo prazo.'},
+  ];
+  const whitespaceData=[
+    {uf:'SP',x:82,y:91,r:22,cor:'#6b7fa0'},{uf:'RJ',x:68,y:78,r:16,cor:'#6b7fa0'},
+    {uf:'CE',x:18,y:74,r:12,cor:'#10b981'},{uf:'PE',x:22,y:68,r:11,cor:'#10b981'},
+    {uf:'BA',x:28,y:62,r:13,cor:'#10b981'},{uf:'MA',x:12,y:58,r:10,cor:'#10b981'},
+    {uf:'MG',x:55,y:52,r:14,cor:'#f59e0b'},{uf:'PR',x:58,y:48,r:13,cor:'#f59e0b'},
+    {uf:'RS',x:62,y:44,r:12,cor:'#f59e0b'},{uf:'GO',x:35,y:38,r:10,cor:'#f59e0b'},
+    {uf:'SC',x:48,y:32,r:10,cor:'#f59e0b'},{uf:'ES',x:52,y:28,r:8,cor:'#f59e0b'},
+    {uf:'DF',x:72,y:22,r:8,cor:'#ef4444'},{uf:'MS',x:38,y:18,r:7,cor:'#ef4444'},
+    {uf:'MT',x:30,y:14,r:7,cor:'#ef4444'},
+  ];
+  const bcgData=[
+    {uf:'SP',x:72,y:88,r:22,cor:'#10b981'},{uf:'RJ',x:58,y:72,r:16,cor:'#10b981'},
+    {uf:'DF',x:64,y:62,r:8,cor:'#10b981'},{uf:'RS',x:52,y:44,r:12,cor:'#63b3ed'},
+    {uf:'PR',x:48,y:40,r:12,cor:'#63b3ed'},{uf:'SC',x:44,y:36,r:10,cor:'#63b3ed'},
+    {uf:'MG',x:38,y:52,r:14,cor:'#f59e0b'},{uf:'ES',x:42,y:28,r:8,cor:'#f59e0b'},
+    {uf:'GO',x:32,y:32,r:10,cor:'#f59e0b'},{uf:'BA',x:28,y:58,r:13,cor:'#f59e0b'},
+    {uf:'CE',x:22,y:64,r:12,cor:'#ef4444'},{uf:'PE',x:18,y:60,r:11,cor:'#ef4444'},
+    {uf:'MA',x:12,y:52,r:10,cor:'#ef4444'},{uf:'MT',x:24,y:18,r:7,cor:'#6b7fa0'},
+  ];
+  const chData={
+    estados:['SP','RJ','MG','RS','PR','SC','GO','CE'],
+    canais:['Instagram','Google','Facebook','WhatsApp','Organic','YouTube','Mkt.Livre'],
+    matrix:[
+      [312,187,143,98,76,54,42],[198,142,108,72,58,38,28],[124,86,72,48,42,24,18],
+      [87,64,52,38,32,20,14],[82,58,46,34,28,18,12],[64,44,36,26,22,14,10],
+      [48,34,28,20,16,10,8],[42,30,24,18,14,9,7],
+    ]
+  };
+  let expansaoRendered=false;
+  function renderExpansao(){
+    if(expansaoRendered) return; expansaoRendered=true;
+    renderLqBars(); renderAdjacency(); renderWhitespaceDots(); renderBcgBubbles(); renderChannelMatrix();
+  }
+  function renderLqBars(){
+    const el=document.getElementById('lq-bars-list'); if(!el) return;
+    el.innerHTML=lqData.sort((a,b)=>b.lq-a.lq).map(d=>{
+      const cor=d.lq>1.2?'#10b981':d.lq>0.8?'#f59e0b':'#ef4444';
+      return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <div style="width:28px;font-size:11px;font-weight:700;">${d.uf}</div>
+        <div style="flex:1;height:12px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${Math.min(d.lq/2*100,100)}%;background:${cor};border-radius:3px;"></div>
+        </div>
+        <div style="width:32px;font-size:11px;font-weight:700;color:${cor};text-align:right;">LQ ${d.lq}</div>
+      </div>`;
+    }).join('');
+  }
+  function renderAdjacency(){
+    const el=document.getElementById('adj-list'); if(!el) return;
+    el.innerHTML=adjData.map(d=>`
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(42,58,85,0.4);">
+        <div style="width:22px;height:22px;border-radius:50%;background:${d.cor}22;border:2px solid ${d.cor};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:${d.cor};flex-shrink:0;">${d.step}</div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:12px;color:${d.cor};">${d.label}</div>
+          <div style="font-size:10px;color:var(--text-muted);margin:2px 0;">${d.estados.join(' · ')}</div>
+          <div style="font-size:10px;color:var(--text-muted);">${d.desc}</div>
+        </div>
+      </div>`).join('');
+  }
+  function renderWhitespaceDots(){
+    const g=document.getElementById('whitespace-dots'); if(!g) return;
+    whitespaceData.forEach(d=>{
+      const cx=d.x/100*420, cy=(100-d.y)/100*320;
+      const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      circle.setAttribute('cx',cx); circle.setAttribute('cy',cy); circle.setAttribute('r',d.r);
+      circle.setAttribute('fill',d.cor); circle.setAttribute('opacity','0.7'); g.appendChild(circle);
+      const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+      txt.setAttribute('x',cx); txt.setAttribute('y',cy+3); txt.setAttribute('text-anchor','middle');
+      txt.setAttribute('fill','#fff'); txt.setAttribute('font-size','8'); txt.setAttribute('font-weight','700');
+      txt.textContent=d.uf; g.appendChild(txt);
+    });
+  }
+  function renderBcgBubbles(){
+    const g=document.getElementById('bcg-bubbles'); if(!g) return;
+    bcgData.forEach(d=>{
+      const cx=d.x/100*420, cy=(100-d.y)/100*320;
+      const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      circle.setAttribute('cx',cx); circle.setAttribute('cy',cy); circle.setAttribute('r',d.r);
+      circle.setAttribute('fill',d.cor); circle.setAttribute('opacity','0.7'); g.appendChild(circle);
+      const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+      txt.setAttribute('x',cx); txt.setAttribute('y',cy+3); txt.setAttribute('text-anchor','middle');
+      txt.setAttribute('fill','#fff'); txt.setAttribute('font-size','8'); txt.setAttribute('font-weight','700');
+      txt.textContent=d.uf; g.appendChild(txt);
+    });
+  }
+  function renderChannelMatrix(){
+    const el=document.getElementById('channel-matrix'); if(!el) return;
+    const max=Math.max(...chData.matrix.flat());
+    let html='<table style="border-collapse:collapse;font-size:11px;width:100%;">';
+    html+='<tr><th style="padding:4px 8px;text-align:left;color:var(--text-muted);font-size:10px;">Estado</th>';
+    chData.canais.forEach(c=>{ html+=`<th style="padding:4px 8px;color:var(--text-muted);font-size:10px;text-align:center;">${c}</th>`; });
+    html+='</tr>';
+    chData.estados.forEach((e,i)=>{
+      html+=`<tr><td style="padding:4px 8px;font-weight:700;">${e}</td>`;
+      chData.canais.forEach((_,j)=>{
+        const v=chData.matrix[i][j]; const op=(v/max*0.9+0.1).toFixed(2);
+        html+=`<td style="padding:3px;"><div style="background:rgba(124,58,237,${op});height:24px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:${v/max>0.4?'#fff':'var(--text-muted)'};">${v}</div></td>`;
+      });
+      html+='</tr>';
+    });
+    html+='</table>';
+    el.innerHTML=html;
   }
 
-  function reconectarPlat(btn, nome){
-    showNotification('Solicitacao de reconexao enviada para a InForge: '+nome+'.');
+  // ── PAINEL TATICO ──
+  const hhiCanaisData=[
+    {label:'Instagram',share:28},{label:'Google Ads',share:22},{label:'Facebook',share:16},
+    {label:'Organico',share:12},{label:'Indicacao',share:8},{label:'Email',share:6},
+    {label:'YouTube',share:5},{label:'Outros',share:3},
+  ];
+  const hhiGeoData=[
+    {label:'SP',share:34},{label:'RJ',share:18},{label:'MG',share:12},
+    {label:'RS',share:8},{label:'PR',share:7},{label:'BA',share:6},
+    {label:'SC',share:5},{label:'Outros',share:10},
+  ];
+  const propCanalData=[
+    {canal:'Instagram',alta:38,media:42,baixa:20},{canal:'Google',alta:44,media:36,baixa:20},
+    {canal:'Facebook',alta:28,media:44,baixa:28},{canal:'Indicacao',alta:62,media:28,baixa:10},
+    {canal:'Organico',alta:52,media:32,baixa:16},{canal:'Email',alta:34,media:38,baixa:28},
+    {canal:'YouTube',alta:22,media:46,baixa:32},{canal:'WhatsApp',alta:56,media:30,baixa:14},
+  ];
+  const lvrData=[
+    {mes:'Jan',lvr:8.2},{mes:'Fev',lvr:12.4},{mes:'Mar',lvr:-3.1},{mes:'Abr',lvr:18.7},{mes:'Mai',lvr:9.3},{mes:'Jun',lvr:14.6},
+  ];
+  const cplData=[
+    {canal:'Instagram',cpl:28,cplQ:42},{canal:'Google',cpl:34,cplQ:52},{canal:'Facebook',cpl:22,cplQ:38},
+    {canal:'Indicacao',cpl:8,cplQ:12},{canal:'Organico',cpl:12,cplQ:18},{canal:'Email',cpl:16,cplQ:24},
+    {canal:'YouTube',cpl:38,cplQ:64},{canal:'WhatsApp',cpl:18,cplQ:28},
+  ];
+  let taticaRendered=false;
+  function renderTatica(){
+    if(taticaRendered) return; taticaRendered=true;
+    renderHhiBars('hhi-canais-bars',hhiCanaisData,'hhi-canais-marker');
+    renderHhiBars('hhi-geo-bars',hhiGeoData,'hhi-geo-marker');
+    renderPropCanal(); renderHeatmap(); renderLvr(); renderCpl(); renderLqi(); renderDup();
+  }
+  function calcHHI(data){ return Math.round(data.reduce((s,d)=>s+d.share*d.share,0)); }
+  function renderHhiBars(elId,data,markId){
+    const el=document.getElementById(elId); if(!el) return;
+    const max=Math.max(...data.map(d=>d.share));
+    el.innerHTML=data.map(d=>`
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <div style="width:70px;font-size:11px;color:var(--text-muted);flex-shrink:0;">${d.label}</div>
+        <div style="flex:1;height:12px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${d.share/max*100}%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:3px;"></div>
+        </div>
+        <div style="width:32px;font-size:11px;font-weight:700;text-align:right;">${d.share}%</div>
+      </div>`).join('');
+    const hhi=calcHHI(data);
+    const mk=document.getElementById(markId); if(!mk) return;
+    const level=hhi<1500?'Diversificado (saudavel)':hhi<2500?'Moderado':'Concentrado (risco)';
+    const cor=hhi<1500?'#10b981':hhi<2500?'#f59e0b':'#ef4444';
+    mk.innerHTML=`HHI: <b style="color:${cor};">${hhi}</b> — ${level}`;
+  }
+  function renderPropCanal(){
+    const el=document.getElementById('prop-canal-chart'); if(!el) return;
+    el.innerHTML=propCanalData.map(d=>`
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+        <div style="width:68px;font-size:10px;color:var(--text-muted);">${d.canal}</div>
+        <div style="flex:1;height:14px;border-radius:3px;overflow:hidden;display:flex;">
+          <div style="flex:${d.alta};background:#10b981;"></div>
+          <div style="flex:${d.media};background:#f59e0b;"></div>
+          <div style="flex:${d.baixa};background:#ef4444;"></div>
+        </div>
+        <div style="width:28px;font-size:10px;text-align:right;color:#10b981;">${d.alta}%</div>
+      </div>`).join('')+
+      '<div style="display:flex;gap:12px;margin-top:8px;font-size:10px;color:var(--text-muted);">'+
+      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#10b981;display:inline-block;"></span>Alta</span>'+
+      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#f59e0b;display:inline-block;"></span>Media</span>'+
+      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#ef4444;display:inline-block;"></span>Baixa</span></div>';
+  }
+  function getHeatVal(dia,hora){
+    const base=[[8,22,14,28,18,10,6],[12,38,18,44,32,14,8],[10,32,16,38,26,12,6],[14,28,20,36,24,10,8],[16,34,22,30,20,8,4],[6,10,8,12,8,4,2],[4,6,4,8,6,2,2]];
+    return base[dia][hora];
+  }
+  function renderHeatmap(){
+    const el=document.getElementById('heatmap-grid'); if(!el) return;
+    const dias=['Seg','Ter','Qua','Qui','Sex','Sab','Dom'];
+    const horas=['8h','10h','12h','14h','16h','18h','20h'];
+    let html='<table style="border-collapse:collapse;font-size:10px;width:100%;">';
+    html+='<tr><th style="padding:2px 4px;color:var(--text-muted);"></th>'+horas.map(h=>`<th style="padding:2px 3px;color:var(--text-muted);font-size:9px;">${h}</th>`).join('')+'</tr>';
+    dias.forEach((d,i)=>{
+      html+=`<tr><td style="padding:2px 6px 2px 0;font-size:10px;color:var(--text-muted);white-space:nowrap;">${d}</td>`;
+      for(let j=0;j<7;j++){
+        const v=getHeatVal(i,j);const op=(0.08+v/44*0.85).toFixed(2);
+        html+=`<td style="padding:1px;"><div style="width:100%;height:20px;background:rgba(124,58,237,${op});border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:8px;color:${v>24?'#fff':'var(--text-muted)'};">${v}%</div></td>`;
+      }
+      html+='</tr>';
+    });
+    html+='</table>';
+    el.innerHTML=html;
+  }
+  function renderLvr(){
+    const el=document.getElementById('lvr-chart'); if(!el) return;
+    const max=Math.max(...lvrData.map(d=>Math.abs(d.lvr)));
+    el.innerHTML='<div style="display:flex;flex-direction:column;gap:8px;">'+lvrData.map(d=>{
+      const pos=d.lvr>=0; const w=Math.abs(d.lvr)/max*100;
+      return `<div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:28px;font-size:10px;color:var(--text-muted);">${d.mes}</div>
+        <div style="flex:1;height:14px;background:var(--border);border-radius:3px;position:relative;overflow:hidden;">
+          <div style="position:absolute;${pos?'left:50%':'right:50%'};top:0;bottom:0;width:${w/2}%;background:${pos?'#10b981':'#ef4444'};"></div>
+          <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#2a3a55;"></div>
+        </div>
+        <div style="width:40px;font-size:11px;font-weight:700;color:${pos?'#10b981':'#ef4444'};text-align:right;">${pos?'+':''}${d.lvr}%</div>
+      </div>`;
+    }).join('')+'</div>';
+  }
+  function renderCpl(){
+    const el=document.getElementById('cpl-chart'); if(!el) return;
+    const max=Math.max(...cplData.map(d=>d.cplQ));
+    el.innerHTML='<div style="display:flex;flex-direction:column;gap:6px;">'+cplData.map(d=>`
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div style="width:68px;font-size:10px;color:var(--text-muted);">${d.canal}</div>
+        <div style="flex:1;position:relative;height:18px;">
+          <div style="height:100%;width:${d.cplQ/max*100}%;background:rgba(37,99,235,0.15);border-radius:3px;border:1px solid rgba(37,99,235,0.3);"></div>
+          <div style="position:absolute;top:0;left:0;height:100%;width:${d.cpl/max*100}%;background:var(--primary);border-radius:3px;opacity:0.8;"></div>
+        </div>
+        <div style="width:44px;font-size:10px;text-align:right;color:var(--text-muted);">R$${d.cpl}/<b style="color:var(--text);">R$${d.cplQ}</b></div>
+      </div>`).join('')+'</div>'+
+      '<div style="display:flex;gap:12px;margin-top:8px;font-size:10px;color:var(--text-muted);">'+
+      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:6px;border-radius:2px;background:var(--primary);display:inline-block;"></span>CPL Bruto</span>'+
+      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:6px;border-radius:2px;background:rgba(37,99,235,0.3);border:1px solid rgba(37,99,235,0.5);display:inline-block;"></span>CPL Qualificado</span></div>';
+  }
+  function renderLqi(){
+    const el=document.getElementById('lqi-chart'); if(!el) return;
+    const lqiData=[
+      {canal:'Indicacao',score:87},{canal:'WhatsApp',score:82},{canal:'Organico',score:76},
+      {canal:'Google',score:72},{canal:'Instagram',score:64},{canal:'Facebook',score:58},
+      {canal:'Email',score:54},{canal:'YouTube',score:44},
+    ];
+    const max=100;
+    el.innerHTML='<div style="display:flex;flex-direction:column;gap:6px;">'+lqiData.map(d=>{
+      const cor=d.score>=75?'#10b981':d.score>=60?'#f59e0b':'#ef4444';
+      return `<div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:68px;font-size:10px;color:var(--text-muted);">${d.canal}</div>
+        <div style="flex:1;height:12px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${d.score}%;background:${cor};border-radius:3px;"></div>
+        </div>
+        <div style="width:28px;font-size:11px;font-weight:700;color:${cor};text-align:right;">${d.score}</div>
+      </div>`;
+    }).join('')+'</div>';
+  }
+  function renderDup(){
+    const el=document.getElementById('dup-chart'); if(!el) return;
+    const dupData=[
+      {canal:'Facebook',pct:8.4},{canal:'Instagram',pct:6.2},{canal:'Email',pct:5.8},
+      {canal:'YouTube',pct:4.1},{canal:'Google',pct:3.2},{canal:'Organico',pct:2.1},
+      {canal:'WhatsApp',pct:1.4},{canal:'Indicacao',pct:0.8},
+    ];
+    el.innerHTML='<div style="display:flex;flex-direction:column;gap:6px;">'+dupData.map(d=>{
+      const cor=d.pct>=7?'#ef4444':d.pct>=4?'#f59e0b':'#10b981';
+      return `<div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:68px;font-size:10px;color:var(--text-muted);">${d.canal}</div>
+        <div style="flex:1;height:12px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${d.pct/10*100}%;background:${cor};border-radius:3px;"></div>
+        </div>
+        <div style="width:32px;font-size:11px;font-weight:700;color:${cor};text-align:right;">${d.pct}%</div>
+      </div>`;
+    }).join('')+'</div>';
   }
 
-  function conectarPlat(btn, nome){
-    showNotification('Solicitacao de nova integracao enviada para a InForge: '+nome+'.');
-    const card = btn.closest('.avail-card');
-    if(card){ card.style.opacity='1'; card.style.borderStyle='solid'; card.style.borderColor='var(--success)'; }
-    btn.textContent = 'Solicitado';
-    btn.disabled = true;
-    btn.style.opacity = '.6';
-    btn.style.cursor = 'default';
+  // ── FUNIL INTELIGENTE ──
+  let funilRendered=false;
+  function renderFunil(){
+    if(funilRendered) return; funilRendered=true;
+    const funilStages=[
+      {label:'Leads Totais',n:8240,pct:100,cor:'#6b7fa0'},
+      {label:'Qualificados',n:2820,pct:34.2,cor:'#63b3ed'},
+      {label:'MQL',n:1541,pct:18.7,cor:'#7c3aed'},
+      {label:'SQL',n:842,pct:10.2,cor:'#2563eb'},
+      {label:'Proposta',n:512,pct:6.2,cor:'#10b981'},
+      {label:'Fechado (Won)',n:267,pct:3.2,cor:'#059669'},
+    ];
+    const fb=document.getElementById('funil-bars');
+    if(fb) fb.innerHTML=funilStages.map(s=>`
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:100px;font-size:11px;color:var(--text-muted);flex-shrink:0;">${s.label}</div>
+        <div style="flex:1;height:22px;background:var(--border);border-radius:4px;overflow:hidden;">
+          <div style="height:100%;width:${s.pct}%;background:${s.cor};border-radius:4px;display:flex;align-items:center;padding-left:8px;">
+            <span style="font-size:10px;font-weight:700;color:#fff;">${s.n.toLocaleString('pt-BR')}</span>
+          </div>
+        </div>
+        <div style="width:36px;font-size:11px;font-weight:700;text-align:right;">${s.pct}%</div>
+      </div>`).join('');
+    const ttcData=[
+      {canal:'WhatsApp',dias:1.8,cor:'#25d366'},{canal:'Indicacao',dias:2.1,cor:'#f59e0b'},
+      {canal:'Instagram',dias:4.2,cor:'#e1306c'},{canal:'Facebook',dias:5.1,cor:'#1877f2'},
+      {canal:'Google Ads',dias:6.8,cor:'#4285f4'},{canal:'Mkt. Livre',dias:8.3,cor:'#ffe600'},
+      {canal:'Email',dias:9.7,cor:'#7c3aed'},{canal:'Organico',dias:12.4,cor:'#10b981'},
+    ];
+    const maxDias=Math.max(...ttcData.map(d=>d.dias));
+    const ttc=document.getElementById('ttc-bars');
+    if(ttc) ttc.innerHTML=ttcData.map(d=>`
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:80px;font-size:11px;color:var(--text-muted);flex-shrink:0;">${d.canal}</div>
+        <div style="flex:1;height:14px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${d.dias/maxDias*100}%;background:${d.cor};border-radius:3px;opacity:.85;"></div>
+        </div>
+        <div style="width:40px;font-size:11px;font-weight:700;text-align:right;">${d.dias}d</div>
+      </div>`).join('');
+    const dropData=[
+      {etapa:'Lead → Qualificacao',pct:65.8,motivo:'Sem perfil / dados invalidos'},
+      {etapa:'Qualif. → MQL',pct:45.4,motivo:'Baixa intencao de compra'},
+      {etapa:'MQL → SQL',pct:31.2,motivo:'Fora do momento de compra'},
+      {etapa:'SQL → Proposta',pct:18.7,motivo:'Orcamento insuficiente'},
+      {etapa:'Proposta → Won',pct:12.3,motivo:'Escolheu concorrente'},
+    ];
+    const dr=document.getElementById('dropout-bars');
+    if(dr) dr.innerHTML=dropData.map(d=>`
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;">
+          <span>${d.etapa}</span><span style="color:#ef4444;font-weight:700;">${d.pct}% saem</span>
+        </div>
+        <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:2px;">
+          <div style="height:100%;width:${d.pct}%;background:linear-gradient(90deg,#ef4444,#f87171);border-radius:4px;"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text-muted);">${d.motivo}</div>
+      </div>`).join('');
   }
 
-  // ── NOTIFICATION ──
-  function showNotification(msg){
-    const el = document.getElementById('notification');
-    document.getElementById('notification-text').textContent = msg;
-    el.classList.add('show');
-    setTimeout(()=>el.classList.remove('show'), 3500);
+  // ── SCORE & PERFIL ──
+  let scoreRendered=false;
+  function renderScore(){
+    if(scoreRendered) return; scoreRendered=true;
+    const leads=[
+      {nome:'Acme Logistica',cidade:'SP',cluster:'Decisor B2B',icp:94,score:96,prob:'91%',cor:'#10b981'},
+      {nome:'Farma Sul Ltda',cidade:'RS',cluster:'Expansao',icp:88,score:91,prob:'84%',cor:'#10b981'},
+      {nome:'Tech Inovacoes',cidade:'SP',cluster:'Early Adopter',icp:82,score:87,prob:'79%',cor:'#10b981'},
+      {nome:'Nortel Distrib.',cidade:'MG',cluster:'Custo-Benef.',icp:76,score:81,prob:'71%',cor:'#63b3ed'},
+      {nome:'Clinica Total',cidade:'RJ',cluster:'SMB Servico',icp:71,score:75,prob:'62%',cor:'#63b3ed'},
+      {nome:'Grupo Santos',cidade:'BA',cluster:'Expansao',icp:65,score:68,prob:'48%',cor:'#f59e0b'},
+      {nome:'DataFlow SA',cidade:'PR',cluster:'Early Adopter',icp:58,score:62,prob:'34%',cor:'#f59e0b'},
+    ];
+    const tb=document.getElementById('score-table-body');
+    if(tb) tb.innerHTML=leads.map(l=>`<tr style="border-bottom:1px solid rgba(42,58,85,0.5);">
+      <td style="padding:8px 14px;"><div style="font-weight:600;font-size:12px;">${l.nome}</div><div style="font-size:10px;color:var(--text-muted);">${l.cidade}</div></td>
+      <td style="padding:8px;text-align:center;"><span style="background:rgba(124,58,237,0.15);color:#a78bfa;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700;">${l.score}</span></td>
+      <td style="padding:8px;text-align:center;font-size:11px;font-weight:700;color:${l.cor};">${l.icp}%</td>
+      <td style="padding:8px;text-align:center;font-size:10px;color:var(--text-muted);">${l.cluster}</td>
+      <td style="padding:8px;text-align:center;font-size:12px;font-weight:700;color:${l.cor};">${l.prob}</td>
+    </tr>`).join('');
+    const rfmCells=[
+      {label:'Champions',n:312,cor:'#059669',desc:'Recentes e frequentes'},{label:'Loyal',n:487,cor:'#10b981',desc:'Clientes fieis'},
+      {label:'Potencial',n:623,cor:'#63b3ed',desc:'Recentes, pouco freq.'},{label:'Em Risco',n:298,cor:'#f59e0b',desc:'Esfriando'},
+      {label:'Hibernando',n:412,cor:'#6b7fa0',desc:'Baixa atividade'},{label:'Perdidos',n:187,cor:'#ef4444',desc:'Sem atividade'},
+    ];
+    const rfm=document.getElementById('rfm-grid');
+    if(rfm) rfm.innerHTML=rfmCells.map(c=>`
+      <div style="background:rgba(42,58,85,0.4);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+        <div style="font-size:10px;font-weight:700;color:${c.cor};margin-bottom:4px;">${c.label}</div>
+        <div style="font-size:18px;font-weight:800;">${c.n}</div>
+        <div style="font-size:9px;color:var(--text-muted);margin-top:2px;">${c.desc}</div>
+      </div>`).join('');
+    const clusters=[
+      {name:'Decisor B2B',cor:'#7c3aed',pts:[[260,40],[280,55],[245,35],[270,45],[255,50]]},
+      {name:'Early Adopter',cor:'#10b981',pts:[[200,80],[220,70],[210,90],[195,75],[215,85]]},
+      {name:'Custo-Benef.',cor:'#f59e0b',pts:[[130,100],[145,115],[120,108],[138,95],[125,120]]},
+      {name:'Expansao',cor:'#63b3ed',pts:[[170,140],[185,130],[160,150],[178,145],[168,135]]},
+      {name:'SMB Servico',cor:'#e1306c',pts:[[80,155],[95,165],[75,148],[88,170],[100,158]]},
+    ];
+    const svg=document.getElementById('cluster-svg');
+    if(svg) clusters.forEach(cl=>cl.pts.forEach(([x,y])=>{
+      const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',5);
+      c.setAttribute('fill',cl.cor);c.setAttribute('opacity','0.75');svg.appendChild(c);
+    }));
+    const leg=document.getElementById('cluster-legend');
+    if(leg) leg.innerHTML=clusters.map(c=>`<span style="display:flex;align-items:center;gap:4px;color:var(--text-muted);"><span style="width:8px;height:8px;border-radius:50%;background:${c.cor};display:inline-block;"></span>${c.name}</span>`).join('');
+    const icpSvg=document.getElementById('icp-svg'); if(!icpSvg) return;
+    const dims=['Porte','Setor','Regiao','Urgencia','Budget','Maturidade'];
+    const vals=[0.82,0.74,0.91,0.68,0.77,0.60];
+    const cx=140,cy=95,r=70,n=dims.length;
+    const toXY=(i,v)=>{const a=(Math.PI*2*i/n)-Math.PI/2;return[cx+Math.cos(a)*r*v,cy+Math.sin(a)*r*v];};
+    [0.25,0.5,0.75,1.0].forEach(t=>{
+      const pts=dims.map((_,i)=>toXY(i,t).join(',')).join(' ');
+      const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+      poly.setAttribute('points',pts);poly.setAttribute('fill','none');
+      poly.setAttribute('stroke','#2a3a55');poly.setAttribute('stroke-width','1');icpSvg.appendChild(poly);
+    });
+    dims.forEach((_,i)=>{
+      const[x,y]=toXY(i,1);
+      const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',cx);ln.setAttribute('y1',cy);ln.setAttribute('x2',x);ln.setAttribute('y2',y);
+      ln.setAttribute('stroke','#2a3a55');ln.setAttribute('stroke-width','1');icpSvg.appendChild(ln);
+      const tx=document.createElementNS('http://www.w3.org/2000/svg','text');
+      const[lx,ly]=toXY(i,1.25);tx.setAttribute('x',lx);tx.setAttribute('y',ly);
+      tx.setAttribute('text-anchor','middle');tx.setAttribute('fill','#8896b0');tx.setAttribute('font-size','9');
+      tx.textContent=dims[i];icpSvg.appendChild(tx);
+    });
+    const dataPts=vals.map((_,i)=>toXY(i,vals[i]).join(',')).join(' ');
+    const dp=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    dp.setAttribute('points',dataPts);dp.setAttribute('fill','rgba(99,179,237,0.2)');
+    dp.setAttribute('stroke','#63b3ed');dp.setAttribute('stroke-width','2');icpSvg.appendChild(dp);
   }
+
+  // ── ROI & ATRIBUICAO ──
+  let roiRendered=false;
+  function renderRoi(){
+    if(roiRendered) return; roiRendered=true;
+    const roasData=[
+      {canal:'Indicacao',roas:9.4,cor:'#10b981'},{canal:'Email Mkt',roas:6.2,cor:'#7c3aed'},
+      {canal:'Organico',roas:5.8,cor:'#059669'},{canal:'Instagram',roas:4.8,cor:'#e1306c'},
+      {canal:'Google Ads',roas:3.9,cor:'#4285f4'},{canal:'Mkt. Livre',roas:3.1,cor:'#ffe600'},
+      {canal:'Facebook',roas:2.7,cor:'#1877f2'},{canal:'YouTube',roas:2.1,cor:'#ff0000'},
+    ];
+    const maxR=Math.max(...roasData.map(d=>d.roas));
+    const rb=document.getElementById('roas-bars');
+    if(rb) rb.innerHTML=roasData.map(d=>`
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:80px;font-size:11px;color:var(--text-muted);flex-shrink:0;">${d.canal}</div>
+        <div style="flex:1;height:14px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${d.roas/maxR*100}%;background:${d.cor};border-radius:3px;opacity:.85;"></div>
+        </div>
+        <div style="width:36px;font-size:11px;font-weight:700;color:${d.roas>=4?'var(--success)':d.roas>=3?'var(--warning)':'#ef4444'};text-align:right;">${d.roas}x</div>
+      </div>`).join('');
+    const cltv=[
+      {seg:'Enterprise',cac:2800,ltv:18400,vol:84,cor:'#63b3ed'},
+      {seg:'Pro',cac:1200,ltv:7200,vol:312,cor:'#7c3aed'},
+      {seg:'Basico',cac:420,ltv:1800,vol:841,cor:'#10b981'},
+      {seg:'Trial',cac:180,ltv:920,vol:203,cor:'#f59e0b'},
+    ];
+    const svg=document.getElementById('cac-ltv-svg');
+    if(svg){
+      cltv.forEach(d=>{
+        const rx=40+d.cac/3000*285, ry=175-d.ltv/20000*160;
+        const rad=Math.sqrt(d.vol)*1.8;
+        const ci=document.createElementNS('http://www.w3.org/2000/svg','circle');
+        ci.setAttribute('cx',rx);ci.setAttribute('cy',ry);ci.setAttribute('r',rad);
+        ci.setAttribute('fill',d.cor);ci.setAttribute('opacity','0.6');svg.appendChild(ci);
+        const tx=document.createElementNS('http://www.w3.org/2000/svg','text');
+        tx.setAttribute('x',rx);tx.setAttribute('y',ry-rad-3);tx.setAttribute('text-anchor','middle');
+        tx.setAttribute('fill',d.cor);tx.setAttribute('font-size','9');tx.setAttribute('font-weight','700');
+        tx.textContent=d.seg;svg.appendChild(tx);
+      });
+    }
+    const pbData=[
+      {seg:'Enterprise',meses:4.2,ok:true},{seg:'Pro',meses:7.8,ok:true},
+      {seg:'Basico',meses:11.2,ok:true},{seg:'Trial',meses:14.6,ok:false},
+    ];
+    const pb=document.getElementById('payback-bars');
+    if(pb) pb.innerHTML=pbData.map(d=>`
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
+          <span>${d.seg}</span><span style="font-weight:700;color:${d.ok?'var(--success)':'#ef4444'};">${d.meses} meses</span>
+        </div>
+        <div style="height:10px;background:var(--border);border-radius:5px;overflow:hidden;">
+          <div style="height:100%;width:${Math.min(d.meses/18*100,100)}%;background:${d.ok?'linear-gradient(90deg,#10b981,#059669)':'linear-gradient(90deg,#ef4444,#f87171)'};border-radius:5px;"></div>
+        </div>
+      </div>`).join('');
+    const colors={Instagram:'#e1306c',Google:'#4285f4',Email:'#7c3aed',Outros:'#6b7fa0'};
+    const attrModels=[
+      {model:'First Touch',vals:{Instagram:40,Google:15,Email:20,Outros:25}},
+      {model:'Last Touch',vals:{Instagram:12,Google:48,Email:22,Outros:18}},
+      {model:'Linear',vals:{Instagram:25,Google:28,Email:24,Outros:23}},
+      {model:'Time Decay',vals:{Instagram:15,Google:38,Email:28,Outros:19}},
+    ];
+    const ag=document.getElementById('attribution-grid');
+    if(ag) ag.innerHTML=attrModels.map(m=>`
+      <div>
+        <div style="font-size:11px;font-weight:700;margin-bottom:4px;">${m.model}</div>
+        <div style="display:flex;height:16px;border-radius:4px;overflow:hidden;gap:1px;">
+          ${Object.entries(m.vals).map(([k,v])=>`<div style="flex:${v};background:${colors[k]};opacity:.85;" title="${k}: ${v}%"></div>`).join('')}
+        </div>
+        <div style="display:flex;gap:8px;margin-top:3px;">
+          ${Object.entries(m.vals).map(([k,v])=>`<span style="font-size:9px;color:${colors[k]};">${k} ${v}%</span>`).join('')}
+        </div>
+      </div>`).join('');
+  }
+
+  // ── COMPORTAMENTO & MERCADO ──
+  let comportamentoRendered=false;
+  function renderComportamento(){
+    if(comportamentoRendered) return; comportamentoRendered=true;
+    const dias=['Seg','Ter','Qua','Qui','Sex','Sab','Dom'];
+    const horas=['8h','10h','12h','14h','16h','18h','20h'];
+    const heatVals=[[22,38,18,41,35,12,8],[28,52,24,48,44,14,6],[24,46,20,44,38,10,5],[20,40,22,46,36,11,7],[26,44,26,40,28,9,4],[8,14,10,12,10,6,3],[4,8,6,9,7,3,2]];
+    const maxH=52;
+    const sh=document.getElementById('season-heatmap');
+    if(sh){
+      let html='<table style="border-collapse:collapse;font-size:10px;width:100%;">';
+      html+='<tr><th style="padding:2px 4px;color:var(--text-muted);"></th>'+horas.map(h=>`<th style="padding:4px 6px;color:var(--text-muted);font-weight:600;">${h}</th>`).join('')+'</tr>';
+      dias.forEach((d,i)=>{
+        html+=`<tr><td style="padding:4px 8px 4px 0;color:var(--text-muted);font-weight:600;white-space:nowrap;">${d}</td>`;
+        horas.forEach((_,j)=>{
+          const v=heatVals[i][j];const op=(0.1+v/maxH*0.85).toFixed(2);
+          html+=`<td style="padding:2px;"><div style="width:100%;height:22px;background:rgba(124,58,237,${op});border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:${v>30?'#fff':'var(--text-muted)'};">${v}%</div></td>`;
+        });
+        html+='</tr>';
+      });
+      html+='</table>';
+      sh.innerHTML=html;
+    }
+    const engDist=[
+      {faixa:'0-20 (Frio)',pct:8,n:659,cor:'#ef4444'},{faixa:'21-40',pct:14,n:1154,cor:'#f59e0b'},
+      {faixa:'41-60 (Morno)',pct:34,n:2802,cor:'#6b7fa0'},{faixa:'61-80',pct:22,n:1813,cor:'#63b3ed'},
+      {faixa:'81-100 (Quente)',pct:22,n:1812,cor:'#10b981'},
+    ];
+    const ed=document.getElementById('engagement-dist');
+    if(ed) ed.innerHTML=engDist.map(d=>`
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:115px;font-size:10px;color:var(--text-muted);flex-shrink:0;">${d.faixa}</div>
+        <div style="flex:1;height:14px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${d.pct*2.5}%;background:${d.cor};border-radius:3px;opacity:.85;"></div>
+        </div>
+        <div style="width:50px;text-align:right;font-size:10px;color:var(--text-muted);">${d.n.toLocaleString('pt-BR')}</div>
+      </div>`).join('');
+    const jSteps=[
+      {step:1,touchpoint:'1 Anuncio (Awareness)',canal:'Instagram / Google',tempo:'D+0',conv:'100%'},
+      {step:2,touchpoint:'Clique na Landing Page',canal:'Trafego pago',tempo:'D+0',conv:'18,4%'},
+      {step:3,touchpoint:'Formulario Preenchido',canal:'Site / LP',tempo:'D+1',conv:'9,2%'},
+      {step:4,touchpoint:'Email de Nurturing',canal:'Email Mkt',tempo:'D+3',conv:'6,8%'},
+      {step:5,touchpoint:'Retargeting Ad',canal:'Facebook/Google',tempo:'D+7',conv:'4,1%'},
+      {step:6,touchpoint:'Contato Comercial',canal:'WhatsApp / Tel',tempo:'D+10',conv:'3,2%'},
+    ];
+    const js=document.getElementById('journey-steps');
+    if(js) js.innerHTML=jSteps.map((s,i)=>`
+      <div style="display:flex;gap:10px;align-items:flex-start;${i<jSteps.length-1?'padding-bottom:8px;border-bottom:1px solid rgba(42,58,85,0.4);margin-bottom:4px;':''}">
+        <div style="width:20px;height:20px;border-radius:50%;background:rgba(124,58,237,0.2);border:1px solid rgba(124,58,237,0.4);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--primary);flex-shrink:0;">${s.step}</div>
+        <div style="flex:1;">
+          <div style="font-size:12px;font-weight:600;">${s.touchpoint}</div>
+          <div style="font-size:10px;color:var(--text-muted);">${s.canal} &middot; ${s.tempo}</div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:${i===0?'var(--text)':i<3?'var(--cyan)':'var(--success)'};">${s.conv}</div>
+      </div>`).join('');
+    const penData=[
+      {uf:'SP',leads:1823,lq:1.42,cor:'#10b981'},{uf:'RJ',leads:892,lq:1.18,cor:'#10b981'},
+      {uf:'RS',leads:412,lq:1.08,cor:'#63b3ed'},{uf:'PR',leads:387,lq:1.03,cor:'#63b3ed'},
+      {uf:'MG',leads:641,lq:0.94,cor:'#f59e0b'},{uf:'SC',leads:276,lq:0.87,cor:'#f59e0b'},
+      {uf:'GO',leads:198,lq:0.72,cor:'#ef4444'},{uf:'CE',leads:187,lq:0.61,cor:'#ef4444'},
+    ];
+    const maxL=penData[0].leads;
+    const pen=document.getElementById('penetracao-bars');
+    if(pen) pen.innerHTML=penData.map(d=>`
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:26px;font-size:11px;font-weight:700;">${d.uf}</div>
+        <div style="flex:1;height:12px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${d.leads/maxL*100}%;background:${d.cor};border-radius:3px;opacity:.8;"></div>
+        </div>
+        <div style="width:52px;font-size:10px;text-align:right;color:var(--text-muted);">${d.leads.toLocaleString('pt-BR')}</div>
+        <div style="width:38px;font-size:10px;font-weight:700;text-align:right;color:${d.cor};">LQ ${d.lq}</div>
+      </div>`).join('');
+  }
+
 </script>
 </body>
 </html>
