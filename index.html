@@ -2778,9 +2778,6 @@
         + '<td style="padding:10px 8px;text-align:center"><span style="font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:12px;background:' + uc + '22;color:' + uc + '">' + d.urgencia + '</span></td>'
         + '<td style="padding:10px 8px;font-size:.78rem;color:var(--muted)">' + d.canal + '</td>'
         + '<td style="padding:10px 8px;font-size:.78rem;color:var(--muted)">' + d.hora + '</td>'
-        + '<td style="padding:10px 8px">'
-          + '<button style="padding:5px 12px;border-radius:6px;font-size:.75rem;font-weight:600;background:var(--accent);color:#fff;border:none;cursor:pointer" onclick="alert("Contato: " + d.nome)">Contatar</button>'
-        + '</td>'
         + '</tr>';
     }).join('');
     document.getElementById('pred-leads-table').innerHTML =
@@ -2793,7 +2790,6 @@
       + '<th style="padding:8px;font-size:.72rem;color:var(--muted);text-align:center;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Urgencia</th>'
       + '<th style="padding:8px;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Canal</th>'
       + '<th style="padding:8px;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Melhor Hora</th>'
-      + '<th style="padding:8px;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Acao</th>'
       + '</thead><tbody>' + rows + '</tbody></table></div>';
   }
 
