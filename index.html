@@ -2298,11 +2298,18 @@
           .attr('d',path).attr('fill',function(d){ var n=(d.properties.name||d.properties.NM_MUN||'x'); var h=0; for(var i=0;i<n.length;i++) h=(h*31+n.charCodeAt(i))&0xffff; var t=(h%100)/100; return t>0.7?'#6d28d9':t>0.45?'#8b5cf6':t>0.25?'#c4b5fd':t>0.1?'#ede9fe':'#f5f3ff'; }).attr('stroke','#0d1220').attr('stroke-width',0.5)
           .style('cursor','pointer')
           .on('mouseover',function(e,d){
-            d3.select(this).attr('fill','#7c3aed');
+            d3.select(this).attr('fill','#f0abfc');
             const n=d.properties.name||d.properties.NM_MUN||'';
             showMapTooltip(e,n,Math.floor(Math.random()*120));
           })
-          .on('mouseout',function(){d3.select(this).attr('fill','#1e3a5a');hideMapTooltip();});
+          .on('mouseout',function(e,d){
+            var n=(d.properties.name||d.properties.NM_MUN||'x');
+            var h=0; for(var i=0;i<n.length;i++) h=(h*31+n.charCodeAt(i))&0xffff;
+            var t=(h%100)/100;
+            var c=t>0.7?'#6d28d9':t>0.45?'#8b5cf6':t>0.25?'#c4b5fd':t>0.1?'#ede9fe':'#f5f3ff';
+            d3.select(this).attr('fill',c);
+            hideMapTooltip();
+          });
         const back=document.getElementById('map-back-btn');
         if(back) back.style.display='inline-flex';
         const titulo=document.getElementById('mapa-titulo');
