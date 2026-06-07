@@ -569,6 +569,10 @@
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 00-8 8c0 5.4 7.05 11.5 7.72 12.06a.5.5 0 00.56 0C12.95 21.5 20 15.4 20 10a8 8 0 00-8-8z"/></svg>
         Localizacao
       </div>
+      <div class="nav-item" onclick="showPage('base')" id="nav-base">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        Minha Base
+      </div>
       <div class="nav-item" onclick="showPage('predicao')" id="nav-predicao">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 2l20 10L2 22V2z"/><path d="M12 12h8"/></svg>
         Priorizacao de Leads
@@ -2182,6 +2186,96 @@
         </div>
       </div><!-- /page-comportamento -->
 
+
+      <div class="page" id="page-base">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:4px">Total visível</div>
+            <div id="base-count" style="font-size:1.5rem;font-weight:800;color:var(--accent)">—</div>
+          </div>
+          <button onclick="baixarCSV()" style="display:flex;align-items:center;gap:8px;padding:10px 22px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:.88rem;font-weight:700;cursor:pointer;">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar CSV
+          </button>
+        </div>
+
+        <!-- Filtros -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+          <div style="font-size:.82rem;font-weight:700;color:var(--text-muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.06em">Filtros</div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Estado</div>
+              <select id="bf-estado" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:120px;">
+                <option value="">Todos</option>
+                <option>SP</option><option>RJ</option><option>MG</option><option>RS</option><option>PR</option>
+                <option>SC</option><option>BA</option><option>GO</option><option>PE</option><option>CE</option>
+                <option>PA</option><option>AM</option><option>MS</option><option>MT</option><option>ES</option>
+                <option>PB</option><option>RN</option><option>AL</option><option>PI</option><option>MA</option>
+                <option>SE</option><option>RO</option><option>TO</option><option>AC</option><option>AP</option>
+                <option>RR</option><option>DF</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Canal</div>
+              <select id="bf-canal" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:130px;">
+                <option value="">Todos</option>
+                <option>Google Ads</option><option>Meta Ads</option><option>LinkedIn Ads</option>
+                <option>Email Marketing</option><option>Indicacao</option><option>Organico</option>
+                <option>Evento</option><option>Outbound</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Score</div>
+              <select id="bf-score" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:110px;">
+                <option value="">Todos</option>
+                <option value="alto">Alto (70+)</option>
+                <option value="medio">Médio (40–69)</option>
+                <option value="baixo">Baixo (&lt;40)</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Urgência</div>
+              <select id="bf-urgencia" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:110px;">
+                <option value="">Todas</option>
+                <option>Alta</option><option>Media</option><option>Baixa</option><option>Frio</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Etapa do Funil</div>
+              <select id="bf-etapa" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:150px;">
+                <option value="">Todas</option>
+                <option>Prospeccao</option><option>Qualificacao</option><option>Proposta</option>
+                <option>Negociacao</option><option>Fechamento</option><option>Pos-venda</option>
+              </select>
+            </div>
+            <button onclick="limparFiltrosBase()" style="padding:8px 18px;background:var(--border);border:none;border-radius:8px;color:var(--text-muted);font-size:.83rem;cursor:pointer;">Limpar</button>
+          </div>
+        </div>
+
+        <!-- Tabela -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:.83rem;">
+              <thead>
+                <tr style="background:var(--bg);border-bottom:2px solid var(--border);">
+                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Lead</th>
+                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Contato</th>
+                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Cidade/UF</th>
+                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Canal</th>
+                  <th style="padding:12px 16px;text-align:center;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Score</th>
+                  <th style="padding:12px 16px;text-align:center;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">P(conv)</th>
+                  <th style="padding:12px 16px;text-align:center;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Urgência</th>
+                  <th style="padding:12px 16px;text-align:center;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Tendência</th>
+                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Etapa</th>
+                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Última Interação</th>
+                </tr>
+              </thead>
+              <tbody id="base-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div><!-- /page-base -->
+
     </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /app -->
@@ -2252,6 +2346,7 @@
     score:    ['Score & Perfil','Lead Scoring Preditivo, ICP, RFM e Clustering de Leads'],
     roi:      ['ROI & Atribuicao','CAC vs LTV, ROAS, Payback Period e Attribution Modeling'],
     comportamento: ['Comportamento & Mercado','Engagement Score, Sazonalidade, Jornada e Penetracao'],
+    base: ['Minha Base','Todos os seus leads processados — filtre, analise e baixe'],
   };
   function showPage(name){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -2273,6 +2368,7 @@
     if(name==='score')         setTimeout(renderScore,        80);
     if(name==='roi')           setTimeout(renderRoi,          80);
     if(name==='comportamento') setTimeout(renderComportamento,80);
+    if(name==='base')          setTimeout(renderBase,         80);
   }
 
   // ── MAP ──
@@ -3182,6 +3278,173 @@
         +'</div>';
     }).join('');
   }
+
+  // ── MINHA BASE ──
+  var baseRendered = false;
+  var baseLeads = (function(){
+    var nomes = ['Ana Lima','Carlos Souza','Fernanda Costa','Ricardo Pereira','Juliana Mendes',
+      'Bruno Alves','Patricia Santos','Marcos Oliveira','Camila Rocha','Diego Ferreira',
+      'Larissa Nunes','Felipe Cardoso','Aline Moreira','Gustavo Araujo','Renata Gomes',
+      'Thiago Barbosa','Vanessa Castro','Eduardo Melo','Isabela Dias','Lucas Ribeiro',
+      'Mariana Farias','Andre Pinto','Beatriz Lopes','Rodrigo Vieira','Stephanie Lima',
+      'Henrique Nascimento','Leticia Campos','Daniel Teixeira','Priscila Monteiro','Rafael Cunha',
+      'Giovanna Freitas','Leandro Carvalho','Tatiane Borges','Alexandre Ramos','Debora Azevedo',
+      'Jonathan Cruz','Natalia Correia','Fabio Pires','Cintia Moura','Otavio Silveira',
+      'Denise Queiroz','Vitor Novaes','Paula Macedo','Sebastiao Brito','Elaine Rezende',
+      'Caio Fonseca','Adriana Valente','Flavio Sampaio','Simone Andrade','Murilo Tavares'];
+    var empresas = ['Alpha Ltda','Beta Comercio','Gama Industria','Delta ME','Epsilon Tech',
+      'Zeta Varejo','Eta Logistica','Theta Financas','Iota Servicos','Kappa Distribuidora',
+      'Lambda Solucoes','Mu Construtora','Nu Digital','Xi Agro','Omicron Saude',
+      'Pi Educacao','Rho Turismo','Sigma Auto','Tau Energia','Upsilon Telecom',
+      'Phi Imobiliaria','Chi Seguradora','Psi Consultoria','Omega Farmacia','Alpha2 Petshop',
+      'Beta2 Academia','Gama2 Restaurante','Delta2 Clinica','Epsilon2 Advocacia','Zeta2 Contabil',
+      'Eta2 RH','Theta2 TI','Iota2 Grafica','Kappa2 Transporte','Lambda2 Seguranca',
+      'Mu2 Limpeza','Nu2 Eletrica','Xi2 Hidraulica','Omicron2 Pintura','Pi2 Marcenaria',
+      'Rho2 Borracharia','Sigma2 Mecanica','Tau2 Funilaria','Upsilon2 Vidracaria','Phi2 Serralheria',
+      'Chi2 Soldagem','Psi2 Refrigeracao','Omega2 Ar Condicionado','Alpha3 Piscinas','Beta3 Jardins'];
+    var cidades = ['Sao Paulo/SP','Rio de Janeiro/RJ','Belo Horizonte/MG','Curitiba/PR','Porto Alegre/RS',
+      'Salvador/BA','Fortaleza/CE','Recife/PE','Goiania/GO','Manaus/AM',
+      'Florianopolis/SC','Vitoria/ES','Campinas/SP','Santos/SP','Ribeirao Preto/SP',
+      'Sao Jose dos Campos/SP','Sorocaba/SP','Osasco/SP','Santo Andre/SP','Guarulhos/SP',
+      'Natal/RN','Joao Pessoa/PB','Maceio/AL','Aracaju/SE','Teresina/PI',
+      'Cuiaba/MT','Campo Grande/MS','Porto Velho/RO','Macapa/AP','Boa Vista/RR',
+      'Palmas/TO','Rio Branco/AC','Sao Luis/MA','Belem/PA','Macaae/RJ',
+      'Niteroi/RJ','Duque de Caxias/RJ','Londrina/PR','Maringa/PR','Foz do Iguacu/PR',
+      'Caxias do Sul/RS','Pelotas/RS','Joinville/SC','Blumenau/SC','Chapeco/SC',
+      'Uberlandia/MG','Contagem/MG','Juiz de Fora/MG','Montes Claros/MG','Betim/MG'];
+    var canais = ['Instagram','Google Ads','Facebook','Indicacao','Organico','Email','YouTube','WhatsApp'];
+    var etapas = ['Awareness','Interesse','Consideracao','Intencao','Avaliacao','Conversao'];
+    var arr = [];
+    for(var i=0;i<50;i++){
+      var score = Math.round(20 + Math.random()*78);
+      var pconv  = Math.round(score*0.9 + Math.random()*10);
+      var urg = score>75?'Alta':score>50?'Media':score>30?'Baixa':'Frio';
+      var tend = score>70?'up':score>45?'stable':'down';
+      arr.push({
+        id: i+1,
+        nome: nomes[i],
+        empresa: empresas[i],
+        cidade: cidades[i],
+        estado: cidades[i].split('/')[1],
+        tel: '('+['11','21','31','41','51','71','85','81','62'][i%9]+') 9'+String(Math.floor(10000000+Math.random()*89999999)),
+        email: nomes[i].split(' ')[0].toLowerCase()+'.'+nomes[i].split(' ')[1].toLowerCase()+'@'+empresas[i].split(' ')[0].toLowerCase()+'.com.br',
+        canal: canais[i%8],
+        score: score,
+        pconv: pconv,
+        ltv: 'R$'+(Math.round((score*180+Math.random()*5000)/100)*100).toLocaleString('pt-BR'),
+        urgencia: urg,
+        tendencia: tend,
+        etapa: etapas[Math.floor(Math.random()*6)],
+        data: ['07/06','06/06','05/06','04/06','03/06'][i%5]
+      });
+    }
+    return arr;
+  })();
+
+  function renderBase(filtros){
+    if(baseRendered && !filtros){ baseRendered=true; return; }
+    baseRendered = true;
+    _renderBaseTable(filtros||{});
+  }
+
+  function _renderBaseTable(f){
+    var dados = baseLeads.filter(function(d){
+      if(f.estado && d.estado !== f.estado) return false;
+      if(f.canal  && d.canal  !== f.canal)  return false;
+      if(f.urgencia && d.urgencia !== f.urgencia) return false;
+      if(f.etapa  && d.etapa  !== f.etapa)  return false;
+      if(f.score === 'alto'  && d.score < 70) return false;
+      if(f.score === 'medio' && (d.score < 40 || d.score >= 70)) return false;
+      if(f.score === 'baixo' && d.score >= 40) return false;
+      return true;
+    });
+    var ct = document.getElementById('base-count');
+    if(ct) ct.textContent = dados.length+' leads encontrados';
+    var urgCor = {Alta:'#ef4444',Media:'#f59e0b',Baixa:'#10b981',Frio:'#8896b0'};
+    var tendIcon = {
+      up:'<svg width="14" height="14" fill="none" stroke="#10b981" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>',
+      down:'<svg width="14" height="14" fill="none" stroke="#ef4444" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>',
+      stable:'<svg width="14" height="14" fill="none" stroke="#f59e0b" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+    };
+    var rows = dados.map(function(d){
+      var uc = urgCor[d.urgencia]||'#8896b0';
+      return '<tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background=\'rgba(37,99,235,.04)\'" onmouseout="this.style.background=\'\'">'
+        +'<td style="padding:10px 10px;min-width:160px">'
+          +'<div style="font-size:.83rem;font-weight:700;color:var(--text)">'+d.nome+'</div>'
+          +'<div style="font-size:.74rem;color:var(--muted)">'+d.empresa+'</div>'
+        +'</td>'
+        +'<td style="padding:10px 10px;min-width:140px">'
+          +'<div style="font-size:.75rem;color:var(--muted)">'+d.tel+'</div>'
+          +'<div style="font-size:.74rem;color:#60a5fa">'+d.email+'</div>'
+        +'</td>'
+        +'<td style="padding:10px 10px;font-size:.78rem;color:var(--muted);white-space:nowrap">'+d.cidade+'</td>'
+        +'<td style="padding:10px 10px;font-size:.78rem;color:var(--muted)">'+d.canal+'</td>'
+        +'<td style="padding:10px 10px;text-align:center">'
+          +'<div style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:rgba(37,99,235,.12);font-size:.78rem;font-weight:800;color:var(--accent2)">'+d.score+'</div>'
+        +'</td>'
+        +'<td style="padding:10px 10px;min-width:90px">'
+          +'<div style="font-size:.74rem;color:var(--muted);text-align:right;margin-bottom:3px">'+d.pconv+'%</div>'
+          +'<div style="height:4px;background:var(--border);border-radius:2px"><div style="height:4px;width:'+d.pconv+'%;background:'+uc+';border-radius:2px"></div></div>'
+        +'</td>'
+        +'<td style="padding:10px 10px;text-align:center">'
+          +'<span style="display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:12px;background:'+uc+'22;color:'+uc+'">'
+          +'<span style="width:7px;height:7px;border-radius:50%;background:'+uc+';display:inline-block"></span>'+d.urgencia+'</span>'
+        +'</td>'
+        +'<td style="padding:10px 10px;text-align:center">'+(tendIcon[d.tendencia]||'')+'</td>'
+        +'<td style="padding:10px 10px;font-size:.74rem;color:var(--muted)">'+d.etapa+'</td>'
+        +'<td style="padding:10px 10px;font-size:.74rem;color:var(--muted)">'+d.data+'</td>'
+        +'</tr>';
+    }).join('');
+    var tb = document.getElementById('base-tbody');
+    if(tb) tb.innerHTML = rows || '<tr><td colspan="10" style="text-align:center;padding:32px;color:var(--muted)">Nenhum lead encontrado com esses filtros.</td></tr>';
+  }
+
+  function aplicarFiltrosBase(){
+    var f = {};
+    var es = document.getElementById('bf-estado');  if(es&&es.value) f.estado=es.value;
+    var ca = document.getElementById('bf-canal');   if(ca&&ca.value) f.canal=ca.value;
+    var sc = document.getElementById('bf-score');   if(sc&&sc.value) f.score=sc.value;
+    var ur = document.getElementById('bf-urgencia');if(ur&&ur.value) f.urgencia=ur.value;
+    var et = document.getElementById('bf-etapa');   if(et&&et.value) f.etapa=et.value;
+    _renderBaseTable(f);
+  }
+
+  function limparFiltrosBase(){
+    ['bf-estado','bf-canal','bf-score','bf-urgencia','bf-etapa'].forEach(function(id){
+      var el=document.getElementById(id); if(el) el.value='';
+    });
+    _renderBaseTable({});
+  }
+
+  function baixarCSV(){
+    var f = {};
+    var es=document.getElementById('bf-estado');  if(es&&es.value) f.estado=es.value;
+    var ca=document.getElementById('bf-canal');   if(ca&&ca.value) f.canal=ca.value;
+    var sc=document.getElementById('bf-score');   if(sc&&sc.value) f.score=sc.value;
+    var ur=document.getElementById('bf-urgencia');if(ur&&ur.value) f.urgencia=ur.value;
+    var et=document.getElementById('bf-etapa');   if(et&&et.value) f.etapa=et.value;
+    var dados = baseLeads.filter(function(d){
+      if(f.estado && d.estado!==f.estado) return false;
+      if(f.canal  && d.canal !==f.canal)  return false;
+      if(f.urgencia && d.urgencia!==f.urgencia) return false;
+      if(f.etapa  && d.etapa !==f.etapa)  return false;
+      if(f.score==='alto'  && d.score<70)  return false;
+      if(f.score==='medio' && (d.score<40||d.score>=70)) return false;
+      if(f.score==='baixo' && d.score>=40) return false;
+      return true;
+    });
+    var header = 'Nome,Empresa,Telefone,Email,Cidade,Estado,Canal,Score,P(conv)%,LTV,Urgencia,Tendencia,Etapa Funil,Ultima Interacao\n';
+    var rows = dados.map(function(d){
+      return [d.nome,d.empresa,d.tel,d.email,d.cidade.split('/')[0],d.estado,d.canal,d.score,d.pconv,d.ltv,d.urgencia,d.tendencia,d.etapa,d.data].join(',');
+    }).join('\n');
+    var blob = new Blob(['﻿'+header+rows], {type:'text/csv;charset=utf-8;'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href=url; a.download='leads-inforge-'+new Date().toISOString().slice(0,10)+'.csv';
+    a.click(); URL.revokeObjectURL(url);
+    showNotification('CSV baixado — '+dados.length+' leads exportados.');
+  }
+
 
 </script>
 </body>
