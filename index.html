@@ -569,10 +569,6 @@
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 00-8 8c0 5.4 7.05 11.5 7.72 12.06a.5.5 0 00.56 0C12.95 21.5 20 15.4 20 10a8 8 0 00-8-8z"/></svg>
         Localizacao
       </div>
-      <div class="nav-item" onclick="showPage('base')" id="nav-base">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        Minha Base
-      </div>
       <div class="nav-item" onclick="showPage('predicao')" id="nav-predicao">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 2l20 10L2 22V2z"/><path d="M12 12h8"/></svg>
         Priorizacao de Leads
@@ -1017,7 +1013,7 @@
               <option value="alta">Apenas propensao Alta</option>
               <option value="reativacao">Apenas reativacao</option>
             </select>
-            <button class="btn btn-outline btn-sm" onclick="showNotification('Relatorio de localizacao exportado.')">Exportar</button>
+            <button onclick="exportarPagina('localizacao')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar CSV</button>
           </div>
         </div>
 
@@ -1713,6 +1709,7 @@
             <div class="section-sub">Onde voce e forte, onde ha espaco para crescer e por qual caminho entrar</div>
           </div>
           <span class="badge badge-purple">Analise estrategica — base 6.990 leads</span>
+          <button onclick="exportarPagina('expansao')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar CSV</button>
         </div>
 
         <!-- STATS -->
@@ -1824,6 +1821,7 @@
 <div class="page" id="page-tatica">
         <div class="section-header">
           <div><div class="section-title">Painel Tatico</div><div class="section-sub">Concentracao, qualidade, velocidade e eficiencia da sua base de leads</div></div>
+          <button onclick="exportarPagina('tatica')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar CSV</button>
         </div>
 
         <!-- HHI ROW -->
@@ -1919,6 +1917,9 @@
 
       <!-- ── PREDICAO DE LEADS ── -->
       <div id="page-predicao" class="page">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+          <button onclick="exportarPagina('predicao')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar CSV</button>
+        </div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px" id="pred-kpis">
           <div class="analytics-card" style="border-top:3px solid #ef4444">
             <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Agir Hoje</div>
@@ -1997,6 +1998,7 @@
       <div class="page" id="page-funil">
         <div class="section-header">
           <div><div class="section-title">Funil Inteligente</div><div class="section-sub">MQL/SQL, Time-to-Convert, Lead Decay e Dropout Analysis</div></div>
+          <button onclick="exportarPagina('funil')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar CSV</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
           <div class="stat-card"><div class="stat-label">Leads Totais</div><div class="stat-value">8.240</div><div class="stat-delta positive">+12% MoM</div></div>
@@ -2054,6 +2056,7 @@
       <div class="page" id="page-score">
         <div class="section-header">
           <div><div class="section-title">Score &amp; Perfil</div><div class="section-sub">Lead Scoring Preditivo, ICP Score, RFM e Clustering de Leads</div></div>
+          <button onclick="exportarPagina('score')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar CSV</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
           <div class="stat-card"><div class="stat-label">Score Medio</div><div class="stat-value" style="color:var(--primary)">62,4</div><div class="stat-delta positive">+4,1 pts</div></div>
@@ -2110,6 +2113,7 @@
       <div class="page" id="page-roi">
         <div class="section-header">
           <div><div class="section-title">ROI &amp; Atribuicao</div><div class="section-sub">CAC vs LTV, ROAS, Payback Period e Attribution Modeling</div></div>
+          <button onclick="exportarPagina('roi')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar CSV</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
           <div class="stat-card"><div class="stat-label">LTV Medio</div><div class="stat-value" style="color:var(--success)">R$4.820</div><div class="stat-delta positive">+8% YoY</div></div>
@@ -2152,6 +2156,7 @@
       <div class="page" id="page-comportamento">
         <div class="section-header">
           <div><div class="section-title">Comportamento &amp; Mercado</div><div class="section-sub">Engagement Score, Sazonalidade, Jornada do Lead e Penetracao de Mercado</div></div>
+          <button onclick="exportarPagina('comportamento')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar CSV</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
           <div class="stat-card"><div class="stat-label">Engagement Medio</div><div class="stat-value" style="color:var(--cyan)">71,2</div><div class="stat-delta positive">+3,4 pts</div></div>
@@ -2187,94 +2192,6 @@
       </div><!-- /page-comportamento -->
 
 
-      <div class="page" id="page-base">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
-          <div>
-            <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:4px">Total visível</div>
-            <div id="base-count" style="font-size:1.5rem;font-weight:800;color:var(--accent)">—</div>
-          </div>
-          <button onclick="baixarCSV()" style="display:flex;align-items:center;gap:8px;padding:10px 22px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:.88rem;font-weight:700;cursor:pointer;">
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Baixar CSV
-          </button>
-        </div>
-
-        <!-- Filtros -->
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
-          <div style="font-size:.82rem;font-weight:700;color:var(--text-muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.06em">Filtros</div>
-          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
-            <div>
-              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Estado</div>
-              <select id="bf-estado" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:120px;">
-                <option value="">Todos</option>
-                <option>SP</option><option>RJ</option><option>MG</option><option>RS</option><option>PR</option>
-                <option>SC</option><option>BA</option><option>GO</option><option>PE</option><option>CE</option>
-                <option>PA</option><option>AM</option><option>MS</option><option>MT</option><option>ES</option>
-                <option>PB</option><option>RN</option><option>AL</option><option>PI</option><option>MA</option>
-                <option>SE</option><option>RO</option><option>TO</option><option>AC</option><option>AP</option>
-                <option>RR</option><option>DF</option>
-              </select>
-            </div>
-            <div>
-              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Canal</div>
-              <select id="bf-canal" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:130px;">
-                <option value="">Todos</option>
-                <option>Google Ads</option><option>Meta Ads</option><option>LinkedIn Ads</option>
-                <option>Email Marketing</option><option>Indicacao</option><option>Organico</option>
-                <option>Evento</option><option>Outbound</option>
-              </select>
-            </div>
-            <div>
-              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Score</div>
-              <select id="bf-score" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:110px;">
-                <option value="">Todos</option>
-                <option value="alto">Alto (70+)</option>
-                <option value="medio">Médio (40–69)</option>
-                <option value="baixo">Baixo (&lt;40)</option>
-              </select>
-            </div>
-            <div>
-              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Urgência</div>
-              <select id="bf-urgencia" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:110px;">
-                <option value="">Todas</option>
-                <option>Alta</option><option>Media</option><option>Baixa</option><option>Frio</option>
-              </select>
-            </div>
-            <div>
-              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:6px">Etapa do Funil</div>
-              <select id="bf-etapa" onchange="aplicarFiltrosBase()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:.83rem;min-width:150px;">
-                <option value="">Todas</option>
-                <option>Prospeccao</option><option>Qualificacao</option><option>Proposta</option>
-                <option>Negociacao</option><option>Fechamento</option><option>Pos-venda</option>
-              </select>
-            </div>
-            <button onclick="limparFiltrosBase()" style="padding:8px 18px;background:var(--border);border:none;border-radius:8px;color:var(--text-muted);font-size:.83rem;cursor:pointer;">Limpar</button>
-          </div>
-        </div>
-
-        <!-- Tabela -->
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
-          <div style="overflow-x:auto;">
-            <table style="width:100%;border-collapse:collapse;font-size:.83rem;">
-              <thead>
-                <tr style="background:var(--bg);border-bottom:2px solid var(--border);">
-                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Lead</th>
-                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Contato</th>
-                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Cidade/UF</th>
-                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Canal</th>
-                  <th style="padding:12px 16px;text-align:center;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Score</th>
-                  <th style="padding:12px 16px;text-align:center;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">P(conv)</th>
-                  <th style="padding:12px 16px;text-align:center;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Urgência</th>
-                  <th style="padding:12px 16px;text-align:center;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Tendência</th>
-                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Etapa</th>
-                  <th style="padding:12px 16px;text-align:left;font-weight:700;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Última Interação</th>
-                </tr>
-              </thead>
-              <tbody id="base-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div><!-- /page-base -->
 
     </div><!-- /content -->
   </div><!-- /main -->
@@ -2346,7 +2263,6 @@
     score:    ['Score & Perfil','Lead Scoring Preditivo, ICP, RFM e Clustering de Leads'],
     roi:      ['ROI & Atribuicao','CAC vs LTV, ROAS, Payback Period e Attribution Modeling'],
     comportamento: ['Comportamento & Mercado','Engagement Score, Sazonalidade, Jornada e Penetracao'],
-    base: ['Minha Base','Todos os seus leads processados — filtre, analise e baixe'],
   };
   function showPage(name){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -2368,7 +2284,6 @@
     if(name==='score')         setTimeout(renderScore,        80);
     if(name==='roi')           setTimeout(renderRoi,          80);
     if(name==='comportamento') setTimeout(renderComportamento,80);
-    if(name==='base')          setTimeout(renderBase,         80);
   }
 
   // ── MAP ──
@@ -3443,6 +3358,62 @@
     a.href=url; a.download='leads-inforge-'+new Date().toISOString().slice(0,10)+'.csv';
     a.click(); URL.revokeObjectURL(url);
     showNotification('CSV baixado — '+dados.length+' leads exportados.');
+  }
+
+
+  // ── EXPORTAR POR PAGINA ──
+  function exportarPagina(tipo){
+    var header = 'Nome,Empresa,Telefone,Email,Cidade,Estado,Canal,Score,P(conv)%,LTV,Urgencia,Tendencia,Etapa Funil,Ultima Interacao\n';
+    var dados = baseLeads.slice();
+
+    if(tipo==='localizacao'){
+      // filtra pelo estado selecionado no mapa, se houver
+      var uf = typeof currentStateUF !== 'undefined' && currentStateUF ? currentStateUF : null;
+      if(uf) dados = dados.filter(function(d){ return d.estado===uf; });
+      dados.sort(function(a,b){ return b.score-a.score; });
+    } else if(tipo==='expansao'){
+      // ordena por estado de maior potencial (leads por estado)
+      dados.sort(function(a,b){ return a.estado.localeCompare(b.estado) || b.score-a.score; });
+    } else if(tipo==='tatica'){
+      // leads com alto CPL — canal com maior custo (baixo score, alto investimento)
+      dados = dados.filter(function(d){ return d.score < 55; });
+      dados.sort(function(a,b){ return a.score-b.score; });
+    } else if(tipo==='predicao'){
+      // top leads por urgencia + score
+      var ord = {Alta:0, Media:1, Baixa:2, Frio:3};
+      dados.sort(function(a,b){ return (ord[a.urgencia]||3)-(ord[b.urgencia]||3) || b.score-a.score; });
+    } else if(tipo==='funil'){
+      // leads por etapa do funil
+      var etapas = ['Prospeccao','Qualificacao','Proposta','Negociacao','Fechamento','Pos-venda'];
+      dados.sort(function(a,b){ return etapas.indexOf(a.etapa)-etapas.indexOf(b.etapa) || b.score-a.score; });
+    } else if(tipo==='score'){
+      // top leads por score — ICP alto
+      dados.sort(function(a,b){ return b.score-a.score; });
+      dados = dados.slice(0, 30);
+    } else if(tipo==='roi'){
+      // leads por canal de atribuicao
+      dados.sort(function(a,b){ return a.canal.localeCompare(b.canal) || b.ltv-a.ltv; });
+    } else if(tipo==='comportamento'){
+      // leads mais engajados (tendencia positiva)
+      dados = dados.filter(function(d){ return d.tendencia==='subindo'; });
+      dados.sort(function(a,b){ return b.score-a.score; });
+    }
+
+    var rows = dados.map(function(d){
+      return [d.nome,d.empresa,d.tel,d.email,d.cidade.split('/')[0],d.estado,
+              d.canal,d.score,d.pconv,d.ltv,d.urgencia,d.tendencia,d.etapa,d.data].join(',');
+    }).join('\n');
+
+    var labels = {
+      localizacao:'localizacao', expansao:'expansao-geografica', tatica:'painel-tatico',
+      predicao:'priorizacao', funil:'funil', score:'score-icp', roi:'roi-atribuicao', comportamento:'comportamento'
+    };
+    var blob = new Blob(['\uFEFF'+header+rows], {type:'text/csv;charset=utf-8;'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href=url; a.download='leads-inforge-'+(labels[tipo]||tipo)+'-'+new Date().toISOString().slice(0,10)+'.csv';
+    a.click(); URL.revokeObjectURL(url);
+    showNotification('Exportado — '+dados.length+' leads em '+a.download.split('-inforge-')[1]);
   }
 
 
