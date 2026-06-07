@@ -1048,7 +1048,13 @@
             </div>
 
             <!-- MAPA D3 BRASIL -->
-            <div id="map-container" style="width:100%;min-height:320px;"></div>
+            <div style="position:relative;">
+              <div id="map-container" style="width:100%;min-height:320px;"></div>
+              <div id="map-tooltip" style="display:none;position:absolute;background:#1a2235;border:1px solid #7c3aed;border-radius:8px;padding:8px 14px;pointer-events:none;z-index:99;box-shadow:0 4px 16px rgba(124,58,237,0.25);">
+                <div id="map-tooltip-name" style="font-size:13px;font-weight:700;color:#f0f4ff;"></div>
+                <div id="map-tooltip-leads" style="font-size:12px;color:#a78bfa;margin-top:2px;"></div>
+              </div>
+            </div>
             <svg id="brazil-svg-map" viewBox="0 0 760 900" style="display:none;" xmlns="http://www.w3.org/2000/svg">
 
               <!-- RR - Roraima -->
@@ -2274,10 +2280,17 @@
           });
       }).catch(()=>{});
   }
-  function showMapTooltip(e,uf,n){
+  function showMapTooltip(e,nome,leads){
     const t=document.getElementById('map-tooltip');
-    if(t){t.style.display='block';t.innerHTML='<b>'+uf+'</b><br>'+n+' leads';
-    t.style.left=(e.offsetX+12)+'px';t.style.top=(e.offsetY-20)+'px';}
+    if(!t) return;
+    document.getElementById('map-tooltip-name').textContent=nome;
+    document.getElementById('map-tooltip-leads').textContent=leads+' leads';
+    t.style.display='block';
+    const container=t.parentElement;
+    const rect=container.getBoundingClientRect();
+    const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    t.style.left=(mx+14)+'px';
+    t.style.top=(my-44)+'px';
   }
   function hideMapTooltip(){const t=document.getElementById('map-tooltip');if(t)t.style.display='none';}
   function drillDownState(uf){
