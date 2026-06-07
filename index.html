@@ -1033,11 +1033,11 @@
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
               <span style="font-size:11px;color:var(--text-muted);">Menos</span>
               <div style="display:flex;gap:3px;">
-                <div style="width:20px;height:14px;border-radius:3px;background:rgba(124,58,237,.12);"></div>
-                <div style="width:20px;height:14px;border-radius:3px;background:rgba(124,58,237,.28);"></div>
-                <div style="width:20px;height:14px;border-radius:3px;background:rgba(124,58,237,.48);"></div>
-                <div style="width:20px;height:14px;border-radius:3px;background:rgba(124,58,237,.68);"></div>
-                <div style="width:20px;height:14px;border-radius:3px;background:rgba(124,58,237,.88);"></div>
+                <div style="width:20px;height:14px;border-radius:3px;background:#16a34a;"></div>
+                <div style="width:20px;height:14px;border-radius:3px;background:#ca8a04;"></div>
+                <div style="width:20px;height:14px;border-radius:3px;background:#ea580c;"></div>
+                <div style="width:20px;height:14px;border-radius:3px;background:#dc2626;"></div>
+                <div style="width:20px;height:14px;border-radius:3px;background:#991b1b;"></div>
               </div>
               <span style="font-size:11px;color:var(--text-muted);">Mais</span>
               <span style="margin-left:12px;font-size:11px;color:var(--text-muted);">|</span>
@@ -2254,7 +2254,7 @@
             const uf=d.properties.sigla||d.properties.UF||d.properties.abbrev;
             const v=mapaLeadCounts[uf]||0;
             const t=v/max;
-            return t>0.7?'#7c3aed':t>0.4?'#2563eb':t>0.2?'#0891b2':t>0.05?'#0e7490':'#1e2d45';
+            return t>0.7?'#dc2626':t>0.4?'#ea580c':t>0.2?'#ca8a04':t>0.05?'#16a34a':'#1e3a5a';
           })
           .attr('stroke','#0d1220').attr('stroke-width',0.8)
           .style('cursor','pointer')
@@ -2295,7 +2295,7 @@
         const path=d3.geoPath().projection(proj);
         const svg=d3.select('#map-container').append('svg').attr('width',w).attr('height',h);
         svg.selectAll('path').data(geo.features).enter().append('path')
-          .attr('d',path).attr('fill','#1e3a5a').attr('stroke','#0d1220').attr('stroke-width',0.5)
+          .attr('d',path).attr('fill',function(d){ var n=(d.properties.name||d.properties.NM_MUN||'x'); var h=0; for(var i=0;i<n.length;i++) h=(h*31+n.charCodeAt(i))&0xffff; var t=(h%100)/100; return t>0.7?'#dc2626':t>0.45?'#ea580c':t>0.25?'#ca8a04':t>0.1?'#16a34a':'#1e3a5a'; }).attr('stroke','#0d1220').attr('stroke-width',0.5)
           .style('cursor','pointer')
           .on('mouseover',function(e,d){
             d3.select(this).attr('fill','#7c3aed');
