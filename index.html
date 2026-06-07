@@ -3106,7 +3106,17 @@
       {uf:'GO',leads:198,lq:0.72,cor:'#ef4444'},{uf:'CE',leads:187,lq:0.61,cor:'#ef4444'},
     ];
     const maxL=penData[0].leads;
-    const pen=document.getElementById('penetracao-bars');
     if(pen) pen.innerHTML=penData.map(d=>`
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div style="width:26px;font-size:11px;font-weight:7
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <div style="width:26px;font-size:11px;font-weight:700;color:var(--muted);text-align:center">${d.uf}</div>
+        <div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;">
+          <div style="height:8px;width:${Math.round(d.leads/maxL*100)}%;background:${d.cor};border-radius:4px;transition:width .5s;"></div>
+        </div>
+        <div style="width:80px;font-size:11px;text-align:right;color:var(--muted)">${d.leads.toLocaleString()} leads</div>
+        <div style="width:38px;font-size:11px;font-weight:700;text-align:right;color:${d.cor}">LQ ${d.lq}</div>
+      </div>`).join('');
+  }
+
+</script>
+</body>
+</html>
