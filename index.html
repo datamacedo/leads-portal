@@ -1022,7 +1022,7 @@
           <div class="card" style="padding:24px;">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
               <div style="font-size:14px;font-weight:700;" id="mapa-titulo">Distribuicao por Estado</div>
-              <button id="btn-voltar-mapa" onclick="voltarParaBrasil()" style="display:none;padding:5px 12px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;display:none;align-items:center;gap:6px;">
+              <button id="map-back-btn" onclick="resetMap()" style="display:none;padding:5px 12px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;align-items:center;gap:6px;">
                 <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
                 Voltar ao Brasil
               </button>
@@ -2305,6 +2305,10 @@
           .on('mouseout',function(){d3.select(this).attr('fill','#1e3a5a');hideMapTooltip();});
         const back=document.getElementById('map-back-btn');
         if(back) back.style.display='inline-flex';
+        const titulo=document.getElementById('mapa-titulo');
+        const sub=document.getElementById('mapa-subtitulo');
+        if(titulo) titulo.textContent='Municipios de '+uf;
+        if(sub) sub.textContent='Clique em um municipio para detalhar';
         mapSvg=null;
       }).catch(()=>{});
   }
@@ -2315,6 +2319,10 @@
     mapSvg=null;
     const back=document.getElementById('map-back-btn');
     if(back) back.style.display='none';
+    const titulo=document.getElementById('mapa-titulo');
+    const sub=document.getElementById('mapa-subtitulo');
+    if(titulo) titulo.textContent='Distribuicao por Estado';
+    if(sub) sub.textContent='Intensidade da cor = concentracao de leads';
     setTimeout(initMapColors,60);
   }
 
