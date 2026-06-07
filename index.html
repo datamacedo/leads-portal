@@ -560,6 +560,15 @@
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Nova Solicitacao
       </div>
+      <div class="nav-item" onclick="showPage('integracoes')" id="nav-integracoes">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>
+        Integracoes
+        <span class="nav-badge" style="background:var(--success)">8</span>
+      </div>
+      <div class="nav-item" onclick="showPage('localizacao')" id="nav-localizacao">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 00-8 8c0 5.4 7.05 11.5 7.72 12.06a.5.5 0 00.56 0C12.95 21.5 20 15.4 20 10a8 8 0 00-8-8z"/></svg>
+        Localizacao
+      </div>
       <div class="nav-item" onclick="showPage('predicao')" id="nav-predicao">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 2l20 10L2 22V2z"/><path d="M12 12h8"/></svg>
         Predicao de Leads
@@ -588,15 +597,6 @@
       <div class="nav-item" onclick="showPage('comportamento')" id="nav-comportamento">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         Comportamento
-      </div>
-      <div class="nav-item" onclick="showPage('integracoes')" id="nav-integracoes">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>
-        Integracoes
-        <span class="nav-badge" style="background:var(--success)">8</span>
-      </div>
-      <div class="nav-item" onclick="showPage('localizacao')" id="nav-localizacao">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 00-8 8c0 5.4 7.05 11.5 7.72 12.06a.5.5 0 00.56 0C12.95 21.5 20 15.4 20 10a8 8 0 00-8-8z"/></svg>
-        Localizacao
       </div>
       <div class="nav-item" onclick="showPage('relatorios')" id="nav-relatorios">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
@@ -1048,7 +1048,7 @@
             </div>
 
             <!-- MAPA D3 BRASIL -->
-            <div id="brazil-map-d3" style="width:100%;min-height:320px;"></div>
+            <div id="map-container" style="width:100%;min-height:320px;"></div>
             <svg id="brazil-svg-map" viewBox="0 0 760 900" style="display:none;" xmlns="http://www.w3.org/2000/svg">
 
               <!-- RR - Roraima -->
