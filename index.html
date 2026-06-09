@@ -556,6 +556,16 @@
         Minhas Solicitacoes
         <span class="nav-badge" id="badge-pendentes">2</span>
       </div>
+      <div class="nav-item" onclick="showPage('oportunidades')" id="nav-oportunidades">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg>
+        Ficha do Lead
+        <span class="nav-badge" style="background:rgba(239,68,68,0.2);color:#ef4444;">10</span>
+      </div>
+      <div class="nav-item" onclick="showPage('oportunidades')" id="nav-oportunidades">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg>
+        Ficha do Lead
+        <span class="nav-badge" style="background:rgba(239,68,68,0.2);color:#ef4444;">10</span>
+      </div>
       <div class="nav-item" onclick="showPage('nova')" id="nav-nova">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Nova Solicitacao
@@ -2193,6 +2203,66 @@
 
 
 
+
+      <div class="page" id="page-oportunidades">
+        <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;">
+
+          <!-- Lista de oportunidades -->
+          <div style="position:sticky;top:0;">
+            <div style="margin-bottom:12px;position:relative;">
+              <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);pointer-events:none;" width="14" height="14" fill="none" stroke="var(--text-muted)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="op-search" oninput="filtrarOportunidades()" placeholder="Buscar lead ou empresa..." style="width:100%;padding:9px 12px 9px 34px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.83rem;outline:none;">
+            </div>
+            <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+              <button onclick="filtrarOportunidadesTipo('todos')" id="opf-todos" class="op-filter-btn active" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--accent);color:#fff;cursor:pointer;">Todos</button>
+              <button onclick="filtrarOportunidadesTipo('comprador')" id="opf-comprador" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Comprador</button>
+              <button onclick="filtrarOportunidadesTipo('cliente')" id="opf-cliente" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Cliente</button>
+              <button onclick="filtrarOportunidadesTipo('curioso')" id="opf-curioso" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Curioso</button>
+            </div>
+            <div id="op-list" style="display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 280px);overflow-y:auto;padding-right:4px;"></div>
+          </div>
+
+          <!-- Ficha do lead -->
+          <div id="op-ficha" style="min-height:400px;">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--text-muted);text-align:center;gap:12px;">
+              <svg width="40" height="40" fill="none" stroke="var(--border)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <div style="font-size:.9rem;">Selecione um lead para ver a ficha completa</div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /page-oportunidades -->
+
+
+      <div class="page" id="page-oportunidades">
+        <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;">
+
+          <!-- Lista de oportunidades -->
+          <div style="position:sticky;top:0;">
+            <div style="margin-bottom:12px;position:relative;">
+              <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);pointer-events:none;" width="14" height="14" fill="none" stroke="var(--text-muted)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="op-search" oninput="filtrarOportunidades()" placeholder="Buscar lead ou empresa..." style="width:100%;padding:9px 12px 9px 34px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.83rem;outline:none;">
+            </div>
+            <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+              <button onclick="filtrarOportunidadesTipo('todos')" id="opf-todos" class="op-filter-btn active" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--accent);color:#fff;cursor:pointer;">Todos</button>
+              <button onclick="filtrarOportunidadesTipo('comprador')" id="opf-comprador" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Comprador</button>
+              <button onclick="filtrarOportunidadesTipo('cliente')" id="opf-cliente" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Cliente</button>
+              <button onclick="filtrarOportunidadesTipo('curioso')" id="opf-curioso" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Curioso</button>
+            </div>
+            <div id="op-list" style="display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 280px);overflow-y:auto;padding-right:4px;"></div>
+          </div>
+
+          <!-- Ficha do lead -->
+          <div id="op-ficha" style="min-height:400px;">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--text-muted);text-align:center;gap:12px;">
+              <svg width="40" height="40" fill="none" stroke="var(--border)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <div style="font-size:.9rem;">Selecione um lead para ver a ficha completa</div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /page-oportunidades -->
+
     </div><!-- /content -->
   </div><!-- /main -->
 
@@ -2272,6 +2342,8 @@
     predicao: ['Priorizacao de Leads','Modelo preditivo identifica quem vai converter, quando agir e quanto vale cada lead'],
     funil:    ['Funil Inteligente','MQL/SQL, Time-to-Convert, Decay Rate e Dropout Analysis'],
     score:    ['Score & Perfil','Lead Scoring Preditivo, ICP, RFM e Clustering de Leads'],
+    oportunidades: ['Ficha do Lead','Perfil 360° — intenção, origem, histórico e insights do vendedor'],
+    oportunidades: ['Ficha do Lead','Perfil 360° — intenção, origem, histórico e insights do vendedor'],
     roi:      ['ROI & Atribuicao','CAC vs LTV, ROAS, Payback Period e Attribution Modeling'],
     comportamento: ['Comportamento & Mercado','Engagement Score, Sazonalidade, Jornada e Penetracao'],
   };
@@ -2285,6 +2357,8 @@
     const t = titles[name] || [name,''];
     document.getElementById('topbar-title').innerHTML = t[0]+' <span>'+t[1]+'</span>';
     window.scrollTo && window.scrollTo(0,0);
+    if(name==='oportunidades') setTimeout(renderOportunidades, 80);
+    if(name==='oportunidades') setTimeout(renderOportunidades, 80);
     if(name==='localizacao') setTimeout(initMapColors, 60);
     if(name==='integracoes') setTimeout(iniciarFeedAoVivo, 300);
     else pararFeedAoVivo();
@@ -3521,6 +3595,376 @@
   function fecharAjuda(){
     document.getElementById('help-overlay').style.display = 'none';
     document.getElementById('help-popup').style.display   = 'none';
+  }
+
+
+  // ── FICHA DO LEAD / OPORTUNIDADES ──────────────────────────────────────────
+  var opLeads = [
+    {id:1, nome:'Carlos Henrique Mota', empresa:'Mota Distribuidora Ltda', cargo:'Sócio-Diretor',
+     cidade:'São Paulo', estado:'SP', tel:'(11) 98234-7712', email:'carlos.mota@motadistrib.com.br',
+     canal:'Google Ads', campanha:'Pesquisa — Enriquecimento de Leads', dispositivo:'iPhone 14 Pro', so:'iOS 17',
+     primeira_pagina:'Página de Produto — Enriquecimento',
+     tipo:'comprador', urgencia:'Alta', score:88, pconv:82,
+     interesse:['Enriquecimento de Base', 'Portal Analítico'],
+     tempo_site:'8min 42s', paginas_visitadas:7,
+     reclame:{status:'limpo', total:0, abertas:0},
+     historico:[], ultima_compra:null, total_gasto:0,
+     insights:[
+       'Acessou pelo iPhone — prefira WhatsApp ao e-mail para primeiro contato.',
+       'Visitou a página de Enriquecimento 3 vezes em 5 dias — alta intenção de compra.',
+       'Sócio-Diretor toma decisão sozinho — não precisa de aprovação do financeiro na maioria dos casos.',
+       'Empresa de distribuição: dor provável é base desatualizada de revendedores. Mencione atualização de CNPJ.'
+     ]},
+    {id:2, nome:'Fernanda Cristina Alves', empresa:'FC Consultoria RH', cargo:'CEO',
+     cidade:'Belo Horizonte', estado:'MG', tel:'(31) 97821-3340', email:'fernanda@fcconsultoria.com.br',
+     canal:'LinkedIn Ads', campanha:'B2B Decision Makers — MG', dispositivo:'Samsung Galaxy S23', so:'Android 14',
+     primeira_pagina:'Home — InForge',
+     tipo:'comprador', urgencia:'Alta', score:91, pconv:87,
+     interesse:['Reativação de Leads', 'Score & Perfil ICP'],
+     tempo_site:'12min 15s', paginas_visitadas:11,
+     reclame:{status:'alerta', total:2, abertas:1, reclamacoes:[
+       {data:'12/03/2024', titulo:'Cobrança indevida após cancelamento', status:'Não respondida', texto:'Após solicitar cancelamento do serviço em janeiro, continuei sendo cobrada em fevereiro e março. Sem retorno da empresa.'},
+       {data:'05/09/2023', titulo:'Prazo de entrega não cumprido', status:'Resolvida', texto:'O relatório prometido para 10 dias úteis chegou após 23 dias.'}
+     ]},
+     historico:[], ultima_compra:null, total_gasto:0,
+     insights:[
+       'ATENÇÃO: cliente tem reclamação ABERTA no Reclame Aqui sobre cobrança — resolva antes de ofertar.',
+       'CEO de consultoria de RH: base provavelmente contém profissionais desatualizados. Mostre o LQ.',
+       'Veio do LinkedIn — perfil mais analítico. Use dados e métricas na abordagem, não apenas proposta de valor.',
+       'Alta intenção mas urgência requer cuidado: resolver reclamação primeiro aumenta a chance de conversão.'
+     ]},
+    {id:3, nome:'Ricardo Sousa Lima', empresa:'RL Imóveis', cargo:'Gerente Comercial',
+     cidade:'Curitiba', estado:'PR', tel:'(41) 99034-5521', email:'ricardo.lima@rllimoveis.com.br',
+     canal:'Meta Ads', campanha:'Leads Imobiliário — Curitiba', dispositivo:'Motorola Edge 40', so:'Android 13',
+     primeira_pagina:'Página de Produto — Portal Analítico',
+     tipo:'cliente', urgencia:'Media', score:74, pconv:61,
+     interesse:['Portal Analítico', 'Expansão Geográfica'],
+     tempo_site:'6min 08s', paginas_visitadas:5,
+     reclame:{status:'limpo', total:0, abertas:0},
+     historico:[
+       {data:'Fev/2024', produto:'Enriquecimento Básico — 2.000 leads', valor:'R$ 890,00', status:'Concluído'},
+       {data:'Out/2023', produto:'Análise Geográfica — PR', valor:'R$ 650,00', status:'Concluído'}
+     ], ultima_compra:'Fev/2024', total_gasto:1540,
+     insights:[
+       'Cliente ativo com 2 compras — abordagem de fidelidade. Ofereça desconto de recompra.',
+       'Mercado imobiliário: sazonalidade alta em mar-abr e set-out. Timing ideal agora.',
+       'Última compra há 4 meses — pode estar avaliando concorrentes. Ligue proativamente.',
+       'Interessado em Expansão Geográfica — apresente análise de whitespace para o Paraná.'
+     ]},
+    {id:4, nome:'Juliana Prates Ferreira', empresa:'JuFit Academia', cargo:'Proprietária',
+     cidade:'Goiânia', estado:'GO', tel:'(62) 98712-0043', email:'ju.prates@jufit.com.br',
+     canal:'Google Ads', campanha:'Branding — Goiás', dispositivo:'iPhone 13', so:'iOS 16',
+     primeira_pagina:'Blog — Como enriquecer leads',
+     tipo:'curioso', urgencia:'Baixa', score:38, pconv:22,
+     interesse:['Conteúdo do Blog'],
+     tempo_site:'2min 30s', paginas_visitadas:2,
+     reclame:{status:'limpo', total:0, abertas:0},
+     historico:[], ultima_compra:null, total_gasto:0,
+     insights:[
+       'Entrou via blog — ainda na fase de descoberta. Não tente vender ainda.',
+       'Academia pequena: ticket baixo e ciclo de decisão longo. Nutra com conteúdo primeiro.',
+       'Score 38 — lead frio. Priorize outros leads e retome em 30 dias com e-mail educativo.',
+       'Se abordar, foque no problema: "Você sabe quantos alunos que saíram ainda têm perfil para voltar?"'
+     ]},
+    {id:5, nome:'Marcelo Tavares Braga', empresa:'Braga Tech Solutions', cargo:'CTO',
+     cidade:'Porto Alegre', estado:'RS', tel:'(51) 97654-8823', email:'marcelo@bragaech.com.br',
+     canal:'Indicação', campanha:'—', dispositivo:'MacBook Pro', so:'macOS',
+     primeira_pagina:'Página de Produto — Enriquecimento',
+     tipo:'comprador', urgencia:'Alta', score:93, pconv:91,
+     interesse:['Enriquecimento via API', 'Integrações', 'Portal Analítico'],
+     tempo_site:'19min 48s', paginas_visitadas:14,
+     reclame:{status:'limpo', total:0, abertas:0},
+     historico:[], ultima_compra:null, total_gasto:0,
+     insights:[
+       'Veio por indicação — conversão 3x maior que outros canais. Pergunte quem indicou e mencione.',
+       'CTO em empresa de tecnologia: decisão técnica + comercial. Prepare uma proposta com documentação de API.',
+       'Acessou do desktop por 19 minutos — leu tudo com atenção. Está em fase de due diligence.',
+       'Interesse em integração via API é sinal de que quer escalar, não compra pontual. Oferte plano recorrente.'
+     ]},
+    {id:6, nome:'Patrícia Nogueira', empresa:'NogStyle Moda', cargo:'Sócia-Fundadora',
+     cidade:'Recife', estado:'PE', tel:'(81) 98103-6674', email:'patricia@nogstyle.com.br',
+     canal:'Instagram Ads', campanha:'Moda Feminina — NE', dispositivo:'iPhone 12', so:'iOS 15',
+     primeira_pagina:'Home — InForge',
+     tipo:'curioso', urgencia:'Baixa', score:29, pconv:14,
+     interesse:['Home'],
+     tempo_site:'1min 12s', paginas_visitadas:1,
+     reclame:{status:'limpo', total:0, abertas:0},
+     historico:[], ultima_compra:null, total_gasto:0,
+     insights:[
+       'Bounce rápido — 1 min no site, 1 página. Provavelmente clique acidental no Instagram.',
+       'Score 29 — lead muito frio. Não invista tempo agora.',
+       'Se quiser qualificar, envie apenas um conteúdo de topo de funil por e-mail.',
+       'Moda B2C: produto InForge pode não ser fit agora. Reavalie se empresa crescer.'
+     ]},
+    {id:7, nome:'Thiago Carvalho Nunes', empresa:'Nunes Agro Insumos', cargo:'Diretor Comercial',
+     cidade:'Ribeirão Preto', estado:'SP', tel:'(16) 99021-4432', email:'thiago.nunes@nunesagro.com.br',
+     canal:'Google Ads', campanha:'Agronegócio — SP Interior', dispositivo:'iPad Pro', so:'iPadOS 17',
+     primeira_pagina:'Página de Produto — Expansão Geográfica',
+     tipo:'comprador', urgencia:'Media', score:79, pconv:68,
+     interesse:['Expansão Geográfica', 'Análise de Localização'],
+     tempo_site:'9min 55s', paginas_visitadas:8,
+     reclame:{status:'limpo', total:0, abertas:0},
+     historico:[
+       {data:'Jun/2023', produto:'Análise Geográfica — SP', valor:'R$ 1.200,00', status:'Concluído'}
+     ], ultima_compra:'Jun/2023', total_gasto:1200,
+     insights:[
+       'Cliente antigo há quase 1 ano — retomada de contato oportuna. Não comece do zero.',
+       'Agronegócio SP interior: potencial enorme. Pergunte se expandiu para MT, GO ou MS desde a última análise.',
+       'Acessou do iPad — reunião presencial ou apresentação. Prepare material visual impactante.',
+       'Interesse em Expansão + Localização indica que quer territorializar equipe de vendas. Ofereça pacote completo.'
+     ]},
+    {id:8, nome:'Camila Duarte Ribeiro', empresa:'Duarte Contabilidade', cargo:'Sócia',
+     cidade:'Florianópolis', estado:'SC', tel:'(48) 98712-2231', email:'camila@duartecontab.com.br',
+     canal:'Email Marketing', campanha:'Newsletter Inteligência de Dados', dispositivo:'Desktop Windows', so:'Windows 11',
+     primeira_pagina:'Blog — ROI em ferramentas de dados',
+     tipo:'comprador', urgencia:'Media', score:71, pconv:59,
+     interesse:['ROI & Atribuição', 'Painel Tático'],
+     tempo_site:'11min 20s', paginas_visitadas:9,
+     reclame:{status:'alerta', total:1, abertas:0, reclamacoes:[
+       {data:'20/11/2022', titulo:'Atraso na entrega de relatório contratado', status:'Resolvida', texto:'Relatório prometido para 15 dias chegou em 28 dias. Foi resolvido com desconto na próxima compra.'}
+     ]},
+     historico:[], ultima_compra:null, total_gasto:0,
+     insights:[
+       'Reclamação antiga mas resolvida — não é bloqueio, mas mencione proativamente se vier à tona.',
+       'Contadora: muito focada em números. Apresente ROI claro e payback do investimento InForge.',
+       'Veio pela newsletter — já é lead educado, conhece o produto. Abordagem direta é bem-vinda.',
+       'Interesse em ROI & Atribuição: ela quer saber se o que investe em marketing retorna. Mostre o LTV/CAC.'
+     ]},
+    {id:9, nome:'Bruno Andrade Costa', empresa:'Costa & Costa Advocacia', cargo:'Sócio',
+     cidade:'Brasília', estado:'DF', tel:'(61) 99234-8812', email:'bruno.costa@costaadvocacia.adv.br',
+     canal:'LinkedIn Ads', campanha:'Jurídico & Compliance — DF', dispositivo:'Samsung Galaxy S24', so:'Android 14',
+     primeira_pagina:'Sobre — InForge',
+     tipo:'curioso', urgencia:'Frio', score:22, pconv:9,
+     interesse:['Sobre a empresa'],
+     tempo_site:'3min 00s', paginas_visitadas:3,
+     reclame:{status:'limpo', total:0, abertas:0},
+     historico:[], ultima_compra:null, total_gasto:0,
+     insights:[
+       'Visitou só a página Sobre — provavelmente pesquisando a empresa, não o produto.',
+       'Escritório de advocacia: ciclo de decisão longo e muito orientado a compliance e LGPD.',
+       'Não aborde ainda. Envie material sobre LGPD e como a InForge trabalha com dados conformes.',
+       'Score 22 — lead frio. Pode virar oportunidade se qualificado com conteúdo especializado para jurídico.'
+     ]},
+    {id:10, nome:'Larissa Monteiro Silva', empresa:'Monteiro Eventos & Cerimoniais', cargo:'Diretora',
+     cidade:'Salvador', estado:'BA', tel:'(71) 97832-5509', email:'larissa@monteiroEventos.com.br',
+     canal:'Meta Ads', campanha:'Eventos Corporativos — BA', dispositivo:'iPhone 15', so:'iOS 17',
+     primeira_pagina:'Página de Produto — Reativação de Leads',
+     tipo:'comprador', urgencia:'Alta', score:84, pconv:77,
+     interesse:['Reativação de Leads', 'Comportamento & Mercado'],
+     tempo_site:'7min 33s', paginas_visitadas:6,
+     reclame:{status:'limpo', total:0, abertas:0},
+     historico:[
+       {data:'Dez/2023', produto:'Reativação de Base — 500 leads', valor:'R$ 480,00', status:'Concluído'},
+       {data:'Ago/2023', produto:'Enriquecimento Básico — 1.000 leads', valor:'R$ 590,00', status:'Concluído'},
+       {data:'Mar/2023', produto:'Enriquecimento Básico — 500 leads', valor:'R$ 350,00', status:'Concluído'}
+     ], ultima_compra:'Dez/2023', total_gasto:1420,
+     insights:[
+       'Cliente fiel com 3 compras — ótima receptividade. Aborde com proposta de plano mensal recorrente.',
+       'Eventos corporativos: sazonalidade em jan-fev (planejamento) e ago-set (orçamentos anuais). Momento ideal.',
+       'Reativação foi o produto de entrada — provavelmente tem base grande. Proponha análise completa.',
+       'Última compra em dez — 6 meses. Base provavelmente envelheceu novamente. Reengaje com essa dor.'
+     ]}
+  ];
+
+  var _opFiltroTipo = 'todos';
+  var _opSelecionado = null;
+
+  function renderOportunidades(){
+    _renderOpList();
+    if(_opSelecionado) abrirFicha(_opSelecionado);
+    else document.getElementById('op-ficha').innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--text-muted);text-align:center;gap:12px;"><svg width="40" height="40" fill="none" stroke="var(--border)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div style="font-size:.9rem;">Selecione um lead para ver a ficha completa</div></div>';
+  }
+
+  function _renderOpList(){
+    var q = (document.getElementById('op-search')||{value:''}).value.toLowerCase();
+    var filtered = opLeads.filter(function(l){
+      var tipoOk = _opFiltroTipo==='todos' || l.tipo===_opFiltroTipo;
+      var searchOk = !q || l.nome.toLowerCase().includes(q) || l.empresa.toLowerCase().includes(q);
+      return tipoOk && searchOk;
+    });
+    var urgCor = {Alta:'#ef4444', Media:'#f59e0b', Baixa:'#6b7280', Frio:'#374151'};
+    var tipoCor = {comprador:'#10b981', cliente:'#3b82f6', curioso:'#9ca3af'};
+    var tipoLabel = {comprador:'Comprador', cliente:'Cliente', curioso:'Curioso'};
+    document.getElementById('op-list').innerHTML = filtered.map(function(l){
+      var sel = _opSelecionado && _opSelecionado.id===l.id;
+      var rcBadge = l.reclame.abertas>0 ? '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#ef4444;margin-left:4px;" title="Reclamação aberta"></span>' : '';
+      return '<div onclick="abrirFicha(opLeads.find(function(x){return x.id==='+l.id+'}))" style="background:'+(sel?'var(--card2)':'var(--card)')+';border:1px solid '+(sel?'var(--accent)':'var(--border)')+';border-radius:12px;padding:14px 16px;cursor:pointer;transition:border-color .15s;">'
+        +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">'
+        +'<div style="font-size:.88rem;font-weight:700;color:var(--text);">'+l.nome+rcBadge+'</div>'
+        +'<div style="font-size:.72rem;font-weight:700;color:'+urgCor[l.urgencia]+';">'+l.urgencia+'</div>'
+        +'</div>'
+        +'<div style="font-size:.78rem;color:var(--text-muted);margin-bottom:8px;">'+l.empresa+' — '+l.cidade+'/'+l.estado+'</div>'
+        +'<div style="display:flex;align-items:center;justify-content:space-between;">'
+        +'<span style="font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:10px;background:'+tipoCor[l.tipo]+'22;color:'+tipoCor[l.tipo]+';">'+tipoLabel[l.tipo]+'</span>'
+        +'<span style="font-size:.78rem;color:var(--text-muted);">Score '+l.score+'</span>'
+        +'</div>'
+        +'</div>';
+    }).join('') || '<div style="color:var(--text-muted);font-size:.83rem;text-align:center;padding:24px;">Nenhum lead encontrado</div>';
+  }
+
+  function filtrarOportunidades(){ _renderOpList(); }
+
+  function filtrarOportunidadesTipo(tipo){
+    _opFiltroTipo = tipo;
+    document.querySelectorAll('.op-filter-btn').forEach(function(b){
+      b.style.background = 'var(--card)'; b.style.color = 'var(--text-muted)';
+    });
+    var btn = document.getElementById('opf-'+tipo);
+    if(btn){ btn.style.background = 'var(--accent)'; btn.style.color = '#fff'; }
+    _renderOpList();
+  }
+
+  function abrirFicha(lead){
+    if(!lead) return;
+    _opSelecionado = lead;
+    _renderOpList();
+    var urgCor = {Alta:'#ef4444', Media:'#f59e0b', Baixa:'#6b7280', Frio:'#374151'};
+    var tipoCor = {comprador:'#10b981', cliente:'#3b82f6', curioso:'#9ca3af'};
+    var tipoLabel = {comprador:'Comprador Sério', cliente:'Cliente Ativo', curioso:'Apenas Curioso'};
+    var tipoDesc = {
+      comprador:'Demonstrou intenção real de compra. Aborde com proposta direta.',
+      cliente:'Já comprou antes. Foco em retenção, upsell e recompra.',
+      curioso:'Ainda na fase de descoberta. Nutra com conteúdo antes de ofertar.'
+    };
+    var scoreColor = lead.score>=80?'#10b981':lead.score>=60?'#f59e0b':'#ef4444';
+
+    // Reclame Aqui block
+    var rcHtml = '';
+    if(lead.reclame.status==='limpo'){
+      rcHtml = '<div style="display:flex;align-items:center;gap:10px;padding:14px 18px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.25);border-radius:10px;">'
+        +'<svg width="18" height="18" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+        +'<div><div style="font-size:.83rem;font-weight:700;color:#10b981;">Sem reclamações</div>'
+        +'<div style="font-size:.77rem;color:var(--text-muted);">Nenhum registro encontrado no Reclame Aqui</div></div></div>';
+    } else {
+      var alertColor = lead.reclame.abertas>0 ? '#ef4444' : '#f59e0b';
+      var alertIcon = lead.reclame.abertas>0
+        ? '<svg width="18" height="18" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r=".5" fill="#ef4444"/></svg>'
+        : '<svg width="18" height="18" fill="none" stroke="#f59e0b" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16.5" r=".5" fill="#f59e0b"/></svg>';
+      rcHtml = '<div style="border:1px solid '+(lead.reclame.abertas>0?'rgba(239,68,68,.35)':'rgba(245,158,11,.3)')+';border-radius:10px;overflow:hidden;">'
+        +'<div style="display:flex;align-items:center;gap:10px;padding:14px 18px;background:'+(lead.reclame.abertas>0?'rgba(239,68,68,.08)':'rgba(245,158,11,.07)') + ';">'
+        +alertIcon
+        +'<div style="flex:1;"><div style="font-size:.83rem;font-weight:700;color:'+alertColor+';">'+(lead.reclame.abertas>0?'ATENÇÃO: '+lead.reclame.abertas+' reclamação aberta sem resposta':'Reclamações anteriores — todas resolvidas')+'</div>'
+        +'<div style="font-size:.77rem;color:var(--text-muted);">'+lead.reclame.total+' registro(s) no Reclame Aqui</div></div></div>';
+      if(lead.reclame.reclamacoes){
+        rcHtml += lead.reclame.reclamacoes.map(function(r){
+          var stColor = r.status==='Resolvida' ? '#10b981' : '#ef4444';
+          return '<div style="padding:14px 18px;border-top:1px solid var(--border);">'
+            +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px;">'
+            +'<div style="font-size:.82rem;font-weight:700;color:var(--text);">'+r.titulo+'</div>'
+            +'<span style="font-size:.72rem;font-weight:700;white-space:nowrap;padding:2px 8px;border-radius:10px;background:'+stColor+'22;color:'+stColor+';">'+r.status+'</span>'
+            +'</div>'
+            +'<div style="font-size:.78rem;color:var(--text-muted);margin-bottom:4px;">'+r.texto+'</div>'
+            +'<div style="font-size:.72rem;color:var(--text-muted);">'+r.data+'</div></div>';
+        }).join('');
+      }
+      rcHtml += '</div>';
+    }
+
+    // Histórico block
+    var histHtml = '';
+    if(lead.historico && lead.historico.length>0){
+      histHtml = '<div class="analytics-card" style="margin-bottom:16px;">'
+        +'<div style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Histórico de Compras</div>'
+        +'<div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;">'
+        +'<div style="flex:1;min-width:100px;background:var(--bg);border-radius:8px;padding:10px 14px;"><div style="font-size:.72rem;color:var(--text-muted);">Total gasto</div><div style="font-size:1.1rem;font-weight:800;color:#10b981;">R$ '+lead.total_gasto.toLocaleString('pt-BR')+',00</div></div>'
+        +'<div style="flex:1;min-width:100px;background:var(--bg);border-radius:8px;padding:10px 14px;"><div style="font-size:.72rem;color:var(--text-muted);">Compras</div><div style="font-size:1.1rem;font-weight:800;color:var(--accent);">'+lead.historico.length+'</div></div>'
+        +'<div style="flex:1;min-width:100px;background:var(--bg);border-radius:8px;padding:10px 14px;"><div style="font-size:.72rem;color:var(--text-muted);">Última compra</div><div style="font-size:.9rem;font-weight:700;color:var(--text);">'+lead.ultima_compra+'</div></div>'
+        +'</div>'
+        +'<div style="display:flex;flex-direction:column;gap:8px;">'
+        +lead.historico.map(function(h){
+          return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border-radius:8px;gap:12px;flex-wrap:wrap;">'
+            +'<div style="font-size:.83rem;font-weight:600;color:var(--text);flex:1;">'+h.produto+'</div>'
+            +'<div style="font-size:.83rem;color:#10b981;font-weight:700;">'+h.valor+'</div>'
+            +'<div style="font-size:.75rem;color:var(--text-muted);">'+h.data+'</div>'
+            +'<span style="font-size:.72rem;padding:2px 8px;border-radius:10px;background:rgba(16,185,129,.12);color:#10b981;">'+h.status+'</span>'
+            +'</div>';
+        }).join('')
+        +'</div></div>';
+    }
+
+    document.getElementById('op-ficha').innerHTML =
+      // Header
+      '<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;">'
+      +'<div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">'
+      +'<div>'
+      +'<div style="font-size:1.35rem;font-weight:800;color:var(--text);margin-bottom:4px;">'+lead.nome+'</div>'
+      +'<div style="font-size:.88rem;color:var(--text-muted);">'+lead.cargo+' · '+lead.empresa+'</div>'
+      +'<div style="font-size:.82rem;color:var(--text-muted);margin-top:2px;">'+lead.cidade+' / '+lead.estado+'</div>'
+      +'</div>'
+      +'<div style="text-align:right;">'
+      +'<div style="font-size:2rem;font-weight:900;color:'+scoreColor+';">'+lead.score+'</div>'
+      +'<div style="font-size:.72rem;color:var(--text-muted);">Score</div>'
+      +'</div></div>'
+      +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">'
+      +'<span style="font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;background:'+tipoCor[lead.tipo]+'22;color:'+tipoCor[lead.tipo]+';">'+tipoLabel[lead.tipo]+'</span>'
+      +'<span style="font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;background:'+urgCor[lead.urgencia]+'22;color:'+urgCor[lead.urgencia]+';">Urgência '+lead.urgencia+'</span>'
+      +'<span style="font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;background:rgba(124,58,237,.15);color:#a78bfa;">P(conv) '+lead.pconv+'%</span>'
+      +'</div>'
+      +'<div style="font-size:.83rem;color:var(--text-muted);padding:12px 16px;background:var(--bg);border-radius:8px;border-left:3px solid '+tipoCor[lead.tipo]+';">'+tipoDesc[lead.tipo]+'</div>'
+      +'</div>'
+
+      // Grid: contato + origem
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">'
+      // Contato
+      +'<div class="analytics-card">'
+      +'<div style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Contato</div>'
+      +'<div style="display:flex;flex-direction:column;gap:10px;">'
+      +'<div style="display:flex;align-items:center;gap:10px;"><svg width="14" height="14" fill="none" stroke="var(--accent2)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.89 10.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012.81 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.67a16 16 0 006.29 6.29l.96-.96a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span style="font-size:.83rem;color:var(--text);">'+lead.tel+'</span></div>'
+      +'<div style="display:flex;align-items:center;gap:10px;"><svg width="14" height="14" fill="none" stroke="var(--accent2)" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:.83rem;color:var(--text);">'+lead.email+'</span></div>'
+      +'</div></div>'
+      // Origem
+      +'<div class="analytics-card">'
+      +'<div style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Como chegou</div>'
+      +'<div style="display:flex;flex-direction:column;gap:8px;font-size:.83rem;">'
+      +'<div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted);">Canal</span><span style="font-weight:700;color:var(--text);">'+lead.canal+'</span></div>'
+      +(lead.campanha!=='—'?'<div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted);">Campanha</span><span style="font-weight:600;color:var(--text);font-size:.78rem;text-align:right;max-width:160px;">'+lead.campanha+'</span></div>':'')
+      +'<div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted);">1ª Página</span><span style="font-weight:600;color:var(--text);font-size:.78rem;text-align:right;max-width:160px;">'+lead.primeira_pagina+'</span></div>'
+      +'<div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted);">Tempo no site</span><span style="font-weight:700;color:var(--text);">'+lead.tempo_site+'</span></div>'
+      +'<div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted);">Páginas vistas</span><span style="font-weight:700;color:var(--text);">'+lead.paginas_visitadas+'</span></div>'
+      +'</div></div>'
+      +'</div>'
+
+      // Grid: dispositivo + interesse
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">'
+      // Dispositivo
+      +'<div class="analytics-card">'
+      +'<div style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Dispositivo</div>'
+      +'<div style="display:flex;align-items:center;gap:14px;">'
+      +'<svg width="28" height="28" fill="none" stroke="var(--accent2)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>'
+      +'<div><div style="font-size:.9rem;font-weight:700;color:var(--text);">'+lead.dispositivo+'</div><div style="font-size:.78rem;color:var(--text-muted);">'+lead.so+'</div></div>'
+      +'</div></div>'
+      // Interesse
+      +'<div class="analytics-card">'
+      +'<div style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Interesse demonstrado</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:6px;">'
+      +lead.interesse.map(function(i){ return '<span style="font-size:.78rem;padding:4px 12px;border-radius:20px;background:rgba(124,58,237,.12);color:#a78bfa;font-weight:600;">'+i+'</span>'; }).join('')
+      +'</div></div>'
+      +'</div>'
+
+      // Reclame Aqui
+      +'<div class="analytics-card" style="margin-bottom:16px;">'
+      +'<div style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Reclame Aqui</div>'
+      +rcHtml
+      +'</div>'
+
+      // Histórico (se houver)
+      +histHtml
+
+      // Insights do Vendedor
+      +'<div style="background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.06));border:1px solid rgba(124,58,237,.3);border-radius:14px;padding:20px 24px;">'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">'
+      +'<svg width="16" height="16" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>'
+      +'<div style="font-size:.82rem;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.06em;">Insights para o Vendedor</div>'
+      +'</div>'
+      +'<div style="display:flex;flex-direction:column;gap:10px;">'
+      +lead.insights.map(function(ins,i){
+        var isAlert = ins.indexOf('ATENÇÃO')>=0;
+        return '<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:'+(isAlert?'rgba(239,68,68,.08)':'var(--card)')+';border-radius:8px;'+(isAlert?'border:1px solid rgba(239,68,68,.25);':'')+';">'
+          +'<div style="min-width:20px;height:20px;border-radius:50%;background:'+(isAlert?'rgba(239,68,68,.2)':'rgba(124,58,237,.15)')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.72rem;font-weight:800;color:'+(isAlert?'#ef4444':'#a78bfa')+';">'+(i+1)+'</div>'
+          +'<div style="font-size:.83rem;color:var(--text);line-height:1.5;">'+ins+'</div>'
+          +'</div>';
+      }).join('')
+      +'</div></div>';
   }
 
 
