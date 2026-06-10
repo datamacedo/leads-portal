@@ -2218,37 +2218,7 @@
           </div>
 
           <!-- Ficha do lead -->
-          <div id="op-ficha" style="min-height:400px;">
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--text-muted);text-align:center;gap:12px;">
-              <svg width="40" height="40" fill="none" stroke="var(--border)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              <div style="font-size:.9rem;">Selecione um lead para ver a ficha completa</div>
-            </div>
-          </div>
-
-        </div>
-      </div><!-- /page-oportunidades -->
-
-
-      <div class="page" id="page-oportunidades">
-        <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;">
-
-          <!-- Lista de oportunidades -->
-          <div style="position:sticky;top:0;">
-            <div style="margin-bottom:12px;position:relative;">
-              <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);pointer-events:none;" width="14" height="14" fill="none" stroke="var(--text-muted)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input id="op-search" oninput="filtrarOportunidades()" placeholder="Buscar lead ou empresa..." style="width:100%;padding:9px 12px 9px 34px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.83rem;outline:none;">
-            </div>
-            <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
-              <button onclick="filtrarOportunidadesTipo('todos')" id="opf-todos" class="op-filter-btn active" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--accent);color:#fff;cursor:pointer;">Todos</button>
-              <button onclick="filtrarOportunidadesTipo('comprador')" id="opf-comprador" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Comprador</button>
-              <button onclick="filtrarOportunidadesTipo('cliente')" id="opf-cliente" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Cliente</button>
-              <button onclick="filtrarOportunidadesTipo('curioso')" id="opf-curioso" class="op-filter-btn" style="padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;">Curioso</button>
-            </div>
-            <div id="op-list" style="display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 280px);overflow-y:auto;padding-right:4px;"></div>
-          </div>
-
-          <!-- Ficha do lead -->
-          <div id="op-ficha" style="min-height:400px;">
+          <div id="op-ficha" style="min-height:400px;overflow-y:auto;max-height:calc(100vh - 120px);">
             <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--text-muted);text-align:center;gap:12px;">
               <svg width="40" height="40" fill="none" stroke="var(--border)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               <div style="font-size:.9rem;">Selecione um lead para ver a ficha completa</div>
@@ -2350,8 +2320,8 @@
     if(nav) nav.classList.add('active');
     const t = titles[name] || [name,''];
     document.getElementById('topbar-title').innerHTML = t[0]+' <span>'+t[1]+'</span>';
-    window.scrollTo && window.scrollTo(0,0);
-    if(name==='oportunidades') setTimeout(renderOportunidades, 80);
+    const contentEl = document.querySelector('.content');
+    if(contentEl) contentEl.scrollTo(0,0);
     if(name==='oportunidades') setTimeout(renderOportunidades, 80);
     if(name==='localizacao') setTimeout(initMapColors, 60);
     if(name==='integracoes') setTimeout(iniciarFeedAoVivo, 300);
