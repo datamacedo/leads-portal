@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InForge Leads — Validar Instalação do track.js</title>
+<style>
+  :root { --ok:#16a34a; --err:#dc2626; --wait:#d97706; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:system-ui,sans-serif; background:#0f172a; color:#e2e8f0; padding:32px; max-width:760px; margin:0 auto; }
+  h1 { font-size:1.3rem; margin-bottom:4px; }
+  p.sub { color:#94a3b8; margin-bottom:24px; font-size:.9rem; }
+  .card { background:#1e293b; border-radius:10px; padding:18px 20px; margin-bottom:12px; display:flex; gap:14px; align-items:flex-start; }
+  .dot { width:14px; height:14px; border-radius:50%; margin-top:4px; flex-shrink:0; background:var(--wait); }
+  .dot.ok { background:var(--ok); } .dot.err { background:var(--err); }
+  .card b { display:block; margin-bottom:2px; }
+  .card small { color:#94a3b8; }
+  #log { background:#0b1220; border-radius:10px; padding:14px; font-family:monospace; font-size:.78rem; max-height:220px; overflow:auto; margin-top:20px; }
+  #log div { padding:2px 0; border-bottom:1px solid #1e293b; }
+  button { background:#2563eb; color:#fff; border:0; border-radius:8px; padding:10px 18px; font-size:.9rem; cursor:pointer; margin:16px 8px 0 0; }
+  input { background:#0b1220; border:1px solid #334155; color:#e2e8f0; border-radius:8px; padding:10px; width:100%; margin-bottom:8px; }
+  label { font-size:.8rem; color:#94a3b8; }
+</style>
+</head>
+<body>
+  <h1>Validação da instalação — InForge Leads</h1>
+  <p class="sub">Abra esta página no domínio onde o script foi instalado, ou informe abaixo o token e a URL da API para testar.</p>
+
+  <label>Tracking token do cliente</label>
+  <input id="token" placeholder="ex.: 5GBgC3xpJOlDnh30QYYon9yJe6Uca4T2">
+  <label>URL da API</label>
+  <input id="api" value="http://localhost:8000/api/v1/track">
+  <button onclick="iniciar()">Iniciar validação</button>
+
+  <div id="checks" style="margin-top:20px"></div>
+  <div id="acoes" style="display:none">
+    <button onclick="window.Inforge.track('teste_manual',{origem:'pagina_validacao'})">Enviar evento de teste</button>
+    <button onclick="window.Inforge.identify({email:'teste@validacao.com',nome:'Teste Validação'})">Testar identify()</button>
+  </div>
+  <div id="log"></div>
+
+<script>
+  var CHECKS = [
+    ["script", "Script carregado", "track.js presente e objeto Inforge disponível"],
+    ["api", "API alcançável", "Endpoint /track/event respondeu"],
+    ["pageview", "Pageview registrado", "Evento automático aceito pelo servidor (202)"],
+    ["device", "Dispositivo detectado", "Tipo, sistema e navegador identificados"],
+    ["identify", "Identify funcional", "Clique em 'Testar identify()' para validar"]
+  ];
+
+  function render() {
+    document.getElementById("checks").innerHTML = CHECKS.map(function(c) {
+      return '<div class="card"><div class="dot" id="dot-'+c[0]+'"></div><div><b>'+c[1]+'</b><small>'+c[2]+'</small></div></div>';
+    }).join("");
+  }
+  render();
+
+  function setStatus(id, ok) {
+    document.getElementById("dot-"+id).className = "dot " + (ok ? "ok" : "err");
+  }
+  function log(msg, ok) {
+    var d = document.createElement("div");
+    d.textContent = new Date().toLocaleTimeString() + "  " + (ok===false ? "✗ " : "✓ ") + msg;
+    d.style.color = ok===false ? "#f87171" : "#86efac";
+    document.getElementById("log").prepend(d);
+  }
+
+  // Intercepta fetch para mostrar no log o que o track.js envia
+  var _fetch = window.fetch;
+  window.fetch = function(url, opts) {
+    var p = _fetch.apply(this, arguments);
+    if (String(url).indexOf("/track/") > -1) {
+      var body = {}; try { body = JSON.parse(opts.body); } catch(e) {}
+      p.then(function(r) {
+        var ok = r.status === 200 || r.status === 202;
+        log(body.type ? "evento '"+body.type+"' → HTTP "+r.status : "identify → HTTP "+r.status, ok);
+        if (body.type === "pageview" && ok) { setStatus("pageview", true); setStatus("api", true); }
+        if (!body.type && ok) setStatus("identify", true);
+        if (!ok) setStatus("api", false);
+      }).catch(function() { log("falha de rede ao chamar a API", false); setStatus("api", false); });
+    }
+    return p;
+  };
+
+  function iniciar() {
+    var token = document.getElementById("token").value.trim();
+    var api = document.getElementById("api").value.trim();
+    if (!token) { alert("Informe o tracking token"); return; }
+
+    var s = document.createElement("script");
+    s.src = "track.js";
+    s.setAttribute("data-token", token);
+    s.setAttribute("data-api", api);
+    s.onload = function() {
+      var ok = !!window.Inforge;
+      setStatus("script", ok);
+      log("track.js carregado — Inforge " + (ok ? "disponível" : "INDISPONÍVEL"), ok);
+      if (ok) {
+        setStatus("device", true);
+        document.getElementById("acoes").style.display = "block";
+      }
+    };
+    s.onerror = function() { setStatus("script", false); log("não foi possível carregar track.js", false); };
+    document.head.appendChild(s);
+  }
+</script>
+</body>
+</html>
